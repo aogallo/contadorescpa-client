@@ -12,6 +12,7 @@ import ClientList from "./components/ClientList";
 import About from "./pages/About";
 import ProviderList from "./components/ProviderList";
 import ProviderForm from "./components/ProviderForm";
+import AccountsPayable from "./pages/AccountsPayable";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
                 />
                 <Route path="add" element={<ProviderForm />} />
               </Route>
+              <Route path="/cxp" element={<AccountsPayable />}></Route>
               <Route path="*" element={<Error404 />} />
             </Routes>
           </div>
