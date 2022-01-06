@@ -180,6 +180,29 @@ const AccountsPayable = () => {
                 />
               </div>
 
+              {/* Account */}
+              <div className="mb-3 row">
+                <label for="account" className="col-sm-2 form-label">
+                  Cuenta
+                </label>
+                <div className="col-sm-10">
+                  <input
+                    className="form-control"
+                    list="datalistOptions"
+                    id="provider"
+                    type="text"
+                    placeholder="Seleccionar cuenta..."
+                  />
+                  <datalist id="datalistOptions">
+                    <option value="San Francisco" />
+                    <option value="New York" />
+                    <option value="Seattle" />
+                    <option value="Los Angeles" />
+                    <option value="Chicago" />
+                  </datalist>
+                </div>
+              </div>
+
               {/* Sub-total */}
               <div className="mb-3 row">
                 <label for="sub_total" className="col-sm-2 form-label">
