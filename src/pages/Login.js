@@ -10,7 +10,7 @@ const Login = () => {
               <div className="col-lg-5">
                 <div className="card shadow-lg border-0 rounded-lg mt-5">
                   <div className="card-header">
-                    <h3 className="text-center font-weight-light my-4">
+                    <h3 className="text-center  font-weight-light my-4">
                       Login
                     </h3>
                   </div>
@@ -23,7 +23,7 @@ const Login = () => {
                           type="email"
                           placeholder="name@example.com"
                         />
-                        <label for="inputEmail">Email address</label>
+                        <label for="inputEmail">Email</label>
                       </div>
                       <div className="form-floating mb-3">
                         <input
@@ -34,22 +34,9 @@ const Login = () => {
                         />
                         <label for="inputPassword">Password</label>
                       </div>
-                      <div className="form-check mb-3">
-                        <input
-                          className="form-check-input"
-                          id="inputRememberPassword"
-                          type="checkbox"
-                          value=""
-                        />
-                        <label
-                          className="form-check-label"
-                          for="inputRememberPassword">
-                          Remember Password
-                        </label>
-                      </div>
                       <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
                         <a className="small" href="password.html">
-                          Forgot Password?
+                          ¿ Has olvidado la contraseña ?
                         </a>
                         <a className="btn btn-primary" href="index.html">
                           Login
@@ -57,11 +44,7 @@ const Login = () => {
                       </div>
                     </form>
                   </div>
-                  <div className="card-footer text-center py-3">
-                    <div className="small">
-                      <a href="register.html">Need an account? Sign up!</a>
-                    </div>
-                  </div>
+                  <div className="card-footer text-center py-3"></div>
                 </div>
               </div>
             </div>
@@ -73,12 +56,12 @@ const Login = () => {
           <div className="container-fluid px-4">
             <div className="d-flex align-items-center justify-content-between small">
               <div className="text-muted">
-                Copyright &copy; Your Website 2021
+                Copyright &copy; Contadores CPA 2022
               </div>
               <div>
-                <a href="#">Privacy Policy</a>
+                <a href="#"></a>
                 &middot;
-                <a href="#">Terms &amp; Conditions</a>
+                <a href="#"></a>
               </div>
             </div>
           </div>

@@ -9,12 +9,12 @@ const ProviderForm = () => {
   };
 
   return (
-    <div class="container-fluid px-4">
+    <div className="container-fluid px-4">
       <div className="col-sm-12">
         <div className="card">
           <div className="card-header">
             <button onClick={handleCancel} className="btn">
-              <i class="fas fa-arrow-left"></i>
+              <i className="fas fa-arrow-left"></i>
             </button>
             Agregar Proveedor
           </div>
@@ -76,7 +76,11 @@ const ProviderForm = () => {
             <button type="button" type="submit" className="btn btn-primary">
               Guardar
             </button>
-            <button type="button" onClick={handleCancel} class="btn btn-danger">
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="btn btn-danger"
+            >
               Cancelar
             </button>
           </div>

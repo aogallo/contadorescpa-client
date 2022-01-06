@@ -3,17 +3,17 @@ import { Link } from "react-router-dom";
 
 const ClientList = ({ title }) => {
   return (
-    <div class="card mb-4">
-      <div class="card-header d-flex justify-content-between">
+    <div className="card mb-4">
+      <div className="card-header d-flex justify-content-between">
         <section>
-          <i class="fas fa-table me-1"></i>
+          <i className="fas fa-table me-1"></i>
           {title}
         </section>
         <Link className="btn btn-primary" to="/client/add">
           Agregar
         </Link>
       </div>
-      <div class="card-body">
+      <div className="card-body">
         <table className="table table-responsive table-striped">
           <thead>
             <tr>
