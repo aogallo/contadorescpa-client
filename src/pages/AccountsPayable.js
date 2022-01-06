@@ -16,7 +16,7 @@ const AccountsPayable = () => {
         <div className="card">
           <div className="card-header">
             <button onClick={handleCancel} className="btn">
-              <i class="fas fa-arrow-left"></i>
+              <i className="fas fa-arrow-left"></i>
             </button>
             Agregar cuenta por pagar
           </div>
@@ -234,7 +234,11 @@ const AccountsPayable = () => {
             <button type="submit" className="btn btn-primary">
               Guardar
             </button>
-            <button type="button" class="btn btn-danger" onClick={handleCancel}>
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={handleCancel}
+            >
               Cancelar
             </button>
           </div>

@@ -6,7 +6,7 @@ const ProviderList = ({ title }) => {
     <section className="card mb-4">
       <section className="card-header d-flex justify-content-between">
         <section>
-          <i class="fas fa-table me-1"></i>
+          <i className="fas fa-table me-1"></i>
           {title}
         </section>
         <Link className="btn btn-primary" to="/provider/add">
