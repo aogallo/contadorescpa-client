@@ -1,4 +1,5 @@
 import React from "react";
+import { Formik } from "formik";
 
 const Login = () => {
   return (
@@ -15,34 +16,79 @@ const Login = () => {
                     </h3>
                   </div>
                   <div className="card-body">
-                    <form>
-                      <div className="form-floating mb-3">
-                        <input
-                          className="form-control"
-                          id="inputEmail"
-                          type="email"
-                          placeholder="name@example.com"
-                        />
-                        <label for="inputEmail">Email</label>
-                      </div>
-                      <div className="form-floating mb-3">
-                        <input
-                          className="form-control"
-                          id="inputPassword"
-                          type="password"
-                          placeholder="Password"
-                        />
-                        <label for="inputPassword">Password</label>
-                      </div>
-                      <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
-                        <a className="small" href="password.html">
-                          ¿ Has olvidado la contraseña ?
-                        </a>
-                        <a className="btn btn-primary" href="index.html">
-                          Login
-                        </a>
-                      </div>
-                    </form>
+                    {/* /* INICIO DE FORMULARIO */}
+                    <Formik
+                      initialValues={{
+                        email: "",
+                        password: "",
+                      }}
+                      validate={(valores) => {
+                        let errores = {};
+
+                        if (
+                          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
+                            valores.email
+                          )
+                        ) {
+                          errores.email = "El correo ingresado es invalido";
+                        }
+
+                        return errores;
+                      }}
+                      onSubmit={(valores, { resetForm }) => {
+                        resetForm();
+                        console.log(valores);
+                        console.log("Formulario enviado");
+                      }}
+                    >
+                      {({ values, handleSubmit, handleChange, errors }) => (
+                        <form className="formulario" onSubmit={handleSubmit}>
+                          <div className="form-floating mb-3">
+                            <input
+                              className="form-control"
+                              name="email"
+                              id="inputEmail"
+                              type="text"
+                              placeholder="name@example.com"
+                              value={values.email}
+                              onChange={handleChange}
+                              autoComplete="off"
+                            />
+                            {errors.email && (
+                              <div className="error" style={{ color: "red" }}>
+                                {errors.email}
+                              </div>
+                            )}
+                            <label htmlFor="inputEmail">Email</label>
+                          </div>
+                          <div className="form-floating mb-3">
+                            <input
+                              className="form-control"
+                              name="password"
+                              id="inputPassword"
+                              type="password"
+                              placeholder="Password"
+                              value={values.password}
+                              onChange={handleChange}
+                            />
+                            <label htmlFor="inputPassword">Password</label>
+                          </div>
+                          <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
+                            <a className="small" href="password.html">
+                              ¿ Has olvidado la contraseña ?
+                            </a>
+                            {/* <a className="btn btn-primary" href="index.html">
+                              Login
+                            </a> */}
+                            <button className="btn btn-primary" type="submit">
+                              {" "}
+                              Login
+                            </button>
+                          </div>
+                        </form>
+                      )}
+                    </Formik>
+                    {/* /* /**FINAL DE FORMULARIO */}
                   </div>
                   <div className="card-footer text-center py-3"></div>
                 </div>
