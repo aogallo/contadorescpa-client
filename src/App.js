@@ -21,8 +21,8 @@ function App() {
       <BrowserRouter>
         {isAuthenticated ? (
           <Routes>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/" element={<Login />}></Route>
+            <Route path="/login" index element={<Login />}></Route>
+            {/* <Route path="/" element={<Login />}></Route> */}
           </Routes>
         ) : (
           <>

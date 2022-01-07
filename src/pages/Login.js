@@ -25,12 +25,18 @@ const Login = () => {
                       validate={(valores) => {
                         let errores = {};
 
-                        if (
+                        if (!valores.email) {
+                          errores.email = "Por favor ingresa tu email";
+                        } else if (
                           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
                             valores.email
                           )
                         ) {
                           errores.email = "El correo ingresado es invalido";
+                        }
+
+                        if (!valores.password) {
+                          errores.password = " Por favor ingresa tu contraseña";
                         }
 
                         return errores;
@@ -41,7 +47,13 @@ const Login = () => {
                         console.log("Formulario enviado");
                       }}
                     >
-                      {({ values, handleSubmit, handleChange, errors }) => (
+                      {({
+                        values,
+                        touched,
+                        handleSubmit,
+                        handleChange,
+                        errors,
+                      }) => (
                         <form className="formulario" onSubmit={handleSubmit}>
                           <div className="form-floating mb-3">
                             <input
@@ -54,7 +66,7 @@ const Login = () => {
                               onChange={handleChange}
                               autoComplete="off"
                             />
-                            {errors.email && (
+                            {touched.email && errors.email && (
                               <div className="error" style={{ color: "red" }}>
                                 {errors.email}
                               </div>
@@ -71,6 +83,11 @@ const Login = () => {
                               value={values.password}
                               onChange={handleChange}
                             />
+                            {touched.password && errors.password && (
+                              <div className="error" style={{ color: "red" }}>
+                                {errors.password}
+                              </div>
+                            )}
                             <label htmlFor="inputPassword">Password</label>
                           </div>
                           <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
