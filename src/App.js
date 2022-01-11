@@ -15,7 +15,7 @@ import ProviderForm from "./components/ProviderForm";
 import AccountsPayable from "./pages/AccountsPayable";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   return (
     <div className="sb-nav-fixed">
       <BrowserRouter>
