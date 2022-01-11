@@ -78,8 +78,7 @@ const ClientForm = () => {
             <button
               type="button"
               className="btn btn-danger"
-              onClick={handleCancel}
-            >
+              onClick={handleCancel}>
               Cancelar
             </button>
           </div>
