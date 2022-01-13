@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const About = () => {
   return <div className="container-fluid px-4">Contadores publicos</div>;
