@@ -1,6 +1,45 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { LOGIN } from "../graphql/Login/mutations";
+
+import { AuthContext } from "../auth/AuthContext";
+import { types } from "../types/types";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [login, { loading, error, data }] = useMutation(LOGIN);
+  const { dispatch } = useContext(AuthContext);
+  const [user, setUser] = useState(null);
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      if (user) return;
+      await login({ variables: { username, password } });
+
+      if (data) {
+        console.log(`data hook`, data);
+        const user = {
+          token: data.login.token,
+          ...data.login.user,
+        };
+
+        dispatch({
+          type: types.login,
+          payload: user,
+        });
+
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(`error`, error);
+    }
+  };
+
   return (
     <div id="layoutAuthentication">
       <div id="layoutAuthentication_content">
@@ -21,6 +60,8 @@ const Login = () => {
                           className="form-control"
                           id="inputEmail"
                           type="email"
+                          value={username}
+                          onChange={({ target }) => setUsername(target.value)}
                           placeholder="name@example.com"
                         />
                         <label for="inputEmail">Email</label>
@@ -29,6 +70,8 @@ const Login = () => {
                         <input
                           className="form-control"
                           id="inputPassword"
+                          value={password}
+                          onChange={({ target }) => setPassword(target.value)}
                           type="password"
                           placeholder="Password"
                         />
@@ -38,7 +81,7 @@ const Login = () => {
                         <a className="small" href="password.html">
                           ¿ Has olvidado la contraseña ?
                         </a>
-                        <a className="btn btn-primary" href="index.html">
+                        <a className="btn btn-primary" onClick={handleLogin}>
                           Login
                         </a>
                       </div>

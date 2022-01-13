@@ -5945,7 +5945,7 @@ fieldset:disabled .btn {
   word-wrap: break-word;
 }
 
-.modal {
+/* .modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -5956,6 +5956,7 @@ fieldset:disabled .btn {
   overflow-x: hidden;
   overflow-y: auto;
   outline: 0;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .modal-dialog {
@@ -6226,7 +6227,7 @@ fieldset:disabled .btn {
   .modal-fullscreen-xxl-down .modal-footer {
     border-radius: 0;
   }
-}
+} */
 .tooltip {
   position: absolute;
   z-index: 1080;

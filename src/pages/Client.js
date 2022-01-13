@@ -3,6 +3,8 @@ import { Outlet } from "react-router-dom";
 import Title from "../components/Title";
 
 const Client = () => {
+  // if (loading) return <>Loading.....</>;
+
   const [breadCrumb, setBreadCrumb] = useState([
     {
       name: "Inicio",

@@ -1,14 +1,60 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import * as bootstrap from "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  HttpLink,
+  from,
+} from "@apollo/client";
+import { onError } from "@apollo/client/link/error";
+import App from "./App";
+
+const errorLink = onError(({ graphqlErrors, networkError }) => {
+  if (graphqlErrors) {
+    graphqlErrors.map(({ message, location, path }) => {
+      alert(`graphql error ${message}`);
+    });
+  }
+});
+
+const {
+  REACT_APP_GRAPQHL_API_DEVELOPMENT,
+  REACT_APP_GRAPQHL_API_PRODUCTION,
+  NODE_ENV,
+} = process.env;
+
+console.log(
+  `graphql_api`,
+  NODE_ENV === "development"
+    ? REACT_APP_GRAPQHL_API_DEVELOPMENT
+    : REACT_APP_GRAPQHL_API_PRODUCTION
+);
+
+const link = from([
+  errorLink,
+  new HttpLink({
+    uri: "http://localhost:3000/dev/graphql",
+  }),
+]);
+
+// uri:
+//   NODE_ENV === "development"
+//     ? REACT_APP_GRAPQHL_API_DEVELOPMENT
+//     : REACT_APP_GRAPQHL_API_PRODUCTION,
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link,
+});
 
 ReactDOM.render(
-  <React.StrictMode>
+  <ApolloProvider client={client}>
     <App />
-  </React.StrictMode>,
+  </ApolloProvider>,
   document.getElementById("root")
 );
 

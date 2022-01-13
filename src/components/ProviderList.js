@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { GET_ALL_PROVIDERS } from "../graphql/Provider/queries";
 
 const ProviderList = ({ title }) => {
+  const { loading, error, data } = useQuery(GET_ALL_PROVIDERS);
+  const [providers, setProviders] = useState([]);
+
+  useEffect(() => {
+    if (data) setProviders(data.getAllProviders);
+  }, [data]);
+
   return (
     <section className="card mb-4">
       <section className="card-header d-flex justify-content-between">
@@ -26,53 +35,23 @@ const ProviderList = ({ title }) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Tiger Nixon</td>
-              <td>System Architect</td>
-              <td>Edinburgh</td>
-              <td>61</td>
-              <td>2011/04/25</td>
-              <td className="col-sm-2">
-                <button type="button" className="btn btn-primary">
-                  Editar
-                </button>
-                <button type="button" className="btn btn-danger">
-                  Eliminar
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Garrett Winters</td>
-              <td>Accountant</td>
-              <td>Tokyo</td>
-              <td>63</td>
-              <td>2011/07/25</td>
-              <td>$170,750</td>
-            </tr>
-            <tr>
-              <td>Ashton Cox</td>
-              <td>Junior Technical Author</td>
-              <td>San Francisco</td>
-              <td>66</td>
-              <td>2009/01/12</td>
-              <td>$86,000</td>
-            </tr>
-            <tr>
-              <td>Cedric Kelly</td>
-              <td>Senior Javascript Developer</td>
-              <td>Edinburgh</td>
-              <td>22</td>
-              <td>2012/03/29</td>
-              <td>$433,060</td>
-            </tr>
-            <tr>
-              <td>Airi Satou</td>
-              <td>Accountant</td>
-              <td>Tokyo</td>
-              <td>33</td>
-              <td>2008/11/28</td>
-              <td>$162,700</td>
-            </tr>
+            {providers.map((provider) => (
+              <tr key={provider.id}>
+                <td>{provider.name}</td>
+                <td>{provider.nit}</td>
+                <td>{provider.email}</td>
+                <td>61</td>
+                <td></td>
+                <td className="col-sm-2">
+                  <button type="button" className="btn btn-primary btn-sm">
+                    Editar
+                  </button>
+                  <button type="button" className="btn btn-danger btn-sm">
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </section>
