@@ -1,29 +1,43 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "../graphql/Login/mutations";
 
-import { AuthContext } from "../auth/AuthContext";
+import { AppContext } from "../context/AppContext";
 import { types } from "../types/types";
-import { Formik } from "formik";
+import { Formik, Form } from "formik";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [login, { loading, error, data }] = useMutation(LOGIN);
-  const { dispatch } = useContext(AuthContext);
+  const [login, { data }] = useMutation(LOGIN);
+  const [messageError, setMessageError] = useState("");
+  const { dispatch } = useContext(AppContext);
   const [user, setUser] = useState(null);
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const initialValues = { username: "", password: "" };
 
-  const handleLogin = async () => {
+  const validateFields = (valores) => {
+    let errores = {};
+
+    if (!valores.username) {
+      errores.username = "Por favor ingresa su usuario";
+    }
+
+    if (!valores.password) {
+      errores.password = " Por favor ingresa tu contraseña";
+    }
+
+    return errores;
+  };
+
+  const handleLogin = async (valores, { resetForm }) => {
     try {
-      if (user) return;
-      await login({ variables: { username, password } });
+      await login({
+        variables: { username: valores.username, password: valores.password },
+      });
 
       if (data) {
-        console.log(`data hook`, data);
         const user = {
           token: data.login.token,
           ...data.login.user,
@@ -33,10 +47,14 @@ const Login = () => {
           type: types.login,
           payload: user,
         });
-
+        resetForm();
         navigate("/");
       }
     } catch (error) {
+      setMessageError(error.message);
+      setTimeout(() => {
+        setMessageError("");
+      }, 5000);
       console.log(`error`, error);
     }
   };
@@ -51,65 +69,41 @@ const Login = () => {
                 <div className="card shadow-lg border-0 rounded-lg mt-5">
                   <div className="card-header">
                     <h3 className="text-center  font-weight-light my-4">
-                      Login
+                      Ingresar
                     </h3>
                   </div>
                   <div className="card-body">
                     {/* /* INICIO DE FORMULARIO */}
                     <Formik
-                      initialValues={{
-                        email: "",
-                        password: "",
-                      }}
-                      validate={(valores) => {
-                        let errores = {};
-
-                        if (!valores.email) {
-                          errores.email = "Por favor ingresa tu email";
-                        } else if (
-                          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
-                            valores.email
-                          )
-                        ) {
-                          errores.email = "El correo ingresado es invalido";
-                        }
-
-                        if (!valores.password) {
-                          errores.password = " Por favor ingresa tu contraseña";
-                        }
-
-                        return errores;
-                      }}
-                      onSubmit={(valores, { resetForm }) => {
-                        resetForm();
-                        console.log(valores);
-                        console.log("Formulario enviado");
-                      }}>
+                      initialValues={initialValues}
+                      validate={validateFields}
+                      onSubmit={handleLogin}>
                       {({
                         values,
                         touched,
-                        handleSubmit,
                         handleChange,
+                        handleBlur,
                         errors,
                       }) => (
-                        <form className="formulario" onSubmit={handleSubmit}>
+                        <Form className="formulario">
                           <div className="form-floating mb-3">
                             <input
                               className="form-control"
-                              name="email"
+                              name="username"
                               id="inputEmail"
                               type="text"
-                              placeholder="name@example.com"
-                              value={values.email}
+                              placeholder="Usuario"
+                              value={values.username}
                               onChange={handleChange}
+                              onBlur={handleBlur}
                               autoComplete="off"
                             />
-                            {touched.email && errors.email && (
+                            {touched.username && errors.username && (
                               <div className="error" style={{ color: "red" }}>
-                                {errors.email}
+                                {errors.username}
                               </div>
                             )}
-                            <label htmlFor="inputEmail">Email</label>
+                            <label htmlFor="inputEmail">Usuario</label>
                           </div>
                           <div className="form-floating mb-3">
                             <input
@@ -119,6 +113,7 @@ const Login = () => {
                               type="password"
                               placeholder="Password"
                               value={values.password}
+                              onBlur={handleBlur}
                               onChange={handleChange}
                             />
                             {touched.password && errors.password && (
@@ -136,16 +131,19 @@ const Login = () => {
                               Login
                             </a> */}
                             <button className="btn btn-primary" type="submit">
-                              {" "}
                               Login
                             </button>
                           </div>
-                        </form>
+                        </Form>
                       )}
                     </Formik>
                     {/* /* /**FINAL DE FORMULARIO */}
                   </div>
-                  <div className="card-footer text-center py-3"></div>
+                  <div className="card-footer text-center py-3">
+                    {messageError ? (
+                      <p style={{ color: "red" }}>{messageError}</p>
+                    ) : null}
+                  </div>
                 </div>
               </div>
             </div>

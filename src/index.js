@@ -11,15 +11,8 @@ import {
   from,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
+import { setContext } from "@apollo/client/link/context";
 import App from "./App";
-
-const errorLink = onError(({ graphqlErrors, networkError }) => {
-  if (graphqlErrors) {
-    graphqlErrors.map(({ message, location, path }) => {
-      alert(`graphql error ${message}`);
-    });
-  }
-});
 
 const {
   REACT_APP_GRAPQHL_API_DEVELOPMENT,
@@ -27,24 +20,36 @@ const {
   NODE_ENV,
 } = process.env;
 
-console.log(
-  `graphql_api`,
-  NODE_ENV === "development"
-    ? REACT_APP_GRAPQHL_API_DEVELOPMENT
-    : REACT_APP_GRAPQHL_API_PRODUCTION
-);
+const errorLink = onError(({ graphqlErrors, networkError }) => {
+  if (graphqlErrors) {
+    graphqlErrors.map(({ message, location, path }) => {
+      console.error(`graphql error ${message}`);
+    });
+  }
+});
+
+const authLink = setContext((_, { headers }) => {
+  const { token } = JSON.parse(localStorage.getItem("user"));
+
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
 
 const link = from([
   errorLink,
-  new HttpLink({
-    uri: "http://localhost:3000/dev/graphql",
-  }),
+  authLink.concat(
+    new HttpLink({
+      uri:
+        NODE_ENV === "development"
+          ? REACT_APP_GRAPQHL_API_DEVELOPMENT
+          : REACT_APP_GRAPQHL_API_PRODUCTION,
+    })
+  ),
 ]);
-
-// uri:
-//   NODE_ENV === "development"
-//     ? REACT_APP_GRAPQHL_API_DEVELOPMENT
-//     : REACT_APP_GRAPQHL_API_PRODUCTION,
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),

@@ -5055,6 +5055,10 @@ fieldset:disabled .btn {
   }
 }
 
+.card-custom {
+  cursor: pointer;
+}
+
 .accordion-button {
   position: relative;
   display: flex;

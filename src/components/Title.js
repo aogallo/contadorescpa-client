@@ -8,7 +8,6 @@ const Title = ({ title, breadCrumb }) => {
       <ol className="breadcrumb mb-4">
         {breadCrumb
           ? breadCrumb.map((b) => {
-              console.log(`b`, b);
               return (
                 <li className="breadcrumb-item" key={b.name}>
                   <Link className="active" to={b.path}>
