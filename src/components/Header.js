@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
+import { types } from "../types/types";
 
 const Header = () => {
+  const { company, dispatch } = useContext(AppContext);
+  const handleLogout = () => {
+    dispatch({
+      type: types.logout,
+    });
+  };
+
   return (
     <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
       {/* <!-- Navbar Brand--> */}
@@ -16,7 +25,10 @@ const Header = () => {
         <i className="fas fa-bars"></i>
       </button>
       {/* <!-- Navbar Search--> */}
-      <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+      <div className="navbar-nav btn-dark ms-auto">
+        Compañia: {company.name}
+      </div>
+      {/* <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
         <div className="input-group">
           <input
             className="form-control"
@@ -32,7 +44,7 @@ const Header = () => {
             <i className="fas fa-search"></i>
           </button>
         </div>
-      </form>
+      </form> */}
       {/* <!-- Navbar--> */}
       <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li className="nav-item dropdown">
@@ -50,20 +62,15 @@ const Header = () => {
             aria-labelledby="navbarDropdown">
             <li>
               <a className="dropdown-item" href="#!">
-                Settings
-              </a>
-            </li>
-            <li>
-              <a className="dropdown-item" href="#!">
-                Activity Log
+                Configuraciones
               </a>
             </li>
             <li>
               <hr className="dropdown-divider" />
             </li>
             <li>
-              <a className="dropdown-item" href="#!">
-                Logout
+              <a className="dropdown-item" href="#!" onClick={handleLogout}>
+                Salir
               </a>
             </li>
           </ul>

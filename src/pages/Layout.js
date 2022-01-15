@@ -13,6 +13,7 @@ import About from "../pages/About";
 import ProviderList from "../components/ProviderList";
 import ProviderForm from "../components/ProviderForm";
 import AccountsPayable from "../pages/AccountsPayable";
+import Home from "./Home";
 
 const Layout = () => {
   return (
@@ -23,6 +24,7 @@ const Layout = () => {
         <div id="layoutSidenav_content">
           <Routes>
             <Route path="/" element={<About />}></Route>
+            <Route path="/home" element={<Home />} />
             <Route path="/client" element={<Client />}>
               <Route
                 path=""

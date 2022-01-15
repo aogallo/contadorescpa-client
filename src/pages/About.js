@@ -3,11 +3,12 @@ import { useQuery } from "@apollo/client";
 import { GET_ALL_COMPANIES } from "../graphql/Company/queries";
 import { AppContext } from "../context/AppContext";
 import Title from "../components/Title";
-import Search from "../components/Search";
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
-  const { errors, data } = useQuery(GET_ALL_COMPANIES);
-  const { company, saveCompany } = useContext(AppContext);
+  const { data } = useQuery(GET_ALL_COMPANIES);
+  const navigate = useNavigate();
+  const { saveCompany } = useContext(AppContext);
   const [companies, setCompanies] = useState([]);
   const [filterCompanies, setFilterCompanies] = useState([]);
   const [search, setSearch] = useState("");
@@ -21,7 +22,6 @@ const About = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(`data`, data);
       setCompanies(data.getAllCompanies);
       setFilterCompanies(data.getAllCompanies);
     }
@@ -48,7 +48,11 @@ const About = () => {
   };
 
   const handleSelectCompany = (company) => {
-    console.log(`company`, company);
+    saveCompany({
+      id: company.id,
+      name: company.name,
+    });
+    navigate("/home");
   };
 
   return (

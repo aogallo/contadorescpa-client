@@ -8,6 +8,14 @@ export const GET_ALL_PROVIDERS = gql`
       address
       email
       phone
+      creditDay
+      company {
+        id
+        name
+        nit
+        dateBirth
+        comercialActivity
+      }
     }
   }
 `;

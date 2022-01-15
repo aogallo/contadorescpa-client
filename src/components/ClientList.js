@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_CLIENTS } from "../graphql/Client/queries";
-import CustomModal from "./Modal";
+import CustomModal from "./Modal/CustomModal";
 
 const ClientList = ({ title }) => {
   const { loading, error, data } = useQuery(GET_ALL_CLIENTS);

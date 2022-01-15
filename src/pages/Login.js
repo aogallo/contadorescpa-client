@@ -13,7 +13,6 @@ const Login = () => {
   const [login, { data }] = useMutation(LOGIN);
   const [messageError, setMessageError] = useState("");
   const { dispatch } = useContext(AppContext);
-  const [user, setUser] = useState(null);
 
   const initialValues = { username: "", password: "" };
 
@@ -25,7 +24,7 @@ const Login = () => {
     }
 
     if (!valores.password) {
-      errores.password = " Por favor ingresa tu contraseña";
+      errores.password = "Por favor ingresa tu contraseña";
     }
 
     return errores;

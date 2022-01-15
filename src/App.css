@@ -12225,3 +12225,15 @@ body {
   font-size: 0.75rem;
   border-radius: 0.25rem !important;
 }
+
+.message {
+  margin: 2rem auto;
+}
+
+.message .message-succes{
+  color: var(--bs-green)
+}
+
+.message .message-error{
+  color: var(--bs-red)
+}
