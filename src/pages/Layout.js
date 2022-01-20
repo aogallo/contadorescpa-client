@@ -31,6 +31,7 @@ const Layout = () => {
                 element={<ClientList title="Listado de clientes" />}
               />
               <Route path="add" element={<ClientForm />} />
+              <Route path="edit/:id" element={<ClientForm />} />
             </Route>
             <Route path="/provider" element={<Provider />}>
               <Route
@@ -38,6 +39,7 @@ const Layout = () => {
                 element={<ProviderList title="Listado de proveedores" />}
               />
               <Route path="add" element={<ProviderForm />} />
+              <Route path="edit/:id" element={<ProviderForm />} />
             </Route>
             <Route path="/cxp" element={<AccountsPayable />}></Route>
             <Route path="*" element={<Error404 />} />

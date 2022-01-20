@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_ALL_PROVIDERS } from "../graphql/Provider/queries";
 import { DELETE_PROVIDER } from "../graphql/Provider/mutations";
@@ -7,9 +7,7 @@ import CustomModal from "./Modal/CustomModal";
 
 const ProviderList = ({ title }) => {
   const { loading, refetch, data } = useQuery(GET_ALL_PROVIDERS);
-  const [deleteProviderById, { data: deleteProvider }] = useMutation(
-    DELETE_PROVIDER
-  );
+  const [deleteProviderById] = useMutation(DELETE_PROVIDER);
   const [providers, setProviders] = useState([]);
   const [providerDelete, setProviderDelete] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -83,9 +81,11 @@ const ProviderList = ({ title }) => {
                   <td>61</td>
                   <td></td>
                   <td className="col-sm-2">
-                    <button type="button" className="btn btn-primary btn-sm">
+                    <NavLink
+                      to={`/provider/edit/${provider.id}`}
+                      className="btn btn-primary btn-sm">
                       Editar
-                    </button>
+                    </NavLink>
                     <button
                       type="button"
                       onClick={() => handleShowModal(provider)}

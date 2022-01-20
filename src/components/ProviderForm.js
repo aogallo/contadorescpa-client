@@ -1,26 +1,35 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Formik, Form, Field } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import { useMutation } from "@apollo/client";
+
+import { GET_ALL_PROVIDERS } from "../graphql/Provider/queries";
 import { CREATE_PROVIDER } from "../graphql/Provider/mutations";
 
 const ProviderForm = () => {
   const navigate = useNavigate();
+  const params = useParams();
   const { company } = useContext(AppContext);
   const [message, setMessage] = useState(null);
-  const [createProvider, { data }] = useMutation(CREATE_PROVIDER);
-  const providerValues = {
+  const [createProvider] = useMutation(CREATE_PROVIDER);
+  const [isEditing, setIsEditing] = useState(false);
+  const [providerValues, setProviderValues] = useState({
     name: "",
     nit: "",
     address: "",
     email: "",
     phone: "",
     creditDay: "",
-  };
+  });
 
   useEffect(() => {
     if (!company.name) navigate("/");
+
+    if (params.id) {
+      setIsEditing(true);
+      getClientById({ variables: { id: params.id } });
+    }
   }, []);
 
   const handleCancel = (e) => {
@@ -36,6 +45,14 @@ const ProviderForm = () => {
     }
     if (!values.nit) {
       errors.nit = "Por favor ingrese el NIT";
+    }
+
+    if (!values.email) {
+      errors.email = "Por favor ingresa una dirección de correo eletrónico";
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+      errors.email = "El correo ingresado es invalido";
     }
     // if (!values.address) {
     //   errors.address = "Por favor ingrese el dirección";
@@ -67,6 +84,7 @@ const ProviderForm = () => {
             idCompany: company.id,
           },
         },
+        refetchQueries: [{ query: GET_ALL_PROVIDERS }],
       });
 
       setMessage({ error: false, message: "Proveedor creado correctamente" });
@@ -163,6 +181,11 @@ const ProviderForm = () => {
                         className="form-control"
                       />
                     </div>
+                    {touched.email && errors.email && (
+                      <div className="error" style={{ color: "red" }}>
+                        {errors.email}
+                      </div>
+                    )}
                   </div>
 
                   {/* Phone */}

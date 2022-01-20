@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useQuery } from "@apollo/client";
-import { GET_ALL_CLIENTS } from "../graphql/Client/queries";
+import { Link, NavLink } from "react-router-dom";
+import { useMutation, useQuery } from "@apollo/client";
+
 import CustomModal from "./Modal/CustomModal";
 
+import { GET_ALL_CLIENTS } from "../graphql/Client/queries";
+import { DELETE_CLIENT } from "../graphql/Client/mutations";
+
 const ClientList = ({ title }) => {
-  const { loading, error, data } = useQuery(GET_ALL_CLIENTS);
+  const { refetch, error, data } = useQuery(GET_ALL_CLIENTS);
+  const [deleteClientById] = useMutation(DELETE_CLIENT);
   const [clients, setClients] = useState([]);
+  const [clientDelete, setClientDelete] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (data) setClients(data.getAllClients);
@@ -17,11 +23,27 @@ const ClientList = ({ title }) => {
     setShowModal(false);
   };
 
-  const handleShowModal = () => {
+  const handleShowModal = (client) => {
+    setClientDelete(client);
     setShowModal(true);
   };
 
-  const handleAction = () => {};
+  const handleAction = async () => {
+    try {
+      await deleteClientById({
+        variables: { id: clientDelete.id },
+      });
+
+      setMessage({ error: false, message: "Cliente eliminado" });
+      setTimeout(() => {
+        setShowModal(false);
+        setMessage("");
+        refetch();
+      }, 1500);
+    } catch (error) {
+      setMessage({ error: true, message: error.message });
+    }
+  };
 
   return (
     <>
@@ -41,9 +63,9 @@ const ClientList = ({ title }) => {
               <tr>
                 <th>Nombre</th>
                 <th>NIT</th>
+                <th>Dirección</th>
                 <th>Correo</th>
-                <th>Contacto</th>
-                <th>Producto de interes</th>
+                <th>Teléfono</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -52,19 +74,19 @@ const ClientList = ({ title }) => {
                 <tr key={client.id}>
                   <td>{client.name}</td>
                   <td>{client.nit}</td>
+                  <td>{client.address}</td>
                   <td>{client.email}</td>
-                  <td>61</td>
-                  <td></td>
+                  <td>{client.phone}</td>
                   <td className="col-sm-2">
-                    <button
+                    <NavLink
                       type="button"
-                      onClick={() => console.log("editar")}
+                      to={`/client/edit/${client.id}`}
                       className="btn btn-primary btn-sm">
                       Editar
-                    </button>
+                    </NavLink>
                     <button
                       type="button"
-                      onClick={handleShowModal}
+                      onClick={() => handleShowModal(client)}
                       className="btn btn-danger btn-sm">
                       Eliminar
                     </button>
@@ -78,10 +100,9 @@ const ClientList = ({ title }) => {
       {showModal && (
         <CustomModal
           title="cliente"
+          message={message}
           handleAction={handleAction}
-          handleClose={handleClose}>
-          Hola
-        </CustomModal>
+          handleClose={handleClose}></CustomModal>
       )}
     </>
   );

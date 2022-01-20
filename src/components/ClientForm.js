@@ -1,13 +1,146 @@
+import React, { useContext, useEffect, useState } from "react";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import { Formik } from "formik";
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
+
+import { GET_ALL_CLIENTS, GET_CLIENT_BY_ID } from "../graphql/Client/queries";
+import { CREATE_CLIENT, UPDATE_CLIENT } from "../graphql/Client/mutations";
 
 const ClientForm = () => {
   const navigate = useNavigate();
+  const params = useParams();
+  const [createClient, { reset }] = useMutation(CREATE_CLIENT);
+  const [updateClient] = useMutation(UPDATE_CLIENT);
+  const [getClientById, { data }] = useLazyQuery(GET_CLIENT_BY_ID);
+
+  const { company } = useContext(AppContext);
+  const [message, setMessage] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [clientValues, setClientValues] = useState({
+    id: 0,
+    name: "",
+    nit: "",
+    address: "",
+    email: "",
+    phone: "",
+  });
+
+  useEffect(() => {
+    if (!company.name) navigate("/");
+
+    if (params.id) {
+      setIsEditing(true);
+      getClientById({ variables: { id: params.id } });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      setClientValues({
+        id: data.getClientById.id,
+        name: data.getClientById.name,
+        nit: data.getClientById.nit,
+        address: data.getClientById.address,
+        email: data.getClientById.email,
+        phone: data.getClientById.phone,
+      });
+    }
+  }, [data]);
+
+  const validateFields = (values) => {
+    let errors = {};
+
+    if (!values.name) {
+      errors.name = " Por favor ingresa tu nombre";
+    } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.name)) {
+      errors.name = " El nombre solo puede contener letras y espacios";
+    }
+
+    if (!values.nit) {
+      errors.nit = " Por favor ingresa el número de NIT";
+    }
+
+    if (!values.address) {
+      errors.address = " Por favor ingresa una dirección válida ";
+    }
+
+    if (!values.email) {
+      errors.email = "Por favor ingresa una dirección de correo eletrónico";
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+      errors.email = "El correo ingresado es invalido";
+    }
+
+    if (!values.phone) {
+      errors.phone = " Por favor ingresa un número de teléfono ";
+    } else if (!/^\d*$/.test(values.phone)) {
+      errors.phone = " El número de teléfono es invalido";
+    }
+
+    return errors;
+  };
+
   const handleCancel = (e) => {
     e.preventDefault();
     navigate(-1);
   };
+
+  const handleCreateClient = async (values, { resetForm }) => {
+    try {
+      if (isEditing) {
+        await updateClient({
+          variables: {
+            client: {
+              id: values.id,
+              name: values.name,
+              nit: values.nit,
+              address: values.address,
+              email: values.email,
+              phone: values.phone,
+              idCompany: company.id,
+            },
+          },
+          refetchQueries: [{ query: GET_ALL_CLIENTS }],
+        });
+      } else {
+        await createClient({
+          variables: {
+            client: {
+              id: 0,
+              name: values.name,
+              nit: values.nit,
+              address: values.address,
+              email: values.email,
+              phone: values.phone,
+              idCompany: company.id,
+            },
+          },
+          awaitRefetchQueries: true,
+          refetchQueries: [{ query: GET_ALL_CLIENTS }],
+        });
+      }
+
+      setMessage({
+        error: false,
+        message: `Cliente ${
+          isEditing ? "actualizado" : "creado"
+        } correctamente`,
+      });
+      setTimeout(() => {
+        setMessage(null);
+        navigate(-1);
+        resetForm();
+        reset();
+      }, 1500);
+    } catch (error) {
+      reset();
+      setMessage({ error: true, message: error.message });
+      console.log(error);
+    }
+  };
+
   return (
     <div className="container-fluid px-4">
       <div className="col-sm-12">
@@ -16,62 +149,16 @@ const ClientForm = () => {
             <button onClick={handleCancel} className="btn">
               <i className="fas fa-arrow-left"></i>
             </button>
-            Agregar Cliente
+            {isEditing ? "Editar" : "Agregar"} Cliente
           </div>
           <div className="card-body">
             {/* INICIO DE FORMULARIO */}
 
             <Formik
-              initialValues={{
-                nombre: "",
-                nit: "",
-                address: "",
-                email: "",
-                phone: "",
-              }}
-              validate={(valores) => {
-                let errores = {};
-
-                if (!valores.nombre) {
-                  errores.nombre = " Por favor ingresa tu nombre";
-                } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.nombre)) {
-                  errores.nombre =
-                    " El nombre solo puede contener letras y espacios";
-                }
-
-                if (!valores.nit) {
-                  errores.nit = " Por favor ingresa el número de NIT";
-                }
-
-                if (!valores.address) {
-                  errores.address = " Por favor ingresa una dirección válida ";
-                }
-
-                if (!valores.email) {
-                  errores.email =
-                    "Por favor ingresa una dirección de correo eletrónico";
-                } else if (
-                  !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
-                    valores.email
-                  )
-                ) {
-                  errores.email = "El correo ingresado es invalido";
-                }
-
-                if (!valores.phone) {
-                  errores.phone = " Por favor ingresa un número de teléfono ";
-                } else if (!/^\d*$/.test(valores.phone)) {
-                  errores.phone = " El número de teléfono es invalido";
-                }
-
-                return errores;
-              }}
-              onSubmit={(valores, { resetForm }) => {
-                resetForm();
-                console.log(valores);
-                console.log("Formulario enviado");
-              }}
-            >
+              enableReinitialize
+              initialValues={clientValues}
+              validate={validateFields}
+              onSubmit={handleCreateClient}>
               {({
                 values,
                 touched,
@@ -89,17 +176,17 @@ const ClientForm = () => {
                     <div className="col-sm-10">
                       <input
                         className="form-control"
-                        name="nombre"
-                        id="inputNombre"
+                        name="name"
+                        id="name"
                         type="text"
-                        value={values.nombre}
+                        value={values.name}
                         onChange={handleChange}
                         autoComplete="off"
                         onBlur={handleBlur}
                       />
-                      {touched.nombre && errors.nombre && (
+                      {touched.name && errors.name && (
                         <div className="error" style={{ color: "red" }}>
-                          {errors.nombre}
+                          {errors.name}
                         </div>
                       )}
                     </div>
@@ -114,7 +201,7 @@ const ClientForm = () => {
                       <input
                         className="form-control"
                         name="nit"
-                        id="inputNit"
+                        id="nit"
                         type="text"
                         value={values.nit}
                         onChange={handleChange}
@@ -161,7 +248,7 @@ const ClientForm = () => {
                       <input
                         className="form-control"
                         name="email"
-                        id="inputEmail"
+                        id="email"
                         type="text"
                         placeholder="name@example.com"
                         value={values.email}
@@ -186,7 +273,7 @@ const ClientForm = () => {
                       <input
                         className="form-control"
                         name="phone"
-                        id="inputphone"
+                        id="phne"
                         type="text"
                         value={values.phone}
                         onChange={handleChange}
@@ -200,16 +287,25 @@ const ClientForm = () => {
                       )}
                     </div>
                   </div>
-                  <div className="card-footer">
+
+                  {/* Message */}
+                  {message && (
+                    <div
+                      className={`message ${
+                        message.error ? "message-error" : "message-success"
+                      }`}>
+                      {message.message}
+                    </div>
+                  )}
+
+                  <div className="">
                     <button type="submit" className="btn btn-primary">
-                      {""}
                       Guardar
                     </button>
                     <button
                       type="button"
                       className="btn btn-danger"
-                      onClick={handleCancel}
-                    >
+                      onClick={handleCancel}>
                       Cancelar
                     </button>
                   </div>
@@ -217,18 +313,6 @@ const ClientForm = () => {
               )}
             </Formik>
           </div>
-
-          {/* <div className="card-footer">
-            <button type="submit" className="btn btn-primary">
-              Guardar
-            </button>
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={handleCancel}>
-              Cancelar
-            </button>
-          </div> */}
         </div>
       </div>
     </div>
