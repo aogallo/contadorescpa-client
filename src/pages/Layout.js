@@ -14,6 +14,8 @@ import ProviderList from "../components/ProviderList";
 import ProviderForm from "../components/ProviderForm";
 import AccountsPayable from "../pages/AccountsPayable";
 import Home from "./Home";
+import AccountPayableForm from "../components/AccountPayableForm";
+import AccountPayableList from "../components/AccountPayableList";
 
 const Layout = () => {
   return (
@@ -41,7 +43,16 @@ const Layout = () => {
               <Route path="add" element={<ProviderForm />} />
               <Route path="edit/:id" element={<ProviderForm />} />
             </Route>
-            <Route path="/cxp" element={<AccountsPayable />}></Route>
+            <Route path="/cxp" element={<AccountsPayable />}>
+              <Route
+                path=""
+                element={
+                  <AccountPayableList title="Listado de cuentas por pagar" />
+                }
+              />
+              <Route path="add" element={<AccountPayableForm />} />
+              <Route path="edit/:id" element={<AccountPayableForm />} />
+            </Route>
             <Route path="*" element={<Error404 />} />
           </Routes>
         </div>

@@ -19,3 +19,24 @@ export const GET_ALL_PROVIDERS = gql`
     }
   }
 `;
+
+export const GET_PROVIDER_BY_ID = gql`
+  query Query($id: ID) {
+    getProviderById(id: $id) {
+      id
+      name
+      nit
+      address
+      email
+      phone
+      creditDay
+      company {
+        id
+        name
+        nit
+        dateBirth
+        comercialActivity
+      }
+    }
+  }
+`;

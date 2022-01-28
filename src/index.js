@@ -47,6 +47,10 @@ const link = from([
         NODE_ENV === "development"
           ? REACT_APP_GRAPQHL_API_DEVELOPMENT
           : REACT_APP_GRAPQHL_API_PRODUCTION,
+      credentials: "same-origin",
+      fetchOptions: {
+        mode: "cors",
+      },
     })
   ),
 ]);

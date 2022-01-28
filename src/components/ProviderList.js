@@ -62,8 +62,8 @@ const ProviderList = ({ title }) => {
               <th>Nombre</th>
               <th>NIT</th>
               <th>Correo</th>
-              <th>Contacto</th>
-              <th>Producto de interes</th>
+              <th>Dirección</th>
+              <th>Teléfono</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -78,8 +78,8 @@ const ProviderList = ({ title }) => {
                   <td>{provider.name}</td>
                   <td>{provider.nit}</td>
                   <td>{provider.email}</td>
-                  <td>61</td>
-                  <td></td>
+                  <td>{provider.address}</td>
+                  <td>{provider.phone}</td>
                   <td className="col-sm-2">
                     <NavLink
                       to={`/provider/edit/${provider.id}`}

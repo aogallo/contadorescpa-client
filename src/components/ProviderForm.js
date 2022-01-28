@@ -1,11 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { AppContext } from "../context/AppContext";
-import { useMutation } from "@apollo/client";
 
-import { GET_ALL_PROVIDERS } from "../graphql/Provider/queries";
-import { CREATE_PROVIDER } from "../graphql/Provider/mutations";
+import {
+  GET_ALL_PROVIDERS,
+  GET_PROVIDER_BY_ID,
+} from "../graphql/Provider/queries";
+import {
+  CREATE_PROVIDER,
+  UPDATE_PROVIDER,
+} from "../graphql/Provider/mutations";
 
 const ProviderForm = () => {
   const navigate = useNavigate();
@@ -13,8 +19,11 @@ const ProviderForm = () => {
   const { company } = useContext(AppContext);
   const [message, setMessage] = useState(null);
   const [createProvider] = useMutation(CREATE_PROVIDER);
+  const [updateProvider] = useMutation(UPDATE_PROVIDER);
   const [isEditing, setIsEditing] = useState(false);
+  const [getProviderById, { data }] = useLazyQuery(GET_PROVIDER_BY_ID);
   const [providerValues, setProviderValues] = useState({
+    id: 0,
     name: "",
     nit: "",
     address: "",
@@ -28,9 +37,23 @@ const ProviderForm = () => {
 
     if (params.id) {
       setIsEditing(true);
-      getClientById({ variables: { id: params.id } });
+      getProviderById({ variables: { id: params.id } });
     }
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      setProviderValues({
+        id: data.getProviderById.id,
+        name: data.getProviderById.name,
+        nit: data.getProviderById.nit,
+        address: data.getProviderById.address,
+        email: data.getProviderById.email,
+        phone: data.getProviderById.phone,
+        creditDay: data.getProviderById.creditDay,
+      });
+    }
+  }, [data]);
 
   const handleCancel = (e) => {
     e.preventDefault();
@@ -54,42 +77,54 @@ const ProviderForm = () => {
     ) {
       errors.email = "El correo ingresado es invalido";
     }
-    // if (!values.address) {
-    //   errors.address = "Por favor ingrese el dirección";
-    // }
-    // if (!values.email) {
-    //   errors.email = "Por favor ingrese correo electrónico";
-    // }
-    // if (!values.phone) {
-    //   errors.phone = "Por favor ingrese teléfono";
-    // }
-    // if (!values.creditDay) {
-    //   errors.creditDay = "Por favor ingrese los días de credito";
-    // }
 
     return errors;
   };
 
   const handleCreateProvider = async (values, { resetForm }) => {
     try {
-      await createProvider({
-        variables: {
-          provider: {
-            name: values.name,
-            nit: values.nit,
-            address: values.address,
-            email: values.email,
-            phone: values.phone,
-            creditDay: Number(values.creditDay),
-            idCompany: company.id,
+      if (isEditing) {
+        await updateProvider({
+          variables: {
+            provider: {
+              id: values.id,
+              name: values.name,
+              nit: values.nit,
+              address: values.address,
+              email: values.email,
+              phone: values.phone,
+              creditDay: Number(values.creditDay),
+              idCompany: company.id,
+            },
           },
-        },
-        refetchQueries: [{ query: GET_ALL_PROVIDERS }],
-      });
+          refetchQueries: [{ query: GET_ALL_PROVIDERS }],
+        });
+      } else {
+        await createProvider({
+          variables: {
+            provider: {
+              name: values.name,
+              nit: values.nit,
+              address: values.address,
+              email: values.email,
+              phone: values.phone,
+              creditDay: Number(values.creditDay),
+              idCompany: company.id,
+            },
+          },
+          refetchQueries: [{ query: GET_ALL_PROVIDERS }],
+        });
+      }
 
-      setMessage({ error: false, message: "Proveedor creado correctamente" });
+      setMessage({
+        error: false,
+        message: `Proveedor ${
+          isEditing ? "actualizado" : "creado"
+        } correctamente`,
+      });
       setTimeout(() => {
         setMessage(null);
+        resetForm();
         navigate(-1);
       }, 1500);
     } catch (error) {
@@ -105,10 +140,11 @@ const ProviderForm = () => {
             <button onClick={handleCancel} className="btn">
               <i className="fas fa-arrow-left"></i>
             </button>
-            Agregar Proveedor
+            {isEditing ? "Editar" : "Agregar"} Proveedor
           </div>
           <div className="card-body">
             <Formik
+              enableReinitialize
               initialValues={providerValues}
               validate={handleValidate}
               onSubmit={handleCreateProvider}>
@@ -194,7 +230,11 @@ const ProviderForm = () => {
                       Teléfono
                     </label>
                     <div className="col-sm-10">
-                      <input className="form-control" id="phone" type="text" />
+                      <Field
+                        className="form-control"
+                        name="phone"
+                        type="text"
+                      />
                     </div>
                   </div>
 

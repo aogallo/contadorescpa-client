@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
@@ -29,6 +29,9 @@ const Login = () => {
 
     return errores;
   };
+  useEffect(() => {
+    console.log("test");
+  });
 
   const handleLogin = async (valores, { resetForm }) => {
     try {
@@ -41,7 +44,7 @@ const Login = () => {
           token: data.login.token,
           ...data.login.user,
         };
-
+        console.log("user", user);
         dispatch({
           type: types.login,
           payload: user,

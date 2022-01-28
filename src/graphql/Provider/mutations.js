@@ -19,3 +19,9 @@ export const DELETE_PROVIDER = gql`
     deleteProviderById(id: $id)
   }
 `;
+
+export const UPDATE_PROVIDER = gql`
+  mutation UpdateProvidder($provider: ProviderInput) {
+    updateProvidder(provider: $provider)
+  }
+`;
