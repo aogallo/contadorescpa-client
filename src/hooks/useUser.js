@@ -17,14 +17,12 @@ const useUser = () => {
   // const sigin = async (username, password) => {
   //   await login({ variables: { username, password } });
 
-  //   console.log(`data hook`, data);
   //   if (data) {
   //     const user = {
   //       token: data.login.token,
   //       ...data.login.user,
   //     };
 
-  //     console.log(`user hook`, user);
   //     setUser(user);
   //     window.localStorage.removeItem("user");
   //     window.localStorage.setItem("user", JSON.stringify(user));

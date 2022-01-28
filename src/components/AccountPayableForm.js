@@ -30,25 +30,23 @@ const AccountPayableForm = () => {
   const [providers, setProviders] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [accounts, setAccounts] = useState([]);
-  const [
-    accountPayableInitialValues,
-    setAccountPayableInitialValues,
-  ] = useState({
-    id: 0,
-    idDocumentType: "",
-    idProvider: "",
-    idAccount: "",
-    serie: "",
-    documentNumber: "",
-    documentDate: "",
-    exento: 0,
-    importation: 0,
-    service: 0,
-    asset: 0,
-    subtotal: 0,
-    iva: 0,
-    total: 0,
-  });
+  const [accountPayableInitialValues, setAccountPayableInitialValues] =
+    useState({
+      id: 0,
+      idDocumentType: "",
+      idProvider: "",
+      idAccount: "",
+      serie: "",
+      documentNumber: "",
+      documentDate: "",
+      exento: 0,
+      importation: 0,
+      service: 0,
+      asset: 0,
+      subtotal: 0,
+      iva: 0,
+      total: 0,
+    });
 
   useEffect(() => {
     if (params.id) {
@@ -112,7 +110,6 @@ const AccountPayableForm = () => {
   };
 
   const handleChangeImportation = ({ target }) => {
-    console.log("target.value", target.value);
     setAccountPayableInitialValues((prevState) => {
       return {
         ...accountPayableInitialValues,
@@ -187,7 +184,6 @@ const AccountPayableForm = () => {
   };
 
   const handleCreateAccountPayable = async (values, { resetForm }) => {
-    console.log("values", values);
     try {
       if (isEditing) {
         //EDIT

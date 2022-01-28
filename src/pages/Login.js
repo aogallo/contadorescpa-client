@@ -29,9 +29,6 @@ const Login = () => {
 
     return errores;
   };
-  useEffect(() => {
-    console.log("test");
-  });
 
   const handleLogin = async (valores, { resetForm }) => {
     try {
@@ -44,7 +41,6 @@ const Login = () => {
           token: data.login.token,
           ...data.login.user,
         };
-        console.log("user", user);
         dispatch({
           type: types.login,
           payload: user,
