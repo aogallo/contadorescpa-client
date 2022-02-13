@@ -103,6 +103,7 @@ const ProviderForm = () => {
         await createProvider({
           variables: {
             provider: {
+              id: null,
               name: values.name,
               nit: values.nit,
               address: values.address,
