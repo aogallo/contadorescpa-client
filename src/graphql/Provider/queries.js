@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 export const GET_ALL_PROVIDERS = gql`
   query {
     getAllProviders {
@@ -18,7 +18,7 @@ export const GET_ALL_PROVIDERS = gql`
       }
     }
   }
-`;
+`
 
 export const GET_PROVIDER_BY_ID = gql`
   query Query($id: ID) {
@@ -39,4 +39,4 @@ export const GET_PROVIDER_BY_ID = gql`
       }
     }
   }
-`;
+`

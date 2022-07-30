@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Title = ({ title, breadCrumb }) => {
   return (
@@ -14,14 +14,14 @@ const Title = ({ title, breadCrumb }) => {
                     {b.name}
                   </Link>
                 </li>
-              );
+              )
             })
           : ''}
 
         <li className='breadcrumb-item active'>{title}</li>
       </ol>
     </div>
-  );
-};
+  )
+}
 
-export default Title;
+export default Title

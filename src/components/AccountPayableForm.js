@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Formik, Field } from 'formik';
-import { GET_ALL_DOCUMENT_TYPES } from '../graphql/DocumentType/queries';
-import { GET_ALL_PROVIDERS } from '../graphql/Provider/queries';
-import { GET_ALL_ACCOUNTS } from '../graphql/Account/queries';
+import React, { useEffect, useState } from 'react'
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
+import { useNavigate, useParams } from 'react-router-dom'
+import { Formik, Field } from 'formik'
+import { GET_ALL_DOCUMENT_TYPES } from '../graphql/DocumentType/queries'
+import { GET_ALL_PROVIDERS } from '../graphql/Provider/queries'
+import { GET_ALL_ACCOUNTS } from '../graphql/Account/queries'
 import {
   CREATE_ACCOUNT_PAYABLE,
   UPDATE_ACCOUNT_PAYABLE,
-} from '../graphql/AccountsPayable/muations';
+} from '../graphql/AccountsPayable/muations'
 import {
   GET_ACCOUNT_PAYABLE_BY_ID,
   GET_ALL_ACCOUNTS_PAYABLE,
-} from '../graphql/AccountsPayable/queries';
+} from '../graphql/AccountsPayable/queries'
 
 const AccountPayableForm = () => {
-  const navigate = useNavigate();
-  const params = useParams();
-  const { data: docs } = useQuery(GET_ALL_DOCUMENT_TYPES);
-  const { data: providersData } = useQuery(GET_ALL_PROVIDERS);
-  const { data: accountsData } = useQuery(GET_ALL_ACCOUNTS);
+  const navigate = useNavigate()
+  const params = useParams()
+  const { data: docs } = useQuery(GET_ALL_DOCUMENT_TYPES)
+  const { data: providersData } = useQuery(GET_ALL_PROVIDERS)
+  const { data: accountsData } = useQuery(GET_ALL_ACCOUNTS)
   const [getAccountPayableById, { data: accountPayableById }] = useLazyQuery(
     GET_ACCOUNT_PAYABLE_BY_ID
-  );
-  const [message, setMessage] = useState(null);
-  const [createAccountPayable] = useMutation(CREATE_ACCOUNT_PAYABLE);
-  const [updateAccountPayable] = useMutation(UPDATE_ACCOUNT_PAYABLE);
-  const [documentTypes, setDocumentTypes] = useState([]);
-  const [providers, setProviders] = useState([]);
-  const [isEditing, setIsEditing] = useState(false);
-  const [accounts, setAccounts] = useState([]);
+  )
+  const [message, setMessage] = useState(null)
+  const [createAccountPayable] = useMutation(CREATE_ACCOUNT_PAYABLE)
+  const [updateAccountPayable] = useMutation(UPDATE_ACCOUNT_PAYABLE)
+  const [documentTypes, setDocumentTypes] = useState([])
+  const [providers, setProviders] = useState([])
+  const [isEditing, setIsEditing] = useState(false)
+  const [accounts, setAccounts] = useState([])
   const [accountPayableInitialValues, setAccountPayableInitialValues] =
     useState({
       id: 0,
@@ -46,14 +46,14 @@ const AccountPayableForm = () => {
       subtotal: 0,
       iva: 0,
       total: 0,
-    });
+    })
 
   useEffect(() => {
     if (params.id) {
-      setIsEditing(true);
-      getAccountPayableById({ variables: { id: params.id } });
+      setIsEditing(true)
+      getAccountPayableById({ variables: { id: params.id } })
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     setAccountPayableInitialValues({
@@ -63,66 +63,66 @@ const AccountPayableForm = () => {
         parseFloat(accountPayableInitialValues.importation) +
         parseFloat(accountPayableInitialValues.service) +
         parseFloat(accountPayableInitialValues.asset),
-    });
+    })
   }, [
     accountPayableInitialValues.exento,
     accountPayableInitialValues.importation,
     accountPayableInitialValues.service,
     accountPayableInitialValues.asset,
-  ]);
+  ])
 
   useEffect(() => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,
       iva: accountPayableInitialValues.total * 0.12,
-    });
-  }, [accountPayableInitialValues.total]);
+    })
+  }, [accountPayableInitialValues.total])
 
   useEffect(() => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,
       subtotal:
         accountPayableInitialValues.total - accountPayableInitialValues.iva,
-    });
-  }, [accountPayableInitialValues.iva]);
+    })
+  }, [accountPayableInitialValues.iva])
 
   const handleChangeService = ({ target }) => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,
       service: parseFloat(target.value) || 0,
-    });
-  };
+    })
+  }
 
   const handleChangeAsset = ({ target }) => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,
       asset: parseFloat(target.value) || 0,
-    });
-  };
+    })
+  }
 
   const handleChangeExento = ({ target }) => {
     setAccountPayableInitialValues((prevState) => {
       return {
         ...accountPayableInitialValues,
         exento: parseFloat(target.value) || 0,
-      };
-    });
-  };
+      }
+    })
+  }
 
   const handleChangeImportation = ({ target }) => {
     setAccountPayableInitialValues((prevState) => {
       return {
         ...accountPayableInitialValues,
         importation: parseFloat(target.value) || 0,
-      };
-    });
-  };
+      }
+    })
+  }
 
   useEffect(() => {
     if (accountPayableById) {
       const documentDate = new Date(
         accountPayableById.getAccountPayableById.documentDate
-      );
+      )
       setAccountPayableInitialValues({
         id: accountPayableById.getAccountPayableById.id,
         idDocumentType:
@@ -141,47 +141,47 @@ const AccountPayableForm = () => {
         subtotal: accountPayableById.getAccountPayableById.subtotal,
         iva: accountPayableById.getAccountPayableById.iva,
         total: accountPayableById.getAccountPayableById.total,
-      });
+      })
     }
-  }, [accountPayableById]);
+  }, [accountPayableById])
 
   useEffect(() => {
-    if (docs) setDocumentTypes(docs.getAllDocumentTypes);
-    if (providersData) setProviders(providersData.getAllProviders);
-    if (accountsData) setAccounts(accountsData.getAllAccounts);
-  }, [docs, providersData, accountsData]);
+    if (docs) setDocumentTypes(docs.getAllDocumentTypes)
+    if (providersData) setProviders(providersData.getAllProviders)
+    if (accountsData) setAccounts(accountsData.getAllAccounts)
+  }, [docs, providersData, accountsData])
 
   const handleCancel = (e) => {
-    e.preventDefault();
-    navigate(-1);
-  };
+    e.preventDefault()
+    navigate(-1)
+  }
 
   const validateFields = (values) => {
     try {
-      let errors = {};
-      if (!values.serie) errors.serie = 'La serie es requerida.';
+      let errors = {}
+      if (!values.serie) errors.serie = 'La serie es requerida.'
 
       if (!values.documentNumber)
-        errors.documentNumber = 'El número de documento es requerido.';
+        errors.documentNumber = 'El número de documento es requerido.'
 
       // if (!values.documentType)
-      //   errors.documentType = 'El tipo de documento es requerido.';
+      //   errors.documentType = 'El tipo de documento es requerido.'
 
       // if (!values.documentDate)
-      //   errors.documentDate = 'La fecha del documento es requerida.';
+      //   errors.documentDate = 'La fecha del documento es requerida.'
 
-      return errors;
+      return errors
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   const getIdAccount = (accountNumber) => {
     const account = accounts.filter(
       (account) => account.accountNumber === accountNumber
-    );
-    return account[0].id;
-  };
+    )
+    return account[0].id
+  }
 
   const handleCreateAccountPayable = async (values, { resetForm }) => {
     try {
@@ -207,7 +207,7 @@ const AccountPayableForm = () => {
             },
           },
           refetchQueries: [{ query: GET_ALL_ACCOUNTS_PAYABLE }],
-        });
+        })
       } else {
         //ADD
         await createAccountPayable({
@@ -230,7 +230,7 @@ const AccountPayableForm = () => {
             },
           },
           refetchQueries: [{ query: GET_ALL_ACCOUNTS_PAYABLE }],
-        });
+        })
       }
 
       setMessage({
@@ -238,16 +238,16 @@ const AccountPayableForm = () => {
         message: `Cuenta por pagar ${
           isEditing ? 'actualizada' : 'creada'
         } correctamente`,
-      });
+      })
       setTimeout(() => {
-        setMessage(null);
-        navigate(-1);
-        resetForm();
-      }, 1500);
+        setMessage(null)
+        navigate(-1)
+        resetForm()
+      }, 1500)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
   return (
     <div className='col-sm-12'>
       <div className='card'>
@@ -555,7 +555,7 @@ const AccountPayableForm = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AccountPayableForm;
+export default AccountPayableForm

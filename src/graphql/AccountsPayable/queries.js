@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 
 export const GET_ALL_ACCOUNTS_PAYABLE = gql`
   query GetAllAccountPayable {
@@ -29,7 +29,7 @@ export const GET_ALL_ACCOUNTS_PAYABLE = gql`
       total
     }
   }
-`;
+`
 
 export const GET_ACCOUNT_PAYABLE_BY_ID = gql`
   query GetAccountPayableById($id: ID) {
@@ -60,4 +60,4 @@ export const GET_ACCOUNT_PAYABLE_BY_ID = gql`
       total
     }
   }
-`;
+`

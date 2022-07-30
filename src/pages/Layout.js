@@ -1,21 +1,21 @@
-import React from 'react';
+import React from 'react'
 
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom'
 
-import SideBar from '../components/SideBar';
-import Header from '../components/Header';
-import Client from '../pages/Client';
-import Provider from '../pages/Provider';
-import ClientForm from '../components/ClientForm';
-import Error404 from '../pages/Error404';
-import ClientList from '../components/ClientList';
-import About from '../pages/About';
-import ProviderList from '../components/ProviderList';
-import ProviderForm from '../components/ProviderForm';
-import AccountsPayable from '../pages/AccountsPayable';
-import Home from './Home';
-import AccountPayableForm from '../components/AccountPayableForm';
-import AccountPayableList from '../components/AccountPayableList';
+import SideBar from '../components/SideBar'
+import Header from '../components/Header'
+import Client from '../pages/Client'
+import Provider from '../pages/Provider'
+import ClientForm from '../components/ClientForm'
+import Error404 from '../pages/Error404'
+import ClientList from '../components/ClientList'
+import About from '../pages/About'
+import ProviderList from '../components/ProviderList'
+import ProviderForm from '../components/ProviderForm'
+import AccountsPayable from '../pages/AccountsPayable'
+import Home from './Home'
+import AccountPayableForm from '../components/AccountPayableForm'
+import AccountPayableList from '../components/AccountPayableList'
 
 const Layout = () => {
   return (
@@ -58,7 +58,7 @@ const Layout = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

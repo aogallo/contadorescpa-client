@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 export const GET_ALL_CLIENTS = gql`
   query {
     getAllClients {
@@ -10,7 +10,7 @@ export const GET_ALL_CLIENTS = gql`
       phone
     }
   }
-`;
+`
 
 export const GET_CLIENT_BY_ID = gql`
   query getClientById($id: ID) {
@@ -28,4 +28,4 @@ export const GET_CLIENT_BY_ID = gql`
       }
     }
   }
-`;
+`

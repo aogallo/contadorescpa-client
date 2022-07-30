@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_ALL_ACCOUNTS_PAYABLE } from '../graphql/AccountsPayable/queries';
-import { Link, NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useQuery } from '@apollo/client'
+import { GET_ALL_ACCOUNTS_PAYABLE } from '../graphql/AccountsPayable/queries'
+import { Link, NavLink } from 'react-router-dom'
 
-import Moment from 'react-moment';
+import Moment from 'react-moment'
 
 const AccountPayableList = ({ title }) => {
-  const { refetch, loading, data } = useQuery(GET_ALL_ACCOUNTS_PAYABLE);
-  const [accountsPayable, setAccountsPayable] = useState([]);
+  const { refetch, loading, data } = useQuery(GET_ALL_ACCOUNTS_PAYABLE)
+  const [accountsPayable, setAccountsPayable] = useState([])
 
   useEffect(() => {
-    if (data) setAccountsPayable(data.getAllAccountPayable);
-  }, [data]);
+    if (data) setAccountsPayable(data.getAllAccountPayable)
+  }, [data])
 
   return (
     <>
@@ -73,7 +73,7 @@ const AccountPayableList = ({ title }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default AccountPayableList;
+export default AccountPayableList

@@ -1,11 +1,11 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import Login from '../pages/Login';
-import PrivateRoute from './PrivateRoute';
+import Login from '../pages/Login'
+import PrivateRoute from './PrivateRoute'
 
-import PublicRoute from './PublicRoute';
-import Layout from '../pages/Layout';
+import PublicRoute from './PublicRoute'
+import Layout from '../pages/Layout'
 
 const AppRouter = () => {
   return (
@@ -29,7 +29,7 @@ const AppRouter = () => {
         />
       </Routes>
     </BrowserRouter>
-  );
-};
+  )
+}
 
-export default AppRouter;
+export default AppRouter

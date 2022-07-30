@@ -1,6 +1,6 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Title from '../components/Title';
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+import Title from '../components/Title'
 
 const AccountsPayable = () => {
   return (
@@ -8,7 +8,7 @@ const AccountsPayable = () => {
       <Title title='Cuentas por Pagar' />
       <Outlet />
     </div>
-  );
-};
+  )
+}
 
-export default AccountsPayable;
+export default AccountsPayable

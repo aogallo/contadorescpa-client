@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 
 export const CREATE_CLIENT = gql`
   mutation CreateClient($client: ClientInput) {
@@ -15,16 +15,16 @@ export const CREATE_CLIENT = gql`
       }
     }
   }
-`;
+`
 
 export const UPDATE_CLIENT = gql`
   mutation Mutation($client: ClientInput) {
     updateClient(client: $client)
   }
-`;
+`
 
 export const DELETE_CLIENT = gql`
   mutation DeleteClientById($id: ID!) {
     deleteClientById(id: $id)
   }
-`;
+`

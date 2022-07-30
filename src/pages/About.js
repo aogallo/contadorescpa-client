@@ -1,36 +1,36 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_ALL_COMPANIES } from '../graphql/Company/queries';
-import { AppContext } from '../context/AppContext';
-import Title from '../components/Title';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react'
+import { useQuery } from '@apollo/client'
+import { GET_ALL_COMPANIES } from '../graphql/Company/queries'
+import { AppContext } from '../context/AppContext'
+import Title from '../components/Title'
+import { useNavigate } from 'react-router-dom'
 
 const About = () => {
-  const { data } = useQuery(GET_ALL_COMPANIES);
-  const navigate = useNavigate();
-  const { saveCompany } = useContext(AppContext);
-  const [companies, setCompanies] = useState([]);
-  const [filterCompanies, setFilterCompanies] = useState([]);
-  const [search, setSearch] = useState('');
+  const { data } = useQuery(GET_ALL_COMPANIES)
+  const navigate = useNavigate()
+  const { saveCompany } = useContext(AppContext)
+  const [companies, setCompanies] = useState([])
+  const [filterCompanies, setFilterCompanies] = useState([])
+  const [search, setSearch] = useState('')
   const [breadCrumb, setBreadCrumb] = useState([
     {
       name: 'Inicio',
       path: '/',
       active: false,
     },
-  ]);
+  ])
 
   useEffect(() => {
     if (data) {
-      setCompanies(data.getAllCompanies);
-      setFilterCompanies(data.getAllCompanies);
+      setCompanies(data.getAllCompanies)
+      setFilterCompanies(data.getAllCompanies)
     }
-  }, [data]);
+  }, [data])
 
   const handleSearch = ({ target }) => {
-    setSearch(target.value);
-    filterTerm(target.value);
-  };
+    setSearch(target.value)
+    filterTerm(target.value)
+  }
 
   const filterTerm = (term) => {
     const result = filterCompanies.filter((compay) => {
@@ -40,20 +40,20 @@ const About = () => {
           .toLowerCase()
           .includes(term.toLocaleLowerCase())
       ) {
-        return compay;
+        return compay
       }
-    });
+    })
 
-    setCompanies(result);
-  };
+    setCompanies(result)
+  }
 
   const handleSelectCompany = (company) => {
     saveCompany({
       id: company.id,
       name: company.name,
-    });
-    navigate('/home');
-  };
+    })
+    navigate('/home')
+  }
 
   return (
     <div className='container-fluid px-4'>
@@ -97,7 +97,7 @@ const About = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default About;
+export default About

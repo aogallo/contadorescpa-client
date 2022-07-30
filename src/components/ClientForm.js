@@ -1,22 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useMutation, useLazyQuery } from '@apollo/client';
-import { Formik } from 'formik';
-import { useNavigate, useParams } from 'react-router-dom';
-import { AppContext } from '../context/AppContext';
+import React, { useContext, useEffect, useState } from 'react'
+import { useMutation, useLazyQuery } from '@apollo/client'
+import { Formik } from 'formik'
+import { useNavigate, useParams } from 'react-router-dom'
+import { AppContext } from '../context/AppContext'
 
-import { GET_ALL_CLIENTS, GET_CLIENT_BY_ID } from '../graphql/Client/queries';
-import { CREATE_CLIENT, UPDATE_CLIENT } from '../graphql/Client/mutations';
+import { GET_ALL_CLIENTS, GET_CLIENT_BY_ID } from '../graphql/Client/queries'
+import { CREATE_CLIENT, UPDATE_CLIENT } from '../graphql/Client/mutations'
 
 const ClientForm = () => {
-  const navigate = useNavigate();
-  const params = useParams();
-  const [createClient, { reset }] = useMutation(CREATE_CLIENT);
-  const [updateClient] = useMutation(UPDATE_CLIENT);
-  const [getClientById, { data }] = useLazyQuery(GET_CLIENT_BY_ID);
+  const navigate = useNavigate()
+  const params = useParams()
+  const [createClient, { reset }] = useMutation(CREATE_CLIENT)
+  const [updateClient] = useMutation(UPDATE_CLIENT)
+  const [getClientById, { data }] = useLazyQuery(GET_CLIENT_BY_ID)
 
-  const { company } = useContext(AppContext);
-  const [message, setMessage] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
+  const { company } = useContext(AppContext)
+  const [message, setMessage] = useState(null)
+  const [isEditing, setIsEditing] = useState(false)
   const [clientValues, setClientValues] = useState({
     id: 0,
     name: '',
@@ -24,16 +24,16 @@ const ClientForm = () => {
     address: '',
     email: '',
     phone: '',
-  });
+  })
 
   useEffect(() => {
-    if (!company.name) navigate('/');
+    if (!company.name) navigate('/')
 
     if (params.id) {
-      setIsEditing(true);
-      getClientById({ variables: { id: params.id } });
+      setIsEditing(true)
+      getClientById({ variables: { id: params.id } })
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (data) {
@@ -44,48 +44,48 @@ const ClientForm = () => {
         address: data.getClientById.address,
         email: data.getClientById.email,
         phone: data.getClientById.phone,
-      });
+      })
     }
-  }, [data]);
+  }, [data])
 
   const validateFields = (values) => {
-    let errors = {};
+    let errors = {}
 
     if (!values.name) {
-      errors.name = ' Por favor ingresa tu nombre';
+      errors.name = ' Por favor ingresa tu nombre'
     } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.name)) {
-      errors.name = ' El nombre solo puede contener letras y espacios';
+      errors.name = ' El nombre solo puede contener letras y espacios'
     }
 
     if (!values.nit) {
-      errors.nit = ' Por favor ingresa el número de NIT';
+      errors.nit = ' Por favor ingresa el número de NIT'
     }
 
     if (!values.address) {
-      errors.address = ' Por favor ingresa una dirección válida ';
+      errors.address = ' Por favor ingresa una dirección válida '
     }
 
     if (!values.email) {
-      errors.email = 'Por favor ingresa una dirección de correo eletrónico';
+      errors.email = 'Por favor ingresa una dirección de correo eletrónico'
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
     ) {
-      errors.email = 'El correo ingresado es invalido';
+      errors.email = 'El correo ingresado es invalido'
     }
 
     if (!values.phone) {
-      errors.phone = ' Por favor ingresa un número de teléfono ';
+      errors.phone = ' Por favor ingresa un número de teléfono '
     } else if (!/^\d*$/.test(values.phone)) {
-      errors.phone = ' El número de teléfono es invalido';
+      errors.phone = ' El número de teléfono es invalido'
     }
 
-    return errors;
-  };
+    return errors
+  }
 
   const handleCancel = (e) => {
-    e.preventDefault();
-    navigate(-1);
-  };
+    e.preventDefault()
+    navigate(-1)
+  }
 
   const handleCreateClient = async (values, { resetForm }) => {
     try {
@@ -103,7 +103,7 @@ const ClientForm = () => {
             },
           },
           refetchQueries: [{ query: GET_ALL_CLIENTS }],
-        });
+        })
       } else {
         await createClient({
           variables: {
@@ -119,7 +119,7 @@ const ClientForm = () => {
           },
           awaitRefetchQueries: true,
           refetchQueries: [{ query: GET_ALL_CLIENTS }],
-        });
+        })
       }
 
       setMessage({
@@ -127,19 +127,19 @@ const ClientForm = () => {
         message: `Cliente ${
           isEditing ? 'actualizado' : 'creado'
         } correctamente`,
-      });
+      })
       setTimeout(() => {
-        setMessage(null);
-        navigate(-1);
-        resetForm();
-        reset();
-      }, 1500);
+        setMessage(null)
+        navigate(-1)
+        resetForm()
+        reset()
+      }, 1500)
     } catch (error) {
-      reset();
-      setMessage({ error: true, message: error.message });
-      console.log(error);
+      reset()
+      setMessage({ error: true, message: error.message })
+      console.log(error)
     }
-  };
+  }
 
   return (
     <div className='container-fluid px-4'>
@@ -316,7 +316,7 @@ const ClientForm = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ClientForm;
+export default ClientForm

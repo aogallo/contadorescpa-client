@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 
 export const CREATE_ACCOUNT_PAYABLE = gql`
   mutation CreateAccountPayable($accountPayable: AccountPayableInput) {
@@ -38,10 +38,10 @@ export const CREATE_ACCOUNT_PAYABLE = gql`
       total
     }
   }
-`;
+`
 
 export const UPDATE_ACCOUNT_PAYABLE = gql`
   mutation UpdateAccountPayable($accountPayable: AccountPayableInput) {
     updateAccountPayable(accountPayable: $accountPayable)
   }
-`;
+`

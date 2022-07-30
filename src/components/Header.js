@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { AppContext } from '../context/AppContext';
-import { types } from '../types/types';
+import React, { useContext } from 'react'
+import { Link } from 'react-router-dom'
+import { AppContext } from '../context/AppContext'
+import { types } from '../types/types'
 
 const Header = () => {
-  const { company, dispatch } = useContext(AppContext);
+  const { company, dispatch } = useContext(AppContext)
   const handleLogout = () => {
     dispatch({
       type: types.logout,
-    });
-  };
+    })
+  }
 
   return (
     <nav className='sb-topnav navbar navbar-expand navbar-dark bg-dark'>
@@ -77,7 +77,7 @@ const Header = () => {
         </li>
       </ul>
     </nav>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

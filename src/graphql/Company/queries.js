@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 export const GET_ALL_COMPANIES = gql`
   query getAllCompanies {
     getAllCompanies {
@@ -9,4 +9,4 @@ export const GET_ALL_COMPANIES = gql`
       comercialActivity
     }
   }
-`;
+`

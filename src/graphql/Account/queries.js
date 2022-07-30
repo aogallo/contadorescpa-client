@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 
 export const GET_ALL_ACCOUNTS = gql`
   query GetAllAccounts {
@@ -9,7 +9,7 @@ export const GET_ALL_ACCOUNTS = gql`
       type
     }
   }
-`;
+`
 
 export const GET_ACCOUNT_BY_ID = gql`
   query GetAccountById($id: ID) {
@@ -20,4 +20,4 @@ export const GET_ACCOUNT_BY_ID = gql`
       type
     }
   }
-`;
+`

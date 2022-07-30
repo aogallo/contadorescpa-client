@@ -1,61 +1,61 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react'
 
-import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { LOGIN } from '../graphql/Login/mutations';
+import { useNavigate } from 'react-router-dom'
+import { useMutation } from '@apollo/client'
+import { LOGIN } from '../graphql/Login/mutations'
 
-import { AppContext } from '../context/AppContext';
-import { types } from '../types/types';
-import { Formik, Form } from 'formik';
+import { AppContext } from '../context/AppContext'
+import { types } from '../types/types'
+import { Formik, Form } from 'formik'
 
 const Login = () => {
-  const navigate = useNavigate();
-  const [login, { data }] = useMutation(LOGIN);
-  const [messageError, setMessageError] = useState('');
-  const { dispatch } = useContext(AppContext);
+  const navigate = useNavigate()
+  const [login, { data }] = useMutation(LOGIN)
+  const [messageError, setMessageError] = useState('')
+  const { dispatch } = useContext(AppContext)
 
-  const initialValues = { username: '', password: '' };
+  const initialValues = { username: '', password: '' }
 
   const validateFields = (valores) => {
-    let errores = {};
+    let errores = {}
 
     if (!valores.username) {
-      errores.username = 'Por favor ingresa su usuario';
+      errores.username = 'Por favor ingresa su usuario'
     }
 
     if (!valores.password) {
-      errores.password = 'Por favor ingresa tu contraseña';
+      errores.password = 'Por favor ingresa tu contraseña'
     }
 
-    return errores;
-  };
+    return errores
+  }
 
   const handleLogin = async (valores, { resetForm }) => {
     try {
       await login({
         variables: { username: valores.username, password: valores.password },
-      });
+      })
 
       if (data) {
         const user = {
           token: data.login.token,
           ...data.login.user,
-        };
+        }
         dispatch({
           type: types.login,
           payload: user,
-        });
-        resetForm();
-        navigate('/');
+        })
+        resetForm()
+        navigate('/')
       }
     } catch (error) {
-      setMessageError(error.message);
+      setMessageError(error.message)
       setTimeout(() => {
-        setMessageError('');
-      }, 5000);
-      console.log(`error`, error);
+        setMessageError('')
+      }, 5000)
+      console.log(`error`, error)
     }
-  };
+  }
 
   return (
     <div id='layoutAuthentication'>
@@ -153,11 +153,11 @@ const Login = () => {
           <div className='container-fluid px-4'>
             <div className='d-flex align-items-center justify-content-between small'>
               <div className='text-muted'>
-                Copyright &copy; Contadores CPA 2022
+                Copyright &copy Contadores CPA 2022
               </div>
               <div>
                 <a href='#'></a>
-                &middot;
+                &middot
                 <a href='#'></a>
               </div>
             </div>
@@ -165,7 +165,7 @@ const Login = () => {
         </footer>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

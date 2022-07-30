@@ -1,6 +1,6 @@
-import React from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import React from 'react'
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
 
 const CustomModal = ({ title, message, handleClose, handleAction }) => {
   return (
@@ -28,7 +28,7 @@ const CustomModal = ({ title, message, handleClose, handleAction }) => {
         </Button>
       </Modal.Footer>
     </Modal>
-  );
-};
+  )
+}
 
-export default CustomModal;
+export default CustomModal

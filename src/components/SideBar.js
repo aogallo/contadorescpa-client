@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const SideBar = () => {
   return (
@@ -57,7 +57,7 @@ const SideBar = () => {
         </nav>
       </div>
     </aside>
-  );
-};
+  )
+}
 
-export default SideBar;
+export default SideBar

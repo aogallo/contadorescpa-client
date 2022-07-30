@@ -1,27 +1,27 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Formik, Form, Field } from 'formik';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useLazyQuery, useMutation } from '@apollo/client';
-import { AppContext } from '../context/AppContext';
+import React, { useContext, useEffect, useState } from 'react'
+import { Formik, Form, Field } from 'formik'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useLazyQuery, useMutation } from '@apollo/client'
+import { AppContext } from '../context/AppContext'
 
 import {
   GET_ALL_PROVIDERS,
   GET_PROVIDER_BY_ID,
-} from '../graphql/Provider/queries';
+} from '../graphql/Provider/queries'
 import {
   CREATE_PROVIDER,
   UPDATE_PROVIDER,
-} from '../graphql/Provider/mutations';
+} from '../graphql/Provider/mutations'
 
 const ProviderForm = () => {
-  const navigate = useNavigate();
-  const params = useParams();
-  const { company } = useContext(AppContext);
-  const [message, setMessage] = useState(null);
-  const [createProvider] = useMutation(CREATE_PROVIDER);
-  const [updateProvider] = useMutation(UPDATE_PROVIDER);
-  const [isEditing, setIsEditing] = useState(false);
-  const [getProviderById, { data }] = useLazyQuery(GET_PROVIDER_BY_ID);
+  const navigate = useNavigate()
+  const params = useParams()
+  const { company } = useContext(AppContext)
+  const [message, setMessage] = useState(null)
+  const [createProvider] = useMutation(CREATE_PROVIDER)
+  const [updateProvider] = useMutation(UPDATE_PROVIDER)
+  const [isEditing, setIsEditing] = useState(false)
+  const [getProviderById, { data }] = useLazyQuery(GET_PROVIDER_BY_ID)
   const [providerValues, setProviderValues] = useState({
     id: 0,
     name: '',
@@ -30,16 +30,16 @@ const ProviderForm = () => {
     email: '',
     phone: '',
     creditDay: '',
-  });
+  })
 
   useEffect(() => {
-    if (!company.name) navigate('/');
+    if (!company.name) navigate('/')
 
     if (params.id) {
-      setIsEditing(true);
-      getProviderById({ variables: { id: params.id } });
+      setIsEditing(true)
+      getProviderById({ variables: { id: params.id } })
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (data) {
@@ -51,35 +51,35 @@ const ProviderForm = () => {
         email: data.getProviderById.email,
         phone: data.getProviderById.phone,
         creditDay: data.getProviderById.creditDay,
-      });
+      })
     }
-  }, [data]);
+  }, [data])
 
   const handleCancel = (e) => {
-    e.preventDefault();
-    navigate(-1);
-  };
+    e.preventDefault()
+    navigate(-1)
+  }
 
   const handleValidate = (values) => {
-    let errors = {};
+    let errors = {}
 
     if (!values.name) {
-      errors.name = 'Por favor ingrese el nombre';
+      errors.name = 'Por favor ingrese el nombre'
     }
     if (!values.nit) {
-      errors.nit = 'Por favor ingrese el NIT';
+      errors.nit = 'Por favor ingrese el NIT'
     }
 
     if (!values.email) {
-      errors.email = 'Por favor ingresa una dirección de correo eletrónico';
+      errors.email = 'Por favor ingresa una dirección de correo eletrónico'
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
     ) {
-      errors.email = 'El correo ingresado es invalido';
+      errors.email = 'El correo ingresado es invalido'
     }
 
-    return errors;
-  };
+    return errors
+  }
 
   const handleCreateProvider = async (values, { resetForm }) => {
     try {
@@ -98,7 +98,7 @@ const ProviderForm = () => {
             },
           },
           refetchQueries: [{ query: GET_ALL_PROVIDERS }],
-        });
+        })
       } else {
         await createProvider({
           variables: {
@@ -114,7 +114,7 @@ const ProviderForm = () => {
             },
           },
           refetchQueries: [{ query: GET_ALL_PROVIDERS }],
-        });
+        })
       }
 
       setMessage({
@@ -122,17 +122,17 @@ const ProviderForm = () => {
         message: `Proveedor ${
           isEditing ? 'actualizado' : 'creado'
         } correctamente`,
-      });
+      })
       setTimeout(() => {
-        setMessage(null);
-        resetForm();
-        navigate(-1);
-      }, 1500);
+        setMessage(null)
+        resetForm()
+        navigate(-1)
+      }, 1500)
     } catch (error) {
-      setMessage({ error: true, message: error.message });
-      console.log(error);
+      setMessage({ error: true, message: error.message })
+      console.log(error)
     }
-  };
+  }
   return (
     <div className='container-fluid px-4'>
       <div className='col-sm-12'>
@@ -282,7 +282,7 @@ const ProviderForm = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProviderForm;
+export default ProviderForm

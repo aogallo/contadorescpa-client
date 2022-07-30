@@ -1,5 +1,5 @@
-import React from 'react';
-import ImageError from '../img/error-404-monochrome.svg';
+import React from 'react'
+import ImageError from '../img/error-404-monochrome.svg'
 
 const Error404 = () => {
   return (
@@ -29,19 +29,19 @@ const Error404 = () => {
           <div className='container-fluid px-4'>
             <div className='d-flex align-items-center justify-content-between small'>
               <div className='text-muted'>
-                Copyright &copy; Your Website 2021
+                Copyright &copy Your Website 2021
               </div>
               <div>
                 <a href='#'>Privacy Policy</a>
-                &middot;
-                <a href='#'>Terms &amp; Conditions</a>
+                &middot
+                <a href='#'>Terms &amp Conditions</a>
               </div>
             </div>
           </div>
         </footer>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Error404;
+export default Error404

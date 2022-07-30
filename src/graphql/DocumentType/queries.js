@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 
 export const GET_ALL_DOCUMENT_TYPES = gql`
   query GetAllDocumentTypes {
@@ -7,7 +7,7 @@ export const GET_ALL_DOCUMENT_TYPES = gql`
       name
     }
   }
-`;
+`
 
 export const GET_ALL_DOCUMENT_BY_ID = gql`
   query GetDocumentTypeById($id: ID) {
@@ -16,4 +16,4 @@ export const GET_ALL_DOCUMENT_BY_ID = gql`
       name
     }
   }
-`;
+`

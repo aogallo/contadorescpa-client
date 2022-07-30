@@ -1,49 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import React, { useState, useEffect } from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import { useMutation, useQuery } from '@apollo/client'
 
-import CustomModal from './Modal/CustomModal';
+import CustomModal from './Modal/CustomModal'
 
-import { GET_ALL_CLIENTS } from '../graphql/Client/queries';
-import { DELETE_CLIENT } from '../graphql/Client/mutations';
+import { GET_ALL_CLIENTS } from '../graphql/Client/queries'
+import { DELETE_CLIENT } from '../graphql/Client/mutations'
 
 const ClientList = ({ title }) => {
-  const { refetch, error, data } = useQuery(GET_ALL_CLIENTS);
-  const [deleteClientById] = useMutation(DELETE_CLIENT);
-  const [clients, setClients] = useState([]);
-  const [clientDelete, setClientDelete] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [message, setMessage] = useState('');
+  const { refetch, error, data } = useQuery(GET_ALL_CLIENTS)
+  const [deleteClientById] = useMutation(DELETE_CLIENT)
+  const [clients, setClients] = useState([])
+  const [clientDelete, setClientDelete] = useState(null)
+  const [showModal, setShowModal] = useState(false)
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
-    if (data) setClients(data.getAllClients);
-  }, [data]);
+    if (data) setClients(data.getAllClients)
+  }, [data])
 
   const handleClose = () => {
-    setShowModal(false);
-  };
+    setShowModal(false)
+  }
 
   const handleShowModal = (client) => {
-    setClientDelete(client);
-    setShowModal(true);
-  };
+    setClientDelete(client)
+    setShowModal(true)
+  }
 
   const handleAction = async () => {
     try {
       await deleteClientById({
         variables: { id: clientDelete.id },
-      });
+      })
 
-      setMessage({ error: false, message: 'Cliente eliminado' });
+      setMessage({ error: false, message: 'Cliente eliminado' })
       setTimeout(() => {
-        setShowModal(false);
-        setMessage('');
-        refetch();
-      }, 1500);
+        setShowModal(false)
+        setMessage('')
+        refetch()
+      }, 1500)
     } catch (error) {
-      setMessage({ error: true, message: error.message });
+      setMessage({ error: true, message: error.message })
     }
-  };
+  }
 
   return (
     <>
@@ -105,7 +105,7 @@ const ClientList = ({ title }) => {
           handleClose={handleClose}></CustomModal>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ClientList;
+export default ClientList
