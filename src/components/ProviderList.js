@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { useMutation, useQuery } from "@apollo/client";
-import { GET_ALL_PROVIDERS } from "../graphql/Provider/queries";
-import { DELETE_PROVIDER } from "../graphql/Provider/mutations";
-import CustomModal from "./Modal/CustomModal";
+import React, { useState, useEffect } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { useMutation, useQuery } from '@apollo/client';
+import { GET_ALL_PROVIDERS } from '../graphql/Provider/queries';
+import { DELETE_PROVIDER } from '../graphql/Provider/mutations';
+import CustomModal from './Modal/CustomModal';
 
 const ProviderList = ({ title }) => {
   const { loading, refetch, data } = useQuery(GET_ALL_PROVIDERS);
@@ -11,7 +11,7 @@ const ProviderList = ({ title }) => {
   const [providers, setProviders] = useState([]);
   const [providerDelete, setProviderDelete] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (data) setProviders(data.getAllProviders);
@@ -32,10 +32,10 @@ const ProviderList = ({ title }) => {
         variables: { id: providerDelete.id },
       });
 
-      setMessage({ error: false, message: "Proveedor eliminado" });
+      setMessage({ error: false, message: 'Proveedor eliminado' });
       setTimeout(() => {
         setShowModal(false);
-        setMessage("");
+        setMessage('');
         refetch();
       }, 1500);
     } catch (error) {
@@ -45,18 +45,18 @@ const ProviderList = ({ title }) => {
   };
 
   return (
-    <section className="card mb-4">
-      <section className="card-header d-flex justify-content-between">
+    <section className='card mb-4'>
+      <section className='card-header d-flex justify-content-between'>
         <section>
-          <i className="fas fa-table me-1"></i>
+          <i className='fas fa-table me-1'></i>
           {title}
         </section>
-        <Link className="btn btn-primary" to="/provider/add">
+        <Link className='btn btn-primary' to='/provider/add'>
           Agregar
         </Link>
       </section>
-      <section className="card-body">
-        <table className="table table-responsive table-striped">
+      <section className='card-body'>
+        <table className='table table-responsive table-striped'>
           <thead>
             <tr>
               <th>Nombre</th>
@@ -69,7 +69,7 @@ const ProviderList = ({ title }) => {
           </thead>
           <tbody>
             {loading ? (
-              <tr className="col-sm-6">
+              <tr className='col-sm-6'>
                 <td>Cargarndo...</td>
               </tr>
             ) : (
@@ -80,16 +80,16 @@ const ProviderList = ({ title }) => {
                   <td>{provider.email}</td>
                   <td>{provider.address}</td>
                   <td>{provider.phone}</td>
-                  <td className="col-sm-2">
+                  <td className='col-sm-2'>
                     <NavLink
                       to={`/provider/edit/${provider.id}`}
-                      className="btn btn-primary btn-sm">
+                      className='btn btn-primary btn-sm'>
                       Editar
                     </NavLink>
                     <button
-                      type="button"
+                      type='button'
                       onClick={() => handleShowModal(provider)}
-                      className="btn btn-danger btn-sm">
+                      className='btn btn-danger btn-sm'>
                       Eliminar
                     </button>
                   </td>
@@ -101,7 +101,7 @@ const ProviderList = ({ title }) => {
       </section>
       {showModal && (
         <CustomModal
-          title="proveedor"
+          title='proveedor'
           message={message}
           handleAction={handleAction}
           handleClose={handleClose}></CustomModal>

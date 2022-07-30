@@ -1,15 +1,15 @@
-import React, { createContext, useReducer, useEffect, useState } from "react";
-import { authReducer } from "../reducer/authReducer";
+import React, { createContext, useReducer, useEffect, useState } from 'react';
+import { authReducer } from '../reducer/authReducer';
 
 export const AppContext = createContext();
 
 const companyInitial = {
   id: null,
-  name: "",
+  name: '',
 };
 
 const init = () => {
-  return JSON.parse(localStorage.getItem("user")) || { logged: false };
+  return JSON.parse(localStorage.getItem('user')) || { logged: false };
 };
 
 const AppProvider = ({ children }) => {
@@ -17,7 +17,7 @@ const AppProvider = ({ children }) => {
   const [company, setCompany] = useState(companyInitial);
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
   }, [user]);
 
   const saveCompany = (company) => {

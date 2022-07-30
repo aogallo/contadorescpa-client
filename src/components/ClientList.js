@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { useMutation, useQuery } from "@apollo/client";
+import React, { useState, useEffect } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { useMutation, useQuery } from '@apollo/client';
 
-import CustomModal from "./Modal/CustomModal";
+import CustomModal from './Modal/CustomModal';
 
-import { GET_ALL_CLIENTS } from "../graphql/Client/queries";
-import { DELETE_CLIENT } from "../graphql/Client/mutations";
+import { GET_ALL_CLIENTS } from '../graphql/Client/queries';
+import { DELETE_CLIENT } from '../graphql/Client/mutations';
 
 const ClientList = ({ title }) => {
   const { refetch, error, data } = useQuery(GET_ALL_CLIENTS);
@@ -13,7 +13,7 @@ const ClientList = ({ title }) => {
   const [clients, setClients] = useState([]);
   const [clientDelete, setClientDelete] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (data) setClients(data.getAllClients);
@@ -34,10 +34,10 @@ const ClientList = ({ title }) => {
         variables: { id: clientDelete.id },
       });
 
-      setMessage({ error: false, message: "Cliente eliminado" });
+      setMessage({ error: false, message: 'Cliente eliminado' });
       setTimeout(() => {
         setShowModal(false);
-        setMessage("");
+        setMessage('');
         refetch();
       }, 1500);
     } catch (error) {
@@ -47,18 +47,18 @@ const ClientList = ({ title }) => {
 
   return (
     <>
-      <div className="card mb-4">
-        <div className="card-header d-flex justify-content-between">
+      <div className='card mb-4'>
+        <div className='card-header d-flex justify-content-between'>
           <section>
-            <i className="fas fa-table me-1"></i>
+            <i className='fas fa-table me-1'></i>
             {title}
           </section>
-          <Link className="btn btn-primary" to="/client/add">
+          <Link className='btn btn-primary' to='/client/add'>
             Agregar
           </Link>
         </div>
-        <div className="card-body">
-          <table className="table table-responsive table-striped">
+        <div className='card-body'>
+          <table className='table table-responsive table-striped'>
             <thead>
               <tr>
                 <th>Nombre</th>
@@ -77,17 +77,17 @@ const ClientList = ({ title }) => {
                   <td>{client.address}</td>
                   <td>{client.email}</td>
                   <td>{client.phone}</td>
-                  <td className="col-sm-2">
+                  <td className='col-sm-2'>
                     <NavLink
-                      type="button"
+                      type='button'
                       to={`/client/edit/${client.id}`}
-                      className="btn btn-primary btn-sm">
+                      className='btn btn-primary btn-sm'>
                       Editar
                     </NavLink>
                     <button
-                      type="button"
+                      type='button'
                       onClick={() => handleShowModal(client)}
-                      className="btn btn-danger btn-sm">
+                      className='btn btn-danger btn-sm'>
                       Eliminar
                     </button>
                   </td>
@@ -99,7 +99,7 @@ const ClientList = ({ title }) => {
       </div>
       {showModal && (
         <CustomModal
-          title="cliente"
+          title='cliente'
           message={message}
           handleAction={handleAction}
           handleClose={handleClose}></CustomModal>

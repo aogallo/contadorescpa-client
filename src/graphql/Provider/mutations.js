@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const CREATE_PROVIDER = gql`
   mutation CreateProvider($provider: ProviderInput) {

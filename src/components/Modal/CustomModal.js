@@ -1,6 +1,6 @@
-import React from "react";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+import React from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const CustomModal = ({ title, message, handleClose, handleAction }) => {
   return (
@@ -13,17 +13,17 @@ const CustomModal = ({ title, message, handleClose, handleAction }) => {
         {message && (
           <div
             className={
-              message.error ? "alert alert-danger" : "alert alert-success"
+              message.error ? 'alert alert-danger' : 'alert alert-success'
             }>
             {message.message}
           </div>
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="danger" onClick={handleAction}>
+        <Button variant='danger' onClick={handleAction}>
           Eliminar
         </Button>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button variant='secondary' onClick={handleClose}>
           Cancelar
         </Button>
       </Modal.Footer>

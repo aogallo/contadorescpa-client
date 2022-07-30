@@ -1,18 +1,18 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Login from "../pages/Login";
-import PrivateRoute from "./PrivateRoute";
+import Login from '../pages/Login';
+import PrivateRoute from './PrivateRoute';
 
-import PublicRoute from "./PublicRoute";
-import Layout from "../pages/Layout";
+import PublicRoute from './PublicRoute';
+import Layout from '../pages/Layout';
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route
-          path="/login"
+          path='/login'
           element={
             <PublicRoute>
               <Login />
@@ -20,7 +20,7 @@ const AppRouter = () => {
           }
         />
         <Route
-          path="/*"
+          path='/*'
           element={
             <PrivateRoute>
               <Layout />

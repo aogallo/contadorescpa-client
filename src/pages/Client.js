@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
-import Title from "../components/Title";
+import React, { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import Title from '../components/Title';
 
 const Client = () => {
   // if (loading) return <>Loading.....</>;
 
   const [breadCrumb, setBreadCrumb] = useState([
     {
-      name: "Inicio",
-      path: "/",
+      name: 'Inicio',
+      path: '/',
       active: false,
     },
   ]);
   return (
-    <div className="container-fluid px-4">
-      <Title title="Clientes" breadCrumb={breadCrumb} />
+    <div className='container-fluid px-4'>
+      <Title title='Clientes' breadCrumb={breadCrumb} />
 
       <Outlet />
     </div>

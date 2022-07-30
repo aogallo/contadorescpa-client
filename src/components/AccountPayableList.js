@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
-import { GET_ALL_ACCOUNTS_PAYABLE } from "../graphql/AccountsPayable/queries";
-import { Link, NavLink } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_ALL_ACCOUNTS_PAYABLE } from '../graphql/AccountsPayable/queries';
+import { Link, NavLink } from 'react-router-dom';
 
-import Moment from "react-moment";
+import Moment from 'react-moment';
 
 const AccountPayableList = ({ title }) => {
   const { refetch, loading, data } = useQuery(GET_ALL_ACCOUNTS_PAYABLE);
@@ -15,18 +15,18 @@ const AccountPayableList = ({ title }) => {
 
   return (
     <>
-      <div className="card mb-4">
-        <div className="card-header d-flex justify-content-between">
+      <div className='card mb-4'>
+        <div className='card-header d-flex justify-content-between'>
           <section>
-            <i className="fas fa-table me-1"></i>
+            <i className='fas fa-table me-1'></i>
             {title}
           </section>
-          <Link className="btn btn-primary" to="/cxp/add">
+          <Link className='btn btn-primary' to='/cxp/add'>
             Agregar
           </Link>
         </div>
-        <div className="card-body">
-          <table className="table table-responsive table-striped">
+        <div className='card-body'>
+          <table className='table table-responsive table-striped'>
             <thead>
               <tr>
                 <th>Serie</th>
@@ -49,19 +49,19 @@ const AccountPayableList = ({ title }) => {
                     <td>{accountPayable.serie}</td>
                     <td>{accountPayable.documentNumber}</td>
                     <td>
-                      <Moment format="DD/MM/YYYY">
+                      <Moment format='DD/MM/YYYY'>
                         {accountPayable.documentDate}
                       </Moment>
                     </td>
                     <td>{accountPayable.proveedor.name}</td>
                     <td>{`${accountPayable.account.accountNumber} - ${accountPayable.account.name}`}</td>
-                    <td className="col-sm-2">
+                    <td className='col-sm-2'>
                       <NavLink
-                        className="btn btn-primary btn-sm"
+                        className='btn btn-primary btn-sm'
                         to={`/cxp/edit/${accountPayable.id}`}>
                         Editar
                       </NavLink>
-                      <button type="button" className="btn btn-danger btn-sm">
+                      <button type='button' className='btn btn-danger btn-sm'>
                         Anular
                       </button>
                     </td>

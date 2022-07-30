@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import { useNavigate, useParams } from "react-router-dom";
-import { Formik, Field } from "formik";
-import { GET_ALL_DOCUMENT_TYPES } from "../graphql/DocumentType/queries";
-import { GET_ALL_PROVIDERS } from "../graphql/Provider/queries";
-import { GET_ALL_ACCOUNTS } from "../graphql/Account/queries";
+import React, { useEffect, useState } from 'react';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Formik, Field } from 'formik';
+import { GET_ALL_DOCUMENT_TYPES } from '../graphql/DocumentType/queries';
+import { GET_ALL_PROVIDERS } from '../graphql/Provider/queries';
+import { GET_ALL_ACCOUNTS } from '../graphql/Account/queries';
 import {
   CREATE_ACCOUNT_PAYABLE,
   UPDATE_ACCOUNT_PAYABLE,
-} from "../graphql/AccountsPayable/muations";
+} from '../graphql/AccountsPayable/muations';
 import {
   GET_ACCOUNT_PAYABLE_BY_ID,
   GET_ALL_ACCOUNTS_PAYABLE,
-} from "../graphql/AccountsPayable/queries";
+} from '../graphql/AccountsPayable/queries';
 
 const AccountPayableForm = () => {
   const navigate = useNavigate();
@@ -33,12 +33,12 @@ const AccountPayableForm = () => {
   const [accountPayableInitialValues, setAccountPayableInitialValues] =
     useState({
       id: 0,
-      idDocumentType: "",
-      idProvider: "",
-      idAccount: "",
-      serie: "",
-      documentNumber: "",
-      documentDate: "",
+      idDocumentType: '',
+      idProvider: '',
+      idAccount: '',
+      serie: '',
+      documentNumber: '',
+      documentDate: '',
       exento: 0,
       importation: 0,
       service: 0,
@@ -159,16 +159,16 @@ const AccountPayableForm = () => {
   const validateFields = (values) => {
     try {
       let errors = {};
-      if (!values.serie) errors.serie = "La serie es requerida.";
+      if (!values.serie) errors.serie = 'La serie es requerida.';
 
       if (!values.documentNumber)
-        errors.documentNumber = "El número de documento es requerido.";
+        errors.documentNumber = 'El número de documento es requerido.';
 
       // if (!values.documentType)
-      //   errors.documentType = "El tipo de documento es requerido.";
+      //   errors.documentType = 'El tipo de documento es requerido.';
 
       // if (!values.documentDate)
-      //   errors.documentDate = "La fecha del documento es requerida.";
+      //   errors.documentDate = 'La fecha del documento es requerida.';
 
       return errors;
     } catch (error) {
@@ -192,8 +192,8 @@ const AccountPayableForm = () => {
             accountPayable: {
               id: values.id,
               idDocumentType: values.idDocumentType,
-              idProvider: values.idProvider.split("-")[0].trim(),
-              idAccount: getIdAccount(values.idAccount.split("-")[0].trim()),
+              idProvider: values.idProvider.split('-')[0].trim(),
+              idAccount: getIdAccount(values.idAccount.split('-')[0].trim()),
               serie: values.serie,
               documentNumber: values.documentNumber,
               documentDate: values.documentDate,
@@ -215,8 +215,8 @@ const AccountPayableForm = () => {
             accountPayable: {
               id: 0,
               idDocumentType: values.idDocumentType,
-              idProvider: values.idProvider.split("-")[0].trim(),
-              idAccount: getIdAccount(values.idAccount.split("-")[0].trim()),
+              idProvider: values.idProvider.split('-')[0].trim(),
+              idAccount: getIdAccount(values.idAccount.split('-')[0].trim()),
               serie: values.serie,
               documentNumber: values.documentNumber,
               documentDate: values.documentDate,
@@ -236,7 +236,7 @@ const AccountPayableForm = () => {
       setMessage({
         error: false,
         message: `Cuenta por pagar ${
-          isEditing ? "actualizada" : "creada"
+          isEditing ? 'actualizada' : 'creada'
         } correctamente`,
       });
       setTimeout(() => {
@@ -249,15 +249,15 @@ const AccountPayableForm = () => {
     }
   };
   return (
-    <div className="col-sm-12">
-      <div className="card">
-        <div className="card-header">
-          <button onClick={handleCancel} className="btn">
-            <i className="fas fa-arrow-left"></i>
+    <div className='col-sm-12'>
+      <div className='card'>
+        <div className='card-header'>
+          <button onClick={handleCancel} className='btn'>
+            <i className='fas fa-arrow-left'></i>
           </button>
-          {isEditing ? "Editar" : "Agregar"} cuenta por pagar
+          {isEditing ? 'Editar' : 'Agregar'} cuenta por pagar
         </div>
-        <div className="card-body">
+        <div className='card-body'>
           <Formik
             enableReinitialize
             initialValues={accountPayableInitialValues}
@@ -273,49 +273,49 @@ const AccountPayableForm = () => {
             }) => (
               <form onSubmit={handleSubmit}>
                 {/* Serie */}
-                <div className="input-group mb-3">
-                  <label htmlFor="serie" className="col-sm-2 form-label">
+                <div className='input-group mb-3'>
+                  <label htmlFor='serie' className='col-sm-2 form-label'>
                     Serie
                   </label>
-                  <div className="col-sm-4">
+                  <div className='col-sm-4'>
                     <Field
-                      id="serie"
-                      type="text"
-                      name="serie"
-                      className="form-control"
-                      placeholder="Serie"
+                      id='serie'
+                      type='text'
+                      name='serie'
+                      className='form-control'
+                      placeholder='Serie'
                     />
                   </div>
                   {/* Document Number */}
 
-                  <label htmlFor="serie" className="mx-2 col-sm-1 form-label">
+                  <label htmlFor='serie' className='mx-2 col-sm-1 form-label'>
                     Número
                   </label>
 
                   <Field
-                    id="documentNumber"
-                    name="documentNumber"
-                    type="text"
-                    placeholder="Número del documento"
-                    className="form-control"
+                    id='documentNumber'
+                    name='documentNumber'
+                    type='text'
+                    placeholder='Número del documento'
+                    className='form-control'
                   />
                 </div>
 
                 {(touched.serie && errors.serie) ||
                 (touched.documentNumber && errors.documentNumber) ? (
-                  <div className="container ">
-                    <div className="row">
-                      <div className="col-6">
+                  <div className='container '>
+                    <div className='row'>
+                      <div className='col-6'>
                         {touched.serie && errors.serie && (
-                          <div className="error" style={{ color: "red" }}>
+                          <div className='error' style={{ color: 'red' }}>
                             {errors.serie}
                           </div>
                         )}
                       </div>
 
-                      <div className="col-6">
+                      <div className='col-6'>
                         {touched.documentNumber && errors.documentNumber && (
-                          <div className="error" style={{ color: "red" }}>
+                          <div className='error' style={{ color: 'red' }}>
                             {errors.documentNumber}
                           </div>
                         )}
@@ -324,18 +324,18 @@ const AccountPayableForm = () => {
                   </div>
                 ) : null}
 
-                <div className="input-group mb-3">
+                <div className='input-group mb-3'>
                   {/* Tipo */}
                   <label
-                    htmlFor="type_document"
-                    className="col-sm-2 form-label">
+                    htmlFor='type_document'
+                    className='col-sm-2 form-label'>
                     Tipo de documento
                   </label>
-                  <div className="col-sm-4">
+                  <div className='col-sm-4'>
                     <Field
-                      component="select"
-                      name="idDocumentType"
-                      className="form-control">
+                      component='select'
+                      name='idDocumentType'
+                      className='form-control'>
                       {documentTypes &&
                         documentTypes.map((document) => (
                           <option key={document.id} value={document.id}>
@@ -347,35 +347,35 @@ const AccountPayableForm = () => {
 
                   {/* Document Date */}
                   <label
-                    htmlFor="document_date"
-                    className="mx-2 col-sm-1 form-label">
+                    htmlFor='document_date'
+                    className='mx-2 col-sm-1 form-label'>
                     Fecha
                   </label>
                   <Field
-                    type="date"
-                    id="documentDate"
-                    name="documentDate"
-                    className="form-control"
+                    type='date'
+                    id='documentDate'
+                    name='documentDate'
+                    className='form-control'
                   />
                 </div>
                 {/* Provider */}
-                <div className="mb-3 row">
-                  <label htmlFor="provider" className="col-sm-2 form-label">
+                <div className='mb-3 row'>
+                  <label htmlFor='provider' className='col-sm-2 form-label'>
                     Proveedor
                   </label>
-                  <div className="col-sm-10">
+                  <div className='col-sm-10'>
                     <input
-                      className="form-control"
-                      list="providerList"
-                      id="idProvider"
-                      type="text"
-                      name="idProvider"
+                      className='form-control'
+                      list='providerList'
+                      id='idProvider'
+                      type='text'
+                      name='idProvider'
                       value={values.idProvider}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      placeholder="Buscar proveedor..."
+                      placeholder='Buscar proveedor...'
                     />
-                    <datalist id="providerList">
+                    <datalist id='providerList'>
                       {providers &&
                         providers.map((provider) => (
                           <option
@@ -386,89 +386,89 @@ const AccountPayableForm = () => {
                   </div>
                 </div>
 
-                <div className="input-group mb-3">
+                <div className='input-group mb-3'>
                   {/* Exento */}
-                  <label htmlFor="exento" className="col-sm-2 form-label">
+                  <label htmlFor='exento' className='col-sm-2 form-label'>
                     Exento
                   </label>
-                  <div className="col-sm-4">
+                  <div className='col-sm-4'>
                     <input
                       onChange={handleChangeExento}
                       value={values.exento}
-                      type="number"
-                      id="exento"
-                      name="exento"
-                      min="0"
-                      className="form-control"
+                      type='number'
+                      id='exento'
+                      name='exento'
+                      min='0'
+                      className='form-control'
                     />
                   </div>
                   {/* Import */}
 
                   <label
-                    htmlFor="importation"
-                    className="mx-2 col-sm-1 form-label">
+                    htmlFor='importation'
+                    className='mx-2 col-sm-1 form-label'>
                     Importación
                   </label>
                   <input
-                    type="number"
+                    type='number'
                     value={values.importation}
                     onChange={handleChangeImportation}
-                    id="importation"
-                    name="importation"
-                    className="form-control"
+                    id='importation'
+                    name='importation'
+                    className='form-control'
                   />
                 </div>
 
-                <div className="input-group mb-3">
+                <div className='input-group mb-3'>
                   {/* Service */}
-                  <label htmlFor="service" className="col-sm-2 form-label">
+                  <label htmlFor='service' className='col-sm-2 form-label'>
                     Servicio
                   </label>
-                  <div className="col-sm-4">
+                  <div className='col-sm-4'>
                     <input
                       value={values.service}
                       onChange={handleChangeService}
-                      type="number"
-                      id="service"
-                      name="service"
-                      className="form-control"
+                      type='number'
+                      id='service'
+                      name='service'
+                      className='form-control'
                     />
                   </div>
 
                   {/* Assets (bienes) */}
 
-                  <label htmlFor="assets" className="mx-2 col-sm-1 form-label">
+                  <label htmlFor='assets' className='mx-2 col-sm-1 form-label'>
                     Bienes
                   </label>
 
                   <input
                     value={values.asset}
                     onChange={handleChangeAsset}
-                    type="number"
-                    id="asset"
-                    name="asset"
-                    className="form-control"
+                    type='number'
+                    id='asset'
+                    name='asset'
+                    className='form-control'
                   />
                 </div>
 
                 {/* Account */}
-                <div className="mb-3 row">
-                  <label htmlFor="account" className="col-sm-2 form-label">
+                <div className='mb-3 row'>
+                  <label htmlFor='account' className='col-sm-2 form-label'>
                     Cuenta
                   </label>
-                  <div className="col-sm-10">
+                  <div className='col-sm-10'>
                     <Field
-                      className="form-control"
-                      list="accountList"
-                      id="idAccount"
-                      name="idAccount"
+                      className='form-control'
+                      list='accountList'
+                      id='idAccount'
+                      name='idAccount'
                       value={values.idAccount}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      type="text"
-                      placeholder="Seleccionar cuenta..."
+                      type='text'
+                      placeholder='Seleccionar cuenta...'
                     />
-                    <datalist id="accountList">
+                    <datalist id='accountList'>
                       {accounts &&
                         accounts.map((account) => (
                           <option
@@ -481,49 +481,49 @@ const AccountPayableForm = () => {
                 </div>
 
                 {/* Sub-total */}
-                <div className="mb-3 row">
-                  <label htmlFor="sub_total" className="col-sm-2 form-label">
+                <div className='mb-3 row'>
+                  <label htmlFor='sub_total' className='col-sm-2 form-label'>
                     Sub-total
                   </label>
-                  <div className="col-sm-10">
+                  <div className='col-sm-10'>
                     <Field
-                      type="text"
+                      type='text'
                       readOnly
-                      id="subtotal"
-                      name="subtotal"
-                      className="form-control"
+                      id='subtotal'
+                      name='subtotal'
+                      className='form-control'
                     />
                   </div>
                 </div>
 
                 {/* IVA */}
-                <div className="mb-3 row">
-                  <label htmlFor="iva" className="col-sm-2 form-label">
+                <div className='mb-3 row'>
+                  <label htmlFor='iva' className='col-sm-2 form-label'>
                     IVA
                   </label>
-                  <div className="col-sm-10">
+                  <div className='col-sm-10'>
                     <Field
-                      type="text"
+                      type='text'
                       readOnly
-                      id="iva"
-                      name="iva"
-                      className="form-control"
+                      id='iva'
+                      name='iva'
+                      className='form-control'
                     />
                   </div>
                 </div>
 
                 {/* TOTAL */}
-                <div className="mb-3 row">
-                  <label htmlFor="total" className="col-sm-2 form-label">
+                <div className='mb-3 row'>
+                  <label htmlFor='total' className='col-sm-2 form-label'>
                     Total
                   </label>
-                  <div className="col-sm-10">
+                  <div className='col-sm-10'>
                     <Field
-                      type="text"
+                      type='text'
                       readOnly
-                      id="total"
-                      name="total"
-                      className="form-control"
+                      id='total'
+                      name='total'
+                      className='form-control'
                     />
                   </div>
                 </div>
@@ -532,19 +532,19 @@ const AccountPayableForm = () => {
                 {message && (
                   <div
                     className={`message ${
-                      message.error ? "message-error" : "message-success"
+                      message.error ? 'message-error' : 'message-success'
                     }`}>
                     {message.message}
                   </div>
                 )}
 
                 <>
-                  <button type="submit" className="btn btn-primary">
+                  <button type='submit' className='btn btn-primary'>
                     Guardar
                   </button>
                   <button
-                    type="button"
-                    className="btn btn-danger"
+                    type='button'
+                    className='btn btn-danger'
                     onClick={(e) => handleCancel(e)}>
                     Cancelar
                   </button>

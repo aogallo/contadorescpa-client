@@ -1,8 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
-import * as bootstrap from "bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import {
   ApolloClient,
   InMemoryCache,

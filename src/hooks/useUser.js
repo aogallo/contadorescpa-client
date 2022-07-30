@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useMutation } from "@apollo/client";
-import { LOGIN } from "../graphql/Login/mutations";
+import React, { useState, useEffect } from 'react';
+import { useMutation } from '@apollo/client';
+import { LOGIN } from '../graphql/Login/mutations';
 
 const useUser = () => {
   // const [login, { loading, error, data }] = useMutation(LOGIN);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const loggedUserJson = window.localStorage.getItem("user");
+    const loggedUserJson = window.localStorage.getItem('user');
     if (loggedUserJson) {
       const user = JSON.parse(loggedUserJson);
       setUser(user);
@@ -24,14 +24,14 @@ const useUser = () => {
   //     };
 
   //     setUser(user);
-  //     window.localStorage.removeItem("user");
-  //     window.localStorage.setItem("user", JSON.stringify(user));
+  //     window.localStorage.removeItem('user');
+  //     window.localStorage.setItem('user', JSON.stringify(user));
   //   }
   // };
 
   const logout = () => {
     setUser(null);
-    window.localStorage.removeItem("user");
+    window.localStorage.removeItem('user');
   };
 
   return {
