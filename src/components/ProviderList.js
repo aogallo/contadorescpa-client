@@ -3,11 +3,11 @@ import { Link, NavLink } from 'react-router-dom'
 import { useMutation, useQuery } from '@apollo/client'
 import { GET_ALL_PROVIDERS } from '../graphql/Provider/queries'
 import { DELETE_PROVIDER } from '../graphql/Provider/mutations'
-import CustomModal from './Modal/CustomModal'
+// import CustomModal from './Modal/CustomModal'
 
 const ProviderList = ({ title }) => {
   const { loading, refetch, data } = useQuery(GET_ALL_PROVIDERS)
-  const [deleteProviderById] = useMutation(DELETE_PROVIDER)
+	const [deleteProviderById] = useMutation(DELETE_PROVIDER)
   const [providers, setProviders] = useState([])
   const [providerDelete, setProviderDelete] = useState(null)
   const [showModal, setShowModal] = useState(false)
@@ -29,7 +29,7 @@ const ProviderList = ({ title }) => {
   const handleAction = async () => {
     try {
       await deleteProviderById({
-        variables: { id: providerDelete.id },
+        variables: { id: providerDelete.id }
       })
 
       setMessage({ error: false, message: 'Proveedor eliminado' })
@@ -48,7 +48,7 @@ const ProviderList = ({ title }) => {
     <section className='card mb-4'>
       <section className='card-header d-flex justify-content-between'>
         <section>
-          <i className='fas fa-table me-1'></i>
+          <i className='fas fa-table me-1' />
           {title}
         </section>
         <Link className='btn btn-primary' to='/provider/add'>
@@ -68,34 +68,38 @@ const ProviderList = ({ title }) => {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
-              <tr className='col-sm-6'>
-                <td>Cargarndo...</td>
-              </tr>
-            ) : (
-              providers.map((provider) => (
-                <tr key={provider.id}>
-                  <td>{provider.name}</td>
-                  <td>{provider.nit}</td>
-                  <td>{provider.email}</td>
-                  <td>{provider.address}</td>
-                  <td>{provider.phone}</td>
-                  <td className='col-sm-2'>
-                    <NavLink
-                      to={`/provider/edit/${provider.id}`}
-                      className='btn btn-primary btn-sm'>
-                      Editar
-                    </NavLink>
-                    <button
-                      type='button'
-                      onClick={() => handleShowModal(provider)}
-                      className='btn btn-danger btn-sm'>
-                      Eliminar
-                    </button>
-                  </td>
+            {loading
+              ? (
+                <tr className='col-sm-6'>
+                  <td>Cargarndo...</td>
                 </tr>
-              ))
-            )}
+                )
+              : (
+                  providers.map((provider) => (
+                    <tr key={provider.id}>
+                      <td>{provider.name}</td>
+                      <td>{provider.nit}</td>
+                      <td>{provider.email}</td>
+                      <td>{provider.address}</td>
+                      <td>{provider.phone}</td>
+                      <td className='col-sm-2'>
+                        <NavLink
+                          to={`/provider/edit/${provider.id}`}
+                          className='btn btn-primary btn-sm'
+                        >
+                          Editar
+                        </NavLink>
+                        <button
+                          type='button'
+                          onClick={() => handleShowModal(provider)}
+                          className='btn btn-danger btn-sm'
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
           </tbody>
         </table>
       </section>
@@ -104,7 +108,8 @@ const ProviderList = ({ title }) => {
           title='proveedor'
           message={message}
           handleAction={handleAction}
-          handleClose={handleClose}></CustomModal>
+          handleClose={handleClose}
+        />
       )}
     </section>
   )

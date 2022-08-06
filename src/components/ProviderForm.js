@@ -6,11 +6,11 @@ import { AppContext } from '../context/AppContext'
 
 import {
   GET_ALL_PROVIDERS,
-  GET_PROVIDER_BY_ID,
+  GET_PROVIDER_BY_ID
 } from '../graphql/Provider/queries'
 import {
   CREATE_PROVIDER,
-  UPDATE_PROVIDER,
+  UPDATE_PROVIDER
 } from '../graphql/Provider/mutations'
 
 const ProviderForm = () => {
@@ -29,7 +29,7 @@ const ProviderForm = () => {
     address: '',
     email: '',
     phone: '',
-    creditDay: '',
+    creditDay: ''
   })
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const ProviderForm = () => {
         address: data.getProviderById.address,
         email: data.getProviderById.email,
         phone: data.getProviderById.phone,
-        creditDay: data.getProviderById.creditDay,
+        creditDay: data.getProviderById.creditDay
       })
     }
   }, [data])
@@ -61,7 +61,7 @@ const ProviderForm = () => {
   }
 
   const handleValidate = (values) => {
-    let errors = {}
+    const errors = {}
 
     if (!values.name) {
       errors.name = 'Por favor ingrese el nombre'
@@ -94,10 +94,10 @@ const ProviderForm = () => {
               email: values.email,
               phone: values.phone,
               creditDay: Number(values.creditDay),
-              idCompany: company.id,
-            },
+              idCompany: company.id
+            }
           },
-          refetchQueries: [{ query: GET_ALL_PROVIDERS }],
+          refetchQueries: [{ query: GET_ALL_PROVIDERS }]
         })
       } else {
         await createProvider({
@@ -110,10 +110,10 @@ const ProviderForm = () => {
               email: values.email,
               phone: values.phone,
               creditDay: Number(values.creditDay),
-              idCompany: company.id,
-            },
+              idCompany: company.id
+            }
           },
-          refetchQueries: [{ query: GET_ALL_PROVIDERS }],
+          refetchQueries: [{ query: GET_ALL_PROVIDERS }]
         })
       }
 
@@ -121,7 +121,7 @@ const ProviderForm = () => {
         error: false,
         message: `Proveedor ${
           isEditing ? 'actualizado' : 'creado'
-        } correctamente`,
+        } correctamente`
       })
       setTimeout(() => {
         setMessage(null)
@@ -139,7 +139,7 @@ const ProviderForm = () => {
         <div className='card'>
           <div className='card-header'>
             <button onClick={handleCancel} className='btn'>
-              <i className='fas fa-arrow-left'></i>
+              <i className='fas fa-arrow-left' />
             </button>
             {isEditing ? 'Editar' : 'Agregar'} Proveedor
           </div>
@@ -148,7 +148,8 @@ const ProviderForm = () => {
               enableReinitialize
               initialValues={providerValues}
               validate={handleValidate}
-              onSubmit={handleCreateProvider}>
+              onSubmit={handleCreateProvider}
+            >
               {({ errors, touched }) => (
                 <Form>
                   {/* Name */}
@@ -257,21 +258,23 @@ const ProviderForm = () => {
                     <div
                       className={`message ${
                         message.error ? 'message-error' : 'message-success'
-                      }`}>
+                      }`}
+                    >
                       {message.message}
                     </div>
                   )}
                   <div className=''>
                     <button
-                      type='button'
                       type='submit'
-                      className='btn btn-primary'>
+                      className='btn btn-primary'
+                    >
                       Guardar
                     </button>
                     <button
                       type='button'
                       onClick={handleCancel}
-                      className='btn btn-danger'>
+                      className='btn btn-danger'
+                    >
                       Cancelar
                     </button>
                   </div>

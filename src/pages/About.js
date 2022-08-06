@@ -16,14 +16,15 @@ const About = () => {
     {
       name: 'Inicio',
       path: '/',
-      active: false,
-    },
+      active: false
+    }
   ])
 
   useEffect(() => {
     if (data) {
       setCompanies(data.getAllCompanies)
       setFilterCompanies(data.getAllCompanies)
+			setBreadCrumb('') 
     }
   }, [data])
 
@@ -50,7 +51,7 @@ const About = () => {
   const handleSelectCompany = (company) => {
     saveCompany({
       id: company.id,
-      name: company.name,
+      name: company.name
     })
     navigate('/home')
   }
@@ -62,7 +63,7 @@ const About = () => {
       <div className='form-inline input-group'>
         <div className='input-group-prepend'>
           <span className='input-group-text' id='basic-addon1'>
-            <i className='fas fa-search'></i>
+            <i className='fas fa-search' />
           </span>
         </div>
         <input
@@ -81,7 +82,8 @@ const About = () => {
             <div
               key={company.id}
               className='col-sm-4'
-              onClick={() => handleSelectCompany(company)}>
+              onClick={() => handleSelectCompany(company)}
+            >
               <div className='card w-20 mt-2 card-custom'>
                 <div className='card-header'>{company.name}</div>
                 <div className='card-body'>

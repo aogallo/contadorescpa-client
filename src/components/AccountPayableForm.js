@@ -7,11 +7,11 @@ import { GET_ALL_PROVIDERS } from '../graphql/Provider/queries'
 import { GET_ALL_ACCOUNTS } from '../graphql/Account/queries'
 import {
   CREATE_ACCOUNT_PAYABLE,
-  UPDATE_ACCOUNT_PAYABLE,
+  UPDATE_ACCOUNT_PAYABLE
 } from '../graphql/AccountsPayable/muations'
 import {
   GET_ACCOUNT_PAYABLE_BY_ID,
-  GET_ALL_ACCOUNTS_PAYABLE,
+  GET_ALL_ACCOUNTS_PAYABLE
 } from '../graphql/AccountsPayable/queries'
 
 const AccountPayableForm = () => {
@@ -45,7 +45,7 @@ const AccountPayableForm = () => {
       asset: 0,
       subtotal: 0,
       iva: 0,
-      total: 0,
+      total: 0
     })
 
   useEffect(() => {
@@ -62,19 +62,19 @@ const AccountPayableForm = () => {
         parseFloat(accountPayableInitialValues.exento) +
         parseFloat(accountPayableInitialValues.importation) +
         parseFloat(accountPayableInitialValues.service) +
-        parseFloat(accountPayableInitialValues.asset),
+        parseFloat(accountPayableInitialValues.asset)
     })
   }, [
     accountPayableInitialValues.exento,
     accountPayableInitialValues.importation,
     accountPayableInitialValues.service,
-    accountPayableInitialValues.asset,
+    accountPayableInitialValues.asset
   ])
 
   useEffect(() => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,
-      iva: accountPayableInitialValues.total * 0.12,
+      iva: accountPayableInitialValues.total * 0.12
     })
   }, [accountPayableInitialValues.total])
 
@@ -82,21 +82,21 @@ const AccountPayableForm = () => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,
       subtotal:
-        accountPayableInitialValues.total - accountPayableInitialValues.iva,
+        accountPayableInitialValues.total - accountPayableInitialValues.iva
     })
   }, [accountPayableInitialValues.iva])
 
   const handleChangeService = ({ target }) => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,
-      service: parseFloat(target.value) || 0,
+      service: parseFloat(target.value) || 0
     })
   }
 
   const handleChangeAsset = ({ target }) => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,
-      asset: parseFloat(target.value) || 0,
+      asset: parseFloat(target.value) || 0
     })
   }
 
@@ -104,7 +104,7 @@ const AccountPayableForm = () => {
     setAccountPayableInitialValues((prevState) => {
       return {
         ...accountPayableInitialValues,
-        exento: parseFloat(target.value) || 0,
+        exento: parseFloat(target.value) || 0
       }
     })
   }
@@ -113,7 +113,7 @@ const AccountPayableForm = () => {
     setAccountPayableInitialValues((prevState) => {
       return {
         ...accountPayableInitialValues,
-        importation: parseFloat(target.value) || 0,
+        importation: parseFloat(target.value) || 0
       }
     })
   }
@@ -140,7 +140,7 @@ const AccountPayableForm = () => {
         asset: accountPayableById.getAccountPayableById.asset,
         subtotal: accountPayableById.getAccountPayableById.subtotal,
         iva: accountPayableById.getAccountPayableById.iva,
-        total: accountPayableById.getAccountPayableById.total,
+        total: accountPayableById.getAccountPayableById.total
       })
     }
   }, [accountPayableById])
@@ -158,12 +158,12 @@ const AccountPayableForm = () => {
 
   const validateFields = (values) => {
     try {
-      let errors = {}
+      const errors = {}
       if (!values.serie) errors.serie = 'La serie es requerida.'
 
-      if (!values.documentNumber)
+      if (!values.documentNumber) {
         errors.documentNumber = 'El número de documento es requerido.'
-
+      }
       // if (!values.documentType)
       //   errors.documentType = 'El tipo de documento es requerido.'
 
@@ -186,7 +186,7 @@ const AccountPayableForm = () => {
   const handleCreateAccountPayable = async (values, { resetForm }) => {
     try {
       if (isEditing) {
-        //EDIT
+        // EDIT
         await updateAccountPayable({
           variables: {
             accountPayable: {
@@ -203,13 +203,13 @@ const AccountPayableForm = () => {
               asset: values.asset.toString(),
               subtotal: values.subtotal.toString(),
               iva: values.iva.toString(),
-              total: values.total.toString(),
-            },
+              total: values.total.toString()
+            }
           },
-          refetchQueries: [{ query: GET_ALL_ACCOUNTS_PAYABLE }],
+          refetchQueries: [{ query: GET_ALL_ACCOUNTS_PAYABLE }]
         })
       } else {
-        //ADD
+        // ADD
         await createAccountPayable({
           variables: {
             accountPayable: {
@@ -226,10 +226,10 @@ const AccountPayableForm = () => {
               asset: values.asset.toString(),
               subtotal: values.subtotal.toString(),
               iva: values.iva.toString(),
-              total: values.total.toString(),
-            },
+              total: values.total.toString()
+            }
           },
-          refetchQueries: [{ query: GET_ALL_ACCOUNTS_PAYABLE }],
+          refetchQueries: [{ query: GET_ALL_ACCOUNTS_PAYABLE }]
         })
       }
 
@@ -237,7 +237,7 @@ const AccountPayableForm = () => {
         error: false,
         message: `Cuenta por pagar ${
           isEditing ? 'actualizada' : 'creada'
-        } correctamente`,
+        } correctamente`
       })
       setTimeout(() => {
         setMessage(null)
@@ -253,7 +253,7 @@ const AccountPayableForm = () => {
       <div className='card'>
         <div className='card-header'>
           <button onClick={handleCancel} className='btn'>
-            <i className='fas fa-arrow-left'></i>
+            <i className='fas fa-arrow-left' />
           </button>
           {isEditing ? 'Editar' : 'Agregar'} cuenta por pagar
         </div>
@@ -262,14 +262,15 @@ const AccountPayableForm = () => {
             enableReinitialize
             initialValues={accountPayableInitialValues}
             validate={validateFields}
-            onSubmit={handleCreateAccountPayable}>
+            onSubmit={handleCreateAccountPayable}
+          >
             {({
               values,
               errors,
               touched,
               handleChange,
               handleBlur,
-              handleSubmit,
+              handleSubmit
             }) => (
               <form onSubmit={handleSubmit}>
                 {/* Serie */}
@@ -302,40 +303,44 @@ const AccountPayableForm = () => {
                 </div>
 
                 {(touched.serie && errors.serie) ||
-                (touched.documentNumber && errors.documentNumber) ? (
-                  <div className='container '>
-                    <div className='row'>
-                      <div className='col-6'>
-                        {touched.serie && errors.serie && (
-                          <div className='error' style={{ color: 'red' }}>
-                            {errors.serie}
-                          </div>
-                        )}
-                      </div>
+                (touched.documentNumber && errors.documentNumber)
+                  ? (
+                    <div className='container '>
+                      <div className='row'>
+                        <div className='col-6'>
+                          {touched.serie && errors.serie && (
+                            <div className='error' style={{ color: 'red' }}>
+                              {errors.serie}
+                            </div>
+                          )}
+                        </div>
 
-                      <div className='col-6'>
-                        {touched.documentNumber && errors.documentNumber && (
-                          <div className='error' style={{ color: 'red' }}>
-                            {errors.documentNumber}
-                          </div>
-                        )}
+                        <div className='col-6'>
+                          {touched.documentNumber && errors.documentNumber && (
+                            <div className='error' style={{ color: 'red' }}>
+                              {errors.documentNumber}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ) : null}
+                    )
+                  : null}
 
                 <div className='input-group mb-3'>
                   {/* Tipo */}
                   <label
                     htmlFor='type_document'
-                    className='col-sm-2 form-label'>
+                    className='col-sm-2 form-label'
+                  >
                     Tipo de documento
                   </label>
                   <div className='col-sm-4'>
                     <Field
                       component='select'
                       name='idDocumentType'
-                      className='form-control'>
+                      className='form-control'
+                    >
                       {documentTypes &&
                         documentTypes.map((document) => (
                           <option key={document.id} value={document.id}>
@@ -348,7 +353,8 @@ const AccountPayableForm = () => {
                   {/* Document Date */}
                   <label
                     htmlFor='document_date'
-                    className='mx-2 col-sm-1 form-label'>
+                    className='mx-2 col-sm-1 form-label'
+                  >
                     Fecha
                   </label>
                   <Field
@@ -380,7 +386,8 @@ const AccountPayableForm = () => {
                         providers.map((provider) => (
                           <option
                             value={`${provider.id} - ${provider.name}`}
-                            key={provider.id}></option>
+                            key={provider.id}
+                          />
                         ))}
                     </datalist>
                   </div>
@@ -406,7 +413,8 @@ const AccountPayableForm = () => {
 
                   <label
                     htmlFor='importation'
-                    className='mx-2 col-sm-1 form-label'>
+                    className='mx-2 col-sm-1 form-label'
+                  >
                     Importación
                   </label>
                   <input
@@ -533,7 +541,8 @@ const AccountPayableForm = () => {
                   <div
                     className={`message ${
                       message.error ? 'message-error' : 'message-success'
-                    }`}>
+                    }`}
+                  >
                     {message.message}
                   </div>
                 )}
@@ -545,7 +554,8 @@ const AccountPayableForm = () => {
                   <button
                     type='button'
                     className='btn btn-danger'
-                    onClick={(e) => handleCancel(e)}>
+                    onClick={(e) => handleCancel(e)}
+                  >
                     Cancelar
                   </button>
                 </>

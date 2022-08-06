@@ -5,7 +5,7 @@ export const AppContext = createContext()
 
 const companyInitial = {
   id: null,
-  name: '',
+  name: ''
 }
 
 const init = () => {

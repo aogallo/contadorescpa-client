@@ -8,7 +8,7 @@ import { GET_ALL_CLIENTS } from '../graphql/Client/queries'
 import { DELETE_CLIENT } from '../graphql/Client/mutations'
 
 const ClientList = ({ title }) => {
-  const { refetch, error, data } = useQuery(GET_ALL_CLIENTS)
+  const { refetch, data } = useQuery(GET_ALL_CLIENTS)
   const [deleteClientById] = useMutation(DELETE_CLIENT)
   const [clients, setClients] = useState([])
   const [clientDelete, setClientDelete] = useState(null)
@@ -31,7 +31,7 @@ const ClientList = ({ title }) => {
   const handleAction = async () => {
     try {
       await deleteClientById({
-        variables: { id: clientDelete.id },
+        variables: { id: clientDelete.id }
       })
 
       setMessage({ error: false, message: 'Cliente eliminado' })
@@ -50,7 +50,7 @@ const ClientList = ({ title }) => {
       <div className='card mb-4'>
         <div className='card-header d-flex justify-content-between'>
           <section>
-            <i className='fas fa-table me-1'></i>
+            <i className='fas fa-table me-1' />
             {title}
           </section>
           <Link className='btn btn-primary' to='/client/add'>
@@ -81,13 +81,15 @@ const ClientList = ({ title }) => {
                     <NavLink
                       type='button'
                       to={`/client/edit/${client.id}`}
-                      className='btn btn-primary btn-sm'>
+                      className='btn btn-primary btn-sm'
+                    >
                       Editar
                     </NavLink>
                     <button
                       type='button'
                       onClick={() => handleShowModal(client)}
-                      className='btn btn-danger btn-sm'>
+                      className='btn btn-danger btn-sm'
+                    >
                       Eliminar
                     </button>
                   </td>
@@ -102,7 +104,8 @@ const ClientList = ({ title }) => {
           title='cliente'
           message={message}
           handleAction={handleAction}
-          handleClose={handleClose}></CustomModal>
+          handleClose={handleClose}
+        />
       )}
     </>
   )

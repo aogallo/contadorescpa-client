@@ -15,7 +15,7 @@ const Error404 = () => {
                     This requested URL was not found on this server.
                   </p>
                   <a href='index.html'>
-                    <i className='fas fa-arrow-left me-1'></i>
+                    <i className='fas fa-arrow-left me-1' />
                     Return to Dashboard
                   </a>
                 </div>

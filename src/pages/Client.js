@@ -9,8 +9,8 @@ const Client = () => {
     {
       name: 'Inicio',
       path: '/',
-      active: false,
-    },
+      active: false
+    }
   ])
   return (
     <div className='container-fluid px-4'>

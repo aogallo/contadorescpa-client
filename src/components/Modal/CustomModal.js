@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 
 const CustomModal = ({ title, message, handleClose, handleAction }) => {
   return (
-    <Modal show={true} onHide={handleClose}>
+    <Modal show onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Eliminación de {title}</Modal.Title>
       </Modal.Header>
@@ -14,7 +14,8 @@ const CustomModal = ({ title, message, handleClose, handleAction }) => {
           <div
             className={
               message.error ? 'alert alert-danger' : 'alert alert-success'
-            }>
+            }
+          >
             {message.message}
           </div>
         )}

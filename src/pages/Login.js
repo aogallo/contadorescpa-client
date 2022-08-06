@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
@@ -17,7 +17,7 @@ const Login = () => {
   const initialValues = { username: '', password: '' }
 
   const validateFields = (valores) => {
-    let errores = {}
+    const errores = {}
 
     if (!valores.username) {
       errores.username = 'Por favor ingresa su usuario'
@@ -33,17 +33,17 @@ const Login = () => {
   const handleLogin = async (valores, { resetForm }) => {
     try {
       await login({
-        variables: { username: valores.username, password: valores.password },
+        variables: { username: valores.username, password: valores.password }
       })
 
       if (data) {
         const user = {
           token: data.login.token,
-          ...data.login.user,
+          ...data.login.user
         }
         dispatch({
           type: types.login,
-          payload: user,
+          payload: user
         })
         resetForm()
         navigate('/')
@@ -53,7 +53,7 @@ const Login = () => {
       setTimeout(() => {
         setMessageError('')
       }, 5000)
-      console.log(`error`, error)
+      console.log('error', error)
     }
   }
 
@@ -75,13 +75,14 @@ const Login = () => {
                     <Formik
                       initialValues={initialValues}
                       validate={validateFields}
-                      onSubmit={handleLogin}>
+                      onSubmit={handleLogin}
+                    >
                       {({
                         values,
                         touched,
                         handleChange,
                         handleBlur,
-                        errors,
+                        errors
                       }) => (
                         <Form className='formulario'>
                           <div className='form-floating mb-3'>
@@ -138,9 +139,11 @@ const Login = () => {
                     {/* /* /**FINAL DE FORMULARIO */}
                   </div>
                   <div className='card-footer text-center py-3'>
-                    {messageError ? (
-                      <p style={{ color: 'red' }}>{messageError}</p>
-                    ) : null}
+                    {messageError
+                      ? (
+                        <p style={{ color: 'red' }}>{messageError}</p>
+                        )
+                      : null}
                   </div>
                 </div>
               </div>
@@ -156,9 +159,9 @@ const Login = () => {
                 Copyright &copy Contadores CPA 2022
               </div>
               <div>
-                <a href='#'></a>
+                <a href='#' />
                 &middot
-                <a href='#'></a>
+                <a href='#' />
               </div>
             </div>
           </div>

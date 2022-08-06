@@ -25,7 +25,8 @@
     "build": "NODE_ENV=production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "PORT=3001 NODE_ENV=development npm start"
+		"fixlinter": "standard --fix",
+    "dev": "PORT=3001 NODE_ENV=development react-scripts start"
   },
   "eslintConfig": {
     "extends": [
@@ -33,6 +34,12 @@
       "react-app/jest"
     ]
   },
+	"standard": {
+		"env": ["jest"],
+		"globals": [
+			"localStorage"
+		]
+	},
   "browserslist": {
     "production": [
       ">0.2%",

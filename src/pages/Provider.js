@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Title from '../components/Title'
 
@@ -8,8 +7,8 @@ const Provider = () => {
     {
       name: 'Inicio',
       path: '/',
-      active: false,
-    },
+      active: false
+    }
   ])
 
   return (

@@ -25,7 +25,7 @@ const Layout = () => {
       <div id='layoutSidenav'>
         <div id='layoutSidenav_content'>
           <Routes>
-            <Route path='/' element={<About />}></Route>
+            <Route path='/' element={<About />} />
             <Route path='/home' element={<Home />} />
             <Route path='/client' element={<Client />}>
               <Route

@@ -23,7 +23,7 @@ const ClientForm = () => {
     nit: '',
     address: '',
     email: '',
-    phone: '',
+    phone: ''
   })
 
   useEffect(() => {
@@ -43,13 +43,13 @@ const ClientForm = () => {
         nit: data.getClientById.nit,
         address: data.getClientById.address,
         email: data.getClientById.email,
-        phone: data.getClientById.phone,
+        phone: data.getClientById.phone
       })
     }
   }, [data])
 
   const validateFields = (values) => {
-    let errors = {}
+    const errors = {}
 
     if (!values.name) {
       errors.name = ' Por favor ingresa tu nombre'
@@ -99,10 +99,10 @@ const ClientForm = () => {
               address: values.address,
               email: values.email,
               phone: values.phone,
-              idCompany: company.id,
-            },
+              idCompany: company.id
+            }
           },
-          refetchQueries: [{ query: GET_ALL_CLIENTS }],
+          refetchQueries: [{ query: GET_ALL_CLIENTS }]
         })
       } else {
         await createClient({
@@ -114,11 +114,11 @@ const ClientForm = () => {
               address: values.address,
               email: values.email,
               phone: values.phone,
-              idCompany: company.id,
-            },
+              idCompany: company.id
+            }
           },
           awaitRefetchQueries: true,
-          refetchQueries: [{ query: GET_ALL_CLIENTS }],
+          refetchQueries: [{ query: GET_ALL_CLIENTS }]
         })
       }
 
@@ -126,7 +126,7 @@ const ClientForm = () => {
         error: false,
         message: `Cliente ${
           isEditing ? 'actualizado' : 'creado'
-        } correctamente`,
+        } correctamente`
       })
       setTimeout(() => {
         setMessage(null)
@@ -147,7 +147,7 @@ const ClientForm = () => {
         <div className='card'>
           <div className='card-header'>
             <button onClick={handleCancel} className='btn'>
-              <i className='fas fa-arrow-left'></i>
+              <i className='fas fa-arrow-left' />
             </button>
             {isEditing ? 'Editar' : 'Agregar'} Cliente
           </div>
@@ -158,14 +158,15 @@ const ClientForm = () => {
               enableReinitialize
               initialValues={clientValues}
               validate={validateFields}
-              onSubmit={handleCreateClient}>
+              onSubmit={handleCreateClient}
+            >
               {({
                 values,
                 touched,
                 handleSubmit,
                 handleChange,
                 errors,
-                handleBlur,
+                handleBlur
               }) => (
                 <form className='agregCliente' onSubmit={handleSubmit}>
                   {/* Name */}
@@ -293,7 +294,8 @@ const ClientForm = () => {
                     <div
                       className={`message ${
                         message.error ? 'message-error' : 'message-success'
-                      }`}>
+                      }`}
+                    >
                       {message.message}
                     </div>
                   )}
@@ -305,7 +307,8 @@ const ClientForm = () => {
                     <button
                       type='button'
                       className='btn btn-danger'
-                      onClick={handleCancel}>
+                      onClick={handleCancel}
+                    >
                       Cancelar
                     </button>
                   </div>

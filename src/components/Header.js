@@ -7,7 +7,7 @@ const Header = () => {
   const { company, dispatch } = useContext(AppContext)
   const handleLogout = () => {
     dispatch({
-      type: types.logout,
+      type: types.logout
     })
   }
 
@@ -21,8 +21,9 @@ const Header = () => {
       <button
         className='btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0'
         id='sidebarToggle'
-        href='#!'>
-        <i className='fas fa-bars'></i>
+        href='#!'
+      >
+        <i className='fas fa-bars' />
       </button>
       {/* <!-- Navbar Search--> */}
       <div className='navbar-nav btn-dark ms-auto'>
@@ -54,12 +55,14 @@ const Header = () => {
             href='#'
             role='button'
             data-bs-toggle='dropdown'
-            aria-expanded='false'>
-            <i className='fas fa-user fa-fw'></i>
+            aria-expanded='false'
+          >
+            <i className='fas fa-user fa-fw' />
           </a>
           <ul
             className='dropdown-menu dropdown-menu-end'
-            aria-labelledby='navbarDropdown'>
+            aria-labelledby='navbarDropdown'
+          >
             <li>
               <a className='dropdown-item' href='#!'>
                 Configuraciones

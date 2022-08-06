@@ -6,7 +6,7 @@ import { Link, NavLink } from 'react-router-dom'
 import Moment from 'react-moment'
 
 const AccountPayableList = ({ title }) => {
-  const { refetch, loading, data } = useQuery(GET_ALL_ACCOUNTS_PAYABLE)
+  const { loading, data } = useQuery(GET_ALL_ACCOUNTS_PAYABLE)
   const [accountsPayable, setAccountsPayable] = useState([])
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const AccountPayableList = ({ title }) => {
       <div className='card mb-4'>
         <div className='card-header d-flex justify-content-between'>
           <section>
-            <i className='fas fa-table me-1'></i>
+            <i className='fas fa-table me-1' />
             {title}
           </section>
           <Link className='btn btn-primary' to='/cxp/add'>
@@ -38,12 +38,14 @@ const AccountPayableList = ({ title }) => {
               </tr>
             </thead>
             <tbody>
-              {loading ? (
-                <tr>
-                  <td>Cargando....</td>
-                </tr>
-              ) : (
-                accountsPayable &&
+              {loading
+                ? (
+                  <tr>
+                    <td>Cargando....</td>
+                  </tr>
+                  )
+                : (
+                    accountsPayable &&
                 accountsPayable.map((accountPayable) => (
                   <tr key={accountPayable.id}>
                     <td>{accountPayable.serie}</td>
@@ -58,7 +60,8 @@ const AccountPayableList = ({ title }) => {
                     <td className='col-sm-2'>
                       <NavLink
                         className='btn btn-primary btn-sm'
-                        to={`/cxp/edit/${accountPayable.id}`}>
+                        to={`/cxp/edit/${accountPayable.id}`}
+                      >
                         Editar
                       </NavLink>
                       <button type='button' className='btn btn-danger btn-sm'>
@@ -67,7 +70,7 @@ const AccountPayableList = ({ title }) => {
                     </td>
                   </tr>
                 ))
-              )}
+                  )}
             </tbody>
           </table>
         </div>

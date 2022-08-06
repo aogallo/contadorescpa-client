@@ -7,7 +7,8 @@ const SideBar = () => {
       <div id='layoutSidenav_nav'>
         <nav
           className='sb-sidenav accordion sb-sidenav-dark'
-          id='sidenavAccordion'>
+          id='sidenavAccordion'
+        >
           <div className='sb-sidenav-menu'>
             <div className='nav'>
               {/* <div className='sb-sidenav-menu-heading'>Core</div> */}
@@ -17,20 +18,22 @@ const SideBar = () => {
                 data-bs-toggle='collapse'
                 data-bs-target='#collapseLayouts'
                 aria-expanded='false'
-                aria-controls='collapseLayouts'>
+                aria-controls='collapseLayouts'
+              >
                 <div className='sb-nav-link-icon'>
-                  <i className='fas fa-columns'></i>
+                  <i className='fas fa-columns' />
                 </div>
                 Catalogos
                 <div className='sb-sidenav-collapse-arrow'>
-                  <i className='fas fa-angle-down'></i>
+                  <i className='fas fa-angle-down' />
                 </div>
               </a>
               <div
                 className='collapse'
                 id='collapseLayouts'
                 aria-labelledby='headingOne'
-                data-bs-parent='#sidenavAccordion'>
+                data-bs-parent='#sidenavAccordion'
+              >
                 <nav className='sb-sidenav-menu-nested nav'>
                   <NavLink className='nav-link' to='/client'>
                     Clientes
@@ -44,7 +47,7 @@ const SideBar = () => {
               <div className='sb-sidenav-menu-heading'>Operaciones</div>
               <NavLink className='nav-link' to='/cxp'>
                 <div className='sb-nav-link-icon'>
-                  <i className='fas fa-chart-area'></i>
+                  <i className='fas fa-chart-area' />
                 </div>
                 Cuentas por pagar
               </NavLink>
