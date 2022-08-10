@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useMutation, useQuery } from '@apollo/client'
 
-import CustomModal from './Modal/CustomModal'
+// import CustomModal from './Modal/CustomModal'
 
 import { GET_ALL_CLIENTS } from '../graphql/Client/queries'
 import { DELETE_CLIENT } from '../graphql/Client/mutations'
@@ -100,12 +100,13 @@ const ClientList = ({ title }) => {
         </div>
       </div>
       {showModal && (
-        <CustomModal
-          title='cliente'
-          message={message}
-          handleAction={handleAction}
-          handleClose={handleClose}
-        />
+        //<CustomModal
+        //  title='cliente'
+        //  message={message}
+        //  handleAction={handleAction}
+        //  handleClose={handleClose}
+        ///>
+        <h1>modal</h1>
       )}
     </>
   )

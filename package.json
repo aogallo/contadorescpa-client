@@ -4,6 +4,10 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.7",
+    "@fortawesome/fontawesome-svg-core": "^6.1.2",
+    "@fortawesome/free-regular-svg-icons": "^6.1.2",
+    "@fortawesome/free-solid-svg-icons": "^6.1.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@popperjs/core": "^2.11.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -25,7 +29,7 @@
     "build": "NODE_ENV=production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-		"fixlinter": "standard --fix",
+    "fixlinter": "standard --fix",
     "dev": "PORT=3001 NODE_ENV=development react-scripts start"
   },
   "eslintConfig": {
@@ -34,12 +38,14 @@
       "react-app/jest"
     ]
   },
-	"standard": {
-		"env": ["jest"],
-		"globals": [
-			"localStorage"
-		]
-	},
+  "standard": {
+    "env": [
+      "jest"
+    ],
+    "globals": [
+      "localStorage"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
