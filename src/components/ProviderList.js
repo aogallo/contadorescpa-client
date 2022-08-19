@@ -103,14 +103,6 @@ const ProviderList = ({ title }) => {
           </tbody>
         </table>
       </section>
-      {showModal && (
-        <CustomModal
-          title='proveedor'
-          message={message}
-          handleAction={handleAction}
-          handleClose={handleClose}
-        />
-      )}
     </section>
   )
 }

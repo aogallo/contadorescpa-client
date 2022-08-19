@@ -8,7 +8,7 @@ import { AppContext } from '../context/AppContext'
 import { types } from '../types/types'
 import { Formik, Form } from 'formik'
 
-import LoginForm from '../components/LoginForm'
+import LoginForm from 'components/LoginForm'
 import './Login/Login.css'
 
 const Login = () => {
@@ -32,12 +32,14 @@ const Login = () => {
     return errores
   }
 
-  const handleLogin = async (valores, { resetForm }) => {
+  const handleLogin = async (valores) => {
     try {
+      console.log('handleLogin', valores)
       await login({
         variables: { username: valores.username, password: valores.password }
       })
 
+      console.log('data', data)
       if (data) {
         const user = {
           token: data.login.token,
@@ -47,8 +49,8 @@ const Login = () => {
           type: types.login,
           payload: user
         })
-        resetForm()
-        navigate('/')
+        //resetForm()
+        // navigate('/')
       }
     } catch (error) {
       setMessageError(error.message)
@@ -60,7 +62,7 @@ const Login = () => {
   }
 
   return (
-    <LoginForm />
+    <LoginForm handleLogin={handleLogin}/>
   )
 }
 

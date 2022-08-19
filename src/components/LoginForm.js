@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const LoginForm = () => {
+const LoginForm = (props) => {
   const navigate = useNavigate()
   const [username, setUserName] = useState('') 
   const [password, setPassword] = useState('')
@@ -17,7 +17,15 @@ const LoginForm = () => {
     if (name === 'password') {
       setPassword(value)
     }
-    navigate('/')
+    // navigate('/')
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    props.handleLogin({
+      username: username,
+      password
+    })
   }
   
   return (
@@ -57,7 +65,7 @@ const LoginForm = () => {
         </section>
         
         <section className='form-group'>
-          <button>Ingresar</button>
+          <button type='submit' onClick={handleSubmit}>Ingresar</button>
         </section>
       </form>
     </div>

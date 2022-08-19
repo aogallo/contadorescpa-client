@@ -1,65 +1,25 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import './SideBar/SideBar.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const SideBar = () => {
   return (
-    <aside id='layoutSidenav'>
-      <div id='layoutSidenav_nav'>
-        <nav
-          className='sb-sidenav accordion sb-sidenav-dark'
-          id='sidenavAccordion'
-        >
-          <div className='sb-sidenav-menu'>
-            <div className='nav'>
-              {/* <div className='sb-sidenav-menu-heading'>Core</div> */}
-              <a
-                className='nav-link collapsed'
-                href='#'
-                data-bs-toggle='collapse'
-                data-bs-target='#collapseLayouts'
-                aria-expanded='false'
-                aria-controls='collapseLayouts'
-              >
-                <div className='sb-nav-link-icon'>
-                  <i className='fas fa-columns' />
-                </div>
-                Catalogos
-                <div className='sb-sidenav-collapse-arrow'>
-                  <i className='fas fa-angle-down' />
-                </div>
-              </a>
-              <div
-                className='collapse'
-                id='collapseLayouts'
-                aria-labelledby='headingOne'
-                data-bs-parent='#sidenavAccordion'
-              >
-                <nav className='sb-sidenav-menu-nested nav'>
-                  <NavLink className='nav-link' to='/client'>
-                    Clientes
-                  </NavLink>
-                  <NavLink className='nav-link' to='/provider'>
-                    Proveedores
-                  </NavLink>
-                </nav>
-              </div>
-
-              <div className='sb-sidenav-menu-heading'>Operaciones</div>
-              <NavLink className='nav-link' to='/cxp'>
-                <div className='sb-nav-link-icon'>
-                  <i className='fas fa-chart-area' />
-                </div>
-                Cuentas por pagar
-              </NavLink>
-            </div>
-          </div>
-          {/* <div className='sb-sidenav-footer'>
-            <div className='small'>Logged in as:</div>
-            Start Bootstrap
-          </div> */}
-        </nav>
+    <section id="menu">
+      <div className="logo">
+        <img src='https://marketplace.canva.com/EAE6OJ2qP8U/1/0/1600w/canva-gamer-with-glasses-character-twitch-profile-picture-CVfgWIJGgRo.jpg' alt='' />
+        <h2>Contadores</h2>
       </div>
-    </aside>
+      <div className='items'>
+        <li><i><FontAwesomeIcon icon='fa-user-secret'/></i><a hrfe='#'>Dashboard</a></li>
+        <li><i><FontAwesomeIcon icon='fa-user-secret'/></i><a hrfe='#'>Dashboard</a></li>
+        <li><i><FontAwesomeIcon icon='fa-user-secret'/></i><a hrfe='#'>Dashboard</a></li>
+        <li><i><FontAwesomeIcon icon='fa-user-secret'/></i><a hrfe='#'>Dashboard</a></li>
+        <li><i><FontAwesomeIcon icon='fa-user-secret'/></i><a hrfe='#'>Dashboard</a></li>
+        <li><i><FontAwesomeIcon icon='fa-user-secret'/></i><a hrfe='#'>Dashboard</a></li>
+        <li><i><FontAwesomeIcon icon='fa-user-secret'/></i><a hrfe='#'>Dashboard</a></li>
+      </div>
+    </section>
   )
 }
 
