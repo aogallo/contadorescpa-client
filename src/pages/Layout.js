@@ -2,7 +2,6 @@ import React, { lazy, Suspense } from 'react'
 
 import { Route, Routes } from 'react-router-dom'
 
-import SideBar from '../components/SideBar'
 import Header from '../components/Header'
 import Provider from '../pages/Provider'
 import ClientForm from '../components/ClientForm'
@@ -18,10 +17,11 @@ const Layout = () => {
   const AboutView = lazy(async () => await import('../pages/About'))
   const ClientView = lazy(async () => await import('../pages/Client'))
   const ClientListView = lazy(async () => await import('../components/ClientList'))
+  const SideBarComponent = lazy(async () => await import('../components/SideBar'))
   return (
     <Suspense fallback={<div>loagind....</div>} >
       <div className='principal-content'>
-        <SideBar />
+        <SideBarComponent />
         <section id='interface'>
           <Header />
           <h3 className='title-page'>Dashbord</h3>
