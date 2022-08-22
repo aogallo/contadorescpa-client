@@ -7,6 +7,9 @@ import { useMutation, useQuery } from '@apollo/client'
 import { GET_ALL_CLIENTS } from '../graphql/Client/queries'
 import { DELETE_CLIENT } from '../graphql/Client/mutations'
 
+import 'components/ClientList/ClientList.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 const ClientList = ({ title }) => {
   const { refetch, data } = useQuery(GET_ALL_CLIENTS)
   const [deleteClientById] = useMutation(DELETE_CLIENT)
@@ -17,6 +20,7 @@ const ClientList = ({ title }) => {
 
   useEffect(() => {
     if (data) setClients(data.getAllClients)
+    console.log(data)
   }, [data])
 
   const handleClose = () => {
@@ -47,18 +51,18 @@ const ClientList = ({ title }) => {
 
   return (
     <>
-      <div className='card mb-4'>
-        <div className='card-header d-flex justify-content-between'>
+      <div className=''>
+        <div className=''>
           <section>
             <i className='fas fa-table me-1' />
             {title}
           </section>
-          <Link className='btn btn-primary' to='/client/add'>
+          <Link className='' to='/client/add'>
             Agregar
           </Link>
         </div>
-        <div className='card-body'>
-          <table className='table table-responsive table-striped'>
+        <div className=''>
+          <table className=''>
             <thead>
               <tr>
                 <th>Nombre</th>
@@ -71,7 +75,7 @@ const ClientList = ({ title }) => {
             </thead>
             <tbody>
               {clients.map((client) => (
-                <tr key={client.id}>
+                <tr key={client.id} className='table-row'>
                   <td>{client.name}</td>
                   <td>{client.nit}</td>
                   <td>{client.address}</td>
@@ -81,16 +85,16 @@ const ClientList = ({ title }) => {
                     <NavLink
                       type='button'
                       to={`/client/edit/${client.id}`}
-                      className='btn btn-primary btn-sm'
+                      className=''
                     >
-                      Editar
+                      <FontAwesomeIcon icon='fa-edit' className='table-icon'/>
                     </NavLink>
                     <button
                       type='button'
                       onClick={() => handleShowModal(client)}
-                      className='btn btn-danger btn-sm'
+                      className=''
                     >
-                      Eliminar
+                      <FontAwesomeIcon icon='fa-trash-alt' size='3x' className='table-icon'/>
                     </button>
                   </td>
                 </tr>

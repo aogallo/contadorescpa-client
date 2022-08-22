@@ -1,17 +1,23 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Title from '../components/Title'
 
 const Client = () => {
   // if (loading) return <>Loading.....</>
 
-  const [breadCrumb, setBreadCrumb] = useState([
+  const breadCrumb = [
     {
       name: 'Inicio',
       path: '/',
-      active: false
+      active: 'active' 
+    },
+    {
+      name: 'Clientes',
+      path: '/client',
+      active: ''
     }
-  ])
+  ]
+
   return (
     <div className='container-fluid px-4'>
       <Title title='Clientes' breadCrumb={breadCrumb} />
