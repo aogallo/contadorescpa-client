@@ -7,6 +7,11 @@
   --blue-main: #3751FF;
 }
 
+#moda-root {
+  position: relative;
+  z-index: 999;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -22,13 +27,15 @@ body {
   height: 100vh;
 }
 
-button {
-  background: var(--blue-main); 
+a {
+  cursor: pointer;
 }
 
 #interface {
-  background: #fff;
-  width: calc(100% - 300px)
+  /* background: #fff; */
+  width: calc(100% - 300px);
+  margin-left: 300px;
+  position: relative;
 }
 
 #interface .navigation {

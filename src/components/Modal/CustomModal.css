@@ -1,0 +1,66 @@
+.modal-container {
+  width: 412px;
+  height: 275px;
+  border-radius: 8px;
+  background: #F6F6F9;
+}
+
+.modal-title {
+  height: 72px;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  height: 132px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.modal-content .modal-icon {
+  background: #D02B20;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.modal-content .modal-text {
+  top: 50px
+}
+
+.modal-actions {
+  height: 70px;
+  top: 204px;
+  padding: 10px 16px;
+  display: flex;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+.modal-actions .btn-cancel {
+  background: #FFFFFF;
+  width: 186px;
+  border: 1px solid #DCDCE4;
+  border-radius: 4px;
+}
+
+.modal-actions .btn-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #FCECEA;
+  border-radius: 4px;
+  width: 186px;
+  border: 1px solid #F5C0B8;
+}
