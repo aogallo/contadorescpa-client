@@ -1,8 +1,24 @@
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.5);
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .modal-container {
-  width: 412px;
-  height: 275px;
-  border-radius: 8px;
-  background: #F6F6F9;
+  width: 500px;
+  min-height: 100px;
+  background: #fff;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: rgba(100, 100, 111, 0.2);
+  padding: 20px;
 }
 
 .modal-title {
@@ -44,7 +60,7 @@
   padding: 10px 16px;
   display: flex;
   gap: 8px;
-  box-sizing: border-box;
+  justify-content: space-between;
 }
 
 .modal-actions .btn-cancel {
@@ -52,10 +68,12 @@
   width: 186px;
   border: 1px solid #DCDCE4;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .modal-actions .btn-delete {
   display: flex;
+  cursor: pointer;
   align-items: center;
   justify-content: center;
   gap: 8px;

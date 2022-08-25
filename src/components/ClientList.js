@@ -16,7 +16,7 @@ const ClientList = ({ title }) => {
   const [deleteClientById] = useMutation(DELETE_CLIENT)
   const [clients, setClients] = useState([])
   const [clientDelete, setClientDelete] = useState(null)
-  const [showModal, setShowModal] = useState(true)
+  const [showModal, setShowModal] = useState(false)
   const [message, setMessage] = useState('')
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const ClientList = ({ title }) => {
         setShowModal(false)
         setMessage('')
         refetch()
-      }, 1500)
+      }, 1000)
     } catch (error) {
       setMessage({ error: true, message: error.message })
     }
@@ -86,7 +86,7 @@ const ClientList = ({ title }) => {
                     >
                       <FontAwesomeIcon icon='fa-edit' className='table-icon'/>
                     </NavLink>
-                    <a className='btn-delete'>
+                    <a className='btn-delete' onClick={() => handleShowModal(client)}>
                       <FontAwesomeIcon icon='fa-trash' className='table-icon'/>
                     </a>
                   </td>
@@ -97,7 +97,7 @@ const ClientList = ({ title }) => {
         </div>
       </div>
       {showModal && (
-        <CustomModal />
+        <CustomModal handleClose={handleClose} handleAction={handleAction}/>
       )}
     </>
   )
