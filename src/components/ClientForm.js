@@ -7,6 +7,8 @@ import { AppContext } from '../context/AppContext'
 import { GET_ALL_CLIENTS, GET_CLIENT_BY_ID } from '../graphql/Client/queries'
 import { CREATE_CLIENT, UPDATE_CLIENT } from '../graphql/Client/mutations'
 
+import 'components/ClientForm/ClientForm.css'
+
 const ClientForm = () => {
   const navigate = useNavigate()
   const params = useParams()
@@ -27,7 +29,7 @@ const ClientForm = () => {
   })
 
   useEffect(() => {
-    if (!company.name) navigate('/')
+    // if (!company.name) navigate('/')
 
     if (params.id) {
       setIsEditing(true)
@@ -124,9 +126,8 @@ const ClientForm = () => {
 
       setMessage({
         error: false,
-        message: `Cliente ${
-          isEditing ? 'actualizado' : 'creado'
-        } correctamente`
+        message: `Cliente ${isEditing ? 'actualizado' : 'creado'
+          } correctamente`
       })
       setTimeout(() => {
         setMessage(null)
@@ -142,181 +143,176 @@ const ClientForm = () => {
   }
 
   return (
-    <div className='container-fluid px-4'>
-      <div className='col-sm-12'>
-        <div className='card'>
-          <div className='card-header'>
-            <button onClick={handleCancel} className='btn'>
-              <i className='fas fa-arrow-left' />
-            </button>
-            {isEditing ? 'Editar' : 'Agregar'} Cliente
-          </div>
-          <div className='card-body'>
-            {/* INICIO DE FORMULARIO */}
+    <div className='form-container'>
+      <div className='form-header'>
+    {/*<button onClick={handleCancel} className=''>
+          <i className='fas fa-arrow-left' />
+        </button>*/}
+        {isEditing ? 'Editar' : 'Agregar'} Cliente
+      </div>
+      <div className='form-content'>
+        {/* INICIO DE FORMULARIO */}
 
-            <Formik
-              enableReinitialize
-              initialValues={clientValues}
-              validate={validateFields}
-              onSubmit={handleCreateClient}
-            >
-              {({
-                values,
-                touched,
-                handleSubmit,
-                handleChange,
-                errors,
-                handleBlur
-              }) => (
-                <form className='agregCliente' onSubmit={handleSubmit}>
-                  {/* Name */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='name' className='col-sm-2 form-label'>
-                      Nombre
-                    </label>
-                    <div className='col-sm-10'>
-                      <input
-                        className='form-control'
-                        name='name'
-                        id='name'
-                        type='text'
-                        value={values.name}
-                        onChange={handleChange}
-                        autoComplete='off'
-                        onBlur={handleBlur}
-                      />
-                      {touched.name && errors.name && (
-                        <div className='error' style={{ color: 'red' }}>
-                          {errors.name}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* NIT */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='nit' className='col-sm-2 form-label'>
-                      NIT
-                    </label>
-                    <div className='col-sm-10'>
-                      <input
-                        className='form-control'
-                        name='nit'
-                        id='nit'
-                        type='text'
-                        value={values.nit}
-                        onChange={handleChange}
-                        autoComplete='off'
-                        onBlur={handleBlur}
-                      />
-                      {touched.nit && errors.nit && (
-                        <div className='error' style={{ color: 'red' }}>
-                          {errors.nit}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Address */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='address' className='col-sm-2 form-label'>
-                      Dirección
-                    </label>
-                    <div className='col-sm-10'>
-                      <textarea
-                        id='address'
-                        className='form-control'
-                        name='address'
-                        value={values.address}
-                        onChange={handleChange}
-                        autoComplete='off'
-                        onBlur={handleBlur}
-                      />
-                      {touched.address && errors.address && (
-                        <div className='error' style={{ color: 'red' }}>
-                          {errors.address}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Email */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='email' className='col-sm-2 form-label'>
-                      Correo
-                    </label>
-                    <div className='col-sm-10'>
-                      <input
-                        className='form-control'
-                        name='email'
-                        id='email'
-                        type='text'
-                        placeholder='name@example.com'
-                        value={values.email}
-                        onChange={handleChange}
-                        autoComplete='off'
-                        onBlur={handleBlur}
-                      />
-                      {touched.email && errors.email && (
-                        <div className='error' style={{ color: 'red' }}>
-                          {errors.email}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Phone */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='phone' className='col-sm-2 form-label'>
-                      Teléfono
-                    </label>
-                    <div className='col-sm-10'>
-                      <input
-                        className='form-control'
-                        name='phone'
-                        id='phne'
-                        type='text'
-                        value={values.phone}
-                        onChange={handleChange}
-                        autoComplete='off'
-                        onBlur={handleBlur}
-                      />
-                      {touched.phone && errors.phone && (
-                        <div className='error' style={{ color: 'red' }}>
-                          {errors.phone}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Message */}
-                  {message && (
-                    <div
-                      className={`message ${
-                        message.error ? 'message-error' : 'message-success'
-                      }`}
-                    >
-                      {message.message}
+        <Formik
+          enableReinitialize
+          initialValues={clientValues}
+          validate={validateFields}
+          onSubmit={handleCreateClient}
+        >
+          {({
+            values,
+            touched,
+            handleSubmit,
+            handleChange,
+            errors,
+            handleBlur
+          }) => (
+            <form className='' onSubmit={handleSubmit}>
+              {/* Name */}
+              <div className='form-control-container'>
+                <label htmlFor='name' className=''>
+                  Nombre
+                </label>
+                <div className='form-control'>
+                  <input
+                    className=''
+                    name='name'
+                    id='name'
+                    type='text'
+                    value={values.name}
+                    onChange={handleChange}
+                    autoComplete='off'
+                    onBlur={handleBlur}
+                  />
+                  {touched.name && errors.name && (
+                    <div className=''>
+                      {errors.name}
                     </div>
                   )}
+                </div>
+              </div>
 
-                  <div className=''>
-                    <button type='submit' className='btn btn-primary'>
-                      Guardar
-                    </button>
-                    <button
-                      type='button'
-                      className='btn btn-danger'
-                      onClick={handleCancel}
-                    >
-                      Cancelar
-                    </button>
-                  </div>
-                </form>
+              {/* NIT */}
+              <div className='form-control-container'>
+                <label htmlFor='nit' className=''>
+                  NIT
+                </label>
+                <div className='form-control'>
+                  <input
+                    className=''
+                    name='nit'
+                    id='nit'
+                    type='text'
+                    value={values.nit}
+                    onChange={handleChange}
+                    autoComplete='off'
+                    onBlur={handleBlur}
+                  />
+                  {touched.nit && errors.nit && (
+                    <div className='error' style={{ color: 'red' }}>
+                      {errors.nit}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Address */}
+              <div className='form-control-container'>
+                <label htmlFor='address' className=''>
+                  Dirección
+                </label>
+                <div className='form-control-text-area'>
+                  <textarea
+                    id='address'
+                    className=''
+                    name='address'
+                    value={values.address}
+                    onChange={handleChange}
+                    autoComplete='off'
+                    onBlur={handleBlur}
+                  />
+                  {touched.address && errors.address && (
+                    <div className='error' style={{ color: 'red' }}>
+                      {errors.address}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Email */}
+              <div className='form-control-container'>
+                <label htmlFor='email' className=''>
+                  Correo
+                </label>
+                <div className='form-control'>
+                  <input
+                    className=''
+                    name='email'
+                    id='email'
+                    type='text'
+                    placeholder='name@example.com'
+                    value={values.email}
+                    onChange={handleChange}
+                    autoComplete='off'
+                    onBlur={handleBlur}
+                  />
+                  {touched.email && errors.email && (
+                    <div className='error' style={{ color: 'red' }}>
+                      {errors.email}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Phone */}
+              <div className='form-control-container'>
+                <label htmlFor='phone' className=''>
+                  Teléfono
+                </label>
+                <div className='form-control'>
+                  <input
+                    className=''
+                    name='phone'
+                    id='phne'
+                    type='text'
+                    value={values.phone}
+                    onChange={handleChange}
+                    autoComplete='off'
+                    onBlur={handleBlur}
+                  />
+                  {touched.phone && errors.phone && (
+                    <div className='error' style={{ color: 'red' }}>
+                      {errors.phone}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Message */}
+              {message && (
+                <div
+                  className={`message ${message.error ? 'message-error' : 'message-success'
+                    }`}
+                >
+                  {message.message}
+                </div>
               )}
-            </Formik>
-          </div>
-        </div>
+
+              <div className='form-actions'>
+                <button type='submit' className='btn-save'>
+                  Guardar
+                </button>
+                <button
+                  type='button'
+                  className='btn-cancel'
+                  onClick={handleCancel}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          )}
+        </Formik>
       </div>
     </div>
   )

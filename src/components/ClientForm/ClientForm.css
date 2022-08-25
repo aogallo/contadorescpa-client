@@ -1,0 +1,78 @@
+.form-container {
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--text-color-gray);
+}
+
+.form-container .form-header {
+  margin: 10px 0px;
+  font-size: 17px;
+}
+
+.form-container .form-content {
+  margin-top: 15px;
+}
+
+.form-control-container {
+  display: flex;
+  align-items: center;
+}
+
+.form-container label {
+  width: 100px;
+}
+
+.form-control-container .form-control {
+  height: 35px;
+  margin-bottom: 25px;
+}
+
+.form-control-container .form-control input {
+  font-size: 16px;
+  font-weight: 400px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #FCFDFE;
+  border: 1px solid #F0F1F7;
+  width: 900px;
+}
+
+.form-control-container .form-control-text-area {
+  margin-bottom: 20px;
+}
+
+.form-control-container .form-control-text-area textarea {
+  width: 900px;
+  font-family: inherit;
+  padding: 10px;
+  font-size: 16px;
+  resize: none;
+  border-radius: 8px;
+  background: #FCFDFE;
+  border: 1px solid #F0F1F7;
+}
+
+
+.form-actions {
+  display: flex;
+  margin: 10px;
+  justify-content: space-evenly;
+}
+
+.form-actions .btn-save {
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  background: var(--blue-main);
+  color: #fff;
+  border: 1px solid var(--blue-main);
+  cursor: pointer;
+}
+
+.form-actions .btn-cancel {
+  width: 200px;
+  cursor: pointer;
+  height: 50px;
+  border-radius: 10px;
+}
