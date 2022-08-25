@@ -24,11 +24,10 @@ const Layout = () => {
         <SideBarComponent />
         <section id='interface'>
           <Header />
-          <h3 className='title-page'>Dashbord</h3>
           
           <div className='content'>
-            Contenido principal
             <Routes>
+              <Route path='/about' element={<AboutView />} />
               <Route path='/client' element={<ClientView />}>
                 <Route path='' element={<ClientListView />} />
               </Route>

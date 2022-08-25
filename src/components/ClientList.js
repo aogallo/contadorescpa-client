@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useMutation, useQuery } from '@apollo/client'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import CustomModal from './Modal/CustomModal'
 
 import { GET_ALL_CLIENTS } from '../graphql/Client/queries'
 import { DELETE_CLIENT } from '../graphql/Client/mutations'
+
+import 'components/ClientList/ClientList.css'
+import CustomModal from './Modal/CustomModal'
 
 const ClientList = ({ title }) => {
   const { refetch, data } = useQuery(GET_ALL_CLIENTS)
@@ -17,6 +21,7 @@ const ClientList = ({ title }) => {
 
   useEffect(() => {
     if (data) setClients(data.getAllClients)
+    console.log(data)
   }, [data])
 
   const handleClose = () => {
@@ -39,7 +44,7 @@ const ClientList = ({ title }) => {
         setShowModal(false)
         setMessage('')
         refetch()
-      }, 1500)
+      }, 1000)
     } catch (error) {
       setMessage({ error: true, message: error.message })
     }
@@ -47,18 +52,14 @@ const ClientList = ({ title }) => {
 
   return (
     <>
-      <div className='card mb-4'>
-        <div className='card-header d-flex justify-content-between'>
-          <section>
-            <i className='fas fa-table me-1' />
-            {title}
-          </section>
-          <Link className='btn btn-primary' to='/client/add'>
-            Agregar
+      <div className=''>
+        <div className='btn-add'>
+          <Link to='/client/add'>
+            <FontAwesomeIcon icon='fa-plus' className='add-icon'/>
           </Link>
         </div>
-        <div className='card-body'>
-          <table className='table table-responsive table-striped'>
+        <div className='table-container'>
+          <table className=''>
             <thead>
               <tr>
                 <th>Nombre</th>
@@ -71,27 +72,23 @@ const ClientList = ({ title }) => {
             </thead>
             <tbody>
               {clients.map((client) => (
-                <tr key={client.id}>
+                <tr key={client.id} className=''>
                   <td>{client.name}</td>
                   <td>{client.nit}</td>
                   <td>{client.address}</td>
                   <td>{client.email}</td>
                   <td>{client.phone}</td>
-                  <td className='col-sm-2'>
+                  <td className='table-actions'>
                     <NavLink
                       type='button'
                       to={`/client/edit/${client.id}`}
-                      className='btn btn-primary btn-sm'
+                      className='btn-edit'
                     >
-                      Editar
+                      <FontAwesomeIcon icon='fa-edit' className='table-icon'/>
                     </NavLink>
-                    <button
-                      type='button'
-                      onClick={() => handleShowModal(client)}
-                      className='btn btn-danger btn-sm'
-                    >
-                      Eliminar
-                    </button>
+                    <a className='btn-delete' onClick={() => handleShowModal(client)}>
+                      <FontAwesomeIcon icon='fa-trash' className='table-icon'/>
+                    </a>
                   </td>
                 </tr>
               ))}
@@ -100,13 +97,7 @@ const ClientList = ({ title }) => {
         </div>
       </div>
       {showModal && (
-        //<CustomModal
-        //  title='cliente'
-        //  message={message}
-        //  handleAction={handleAction}
-        //  handleClose={handleClose}
-        ///>
-        <h1>modal</h1>
+        <CustomModal handleClose={handleClose} handleAction={handleAction}/>
       )}
     </>
   )
