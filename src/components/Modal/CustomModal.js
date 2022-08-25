@@ -1,34 +1,43 @@
 import React from 'react'
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import './CustomModal.css'
 
-const CustomModal = ({ title, message, handleClose, handleAction }) => {
+const CustomModal = (props) => {
+  const handleCancel = () => {
+    console.log('cancel button')
+    props.handleClose()
+  }
+
+  const handleSubmit = () => {
+    console.log('submit button')
+    props.handleAction()
+  }
+
   return (
-    <Modal show onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Eliminación de {title}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        Esta seguro de eliminar este registro!
-        {message && (
-          <div
-            className={
-              message.error ? 'alert alert-danger' : 'alert alert-success'
-            }
-          >
-            {message.message}
+    <div className='overlay'>
+      <div className='modal-container'>
+        <div className='modal-title'>
+          <h3>Confirmacion</h3>
+        </div>
+        <div className='modal-content'>
+          <div className='modal-icon'>
+            <FontAwesomeIcon icon='fa-exclamation' />
           </div>
-        )}
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant='danger' onClick={handleAction}>
-          Eliminar
-        </Button>
-        <Button variant='secondary' onClick={handleClose}>
-          Cancelar
-        </Button>
-      </Modal.Footer>
-    </Modal>
+          <p className='modal-text'>
+            Esta seguro de eliminar el registro?
+          </p>
+        </div>
+        <div className='modal-actions'>
+          <button className='btn-cancel' onClick={handleCancel}>
+            <span>Cancelar</span>
+          </button>
+          <button className='btn-delete' onClick={handleSubmit}>
+            <FontAwesomeIcon icon='fa-trash' className='model-table-icon' />
+            <span>Eliminar</span>
+          </button>
+        </div>
+      </div>
+    </div>
   )
 }
 

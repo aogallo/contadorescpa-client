@@ -1,25 +1,23 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import './Title/Title.css'
 
 const Title = ({ title, breadCrumb }) => {
   return (
     <div>
-      <h1 className='mt-4'>{title}</h1>
-      <ol className='breadcrumb mb-4'>
+      <h3 className='title-page'>{title}</h3>
+      <nav className='breadcrumb'>
         {breadCrumb
           ? breadCrumb.map((b) => {
             return (
-              <li className='breadcrumb-item' key={b.name}>
-                <Link className='active' to={b.path}>
-                  {b.name}
-                </Link>
-              </li>
+              <NavLink className={`breadcrumb-item`} key={b.name} to={b.path}>
+                <h4>{b.name}</h4> {b.active && <span>/</span> }
+              </NavLink>
             )
           })
           : ''}
 
-        <li className='breadcrumb-item active'>{title}</li>
-      </ol>
+      </nav>
     </div>
   )
 }
