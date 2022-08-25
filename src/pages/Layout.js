@@ -3,11 +3,7 @@ import React, { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import Header from '../components/Header'
-import Provider from '../pages/Provider'
 import Error404 from '../pages/Error404'
-import ProviderList from '../components/ProviderList'
-import ProviderForm from '../components/ProviderForm'
-import AccountsPayable from '../pages/AccountsPayable'
 import Home from './Home'
 import AccountPayableForm from '../components/AccountPayableForm'
 import AccountPayableList from '../components/AccountPayableList'
@@ -18,13 +14,20 @@ const Layout = () => {
   const ClientListView = lazy(async () => await import('../components/ClientList'))
   const ClientFormView = lazy(async () => await import('components/ClientForm'))
   const SideBarComponent = lazy(async () => await import('../components/SideBar'))
+  const ProviderView = lazy(async () => await import('pages/Provider'))
+
+  const ProviderList = lazy(async () => await import('../components/ProviderList'))
+  const ProviderForm = lazy(async () => await import('../components/ProviderForm'))
+  
+  const AccountsPayable = lazy(async () => await import('../pages/AccountsPayable'))
+
   return (
     <Suspense fallback={<div>loagind....</div>} >
       <div className='principal-content'>
         <SideBarComponent />
         <section id='interface'>
           <Header />
-          
+
           <div className='content'>
             <Routes>
               <Route path='/about' element={<AboutView />} />
@@ -33,6 +36,25 @@ const Layout = () => {
                 <Route path='add' element={<ClientFormView />} />
                 <Route path='edit/:id' element={<ClientFormView />} />
               </Route>
+              <Route path='/provider' element={<ProviderView />}>
+                <Route
+                  path=''
+                  element={<ProviderList title='Listado de proveedores' />}
+                />
+                <Route path='add' element={<ProviderForm />} />
+                <Route path='edit/:id' element={<ProviderForm />} />
+              </Route>
+              <Route path='/cxp' element={<AccountsPayable />}>
+                <Route
+                  path=''
+                  element={
+                    <AccountPayableList title='Listado de cuentas por pagar' />
+                  }
+                />
+                <Route path='add' element={<AccountPayableForm />} />
+                <Route path='edit/:id' element={<AccountPayableForm />} />
+              </Route>
+              <Route path='*' element={<Error404 />} />
             </Routes>
           </div>
         </section>

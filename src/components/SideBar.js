@@ -23,11 +23,11 @@ const SideBar = () => {
           <FontAwesomeIcon icon='fa-building' className='icon-sidebar'/>
           <span>Compa&ntilde;ia</span>
         </NavLink>
-        <NavLink to='' className='sidebar-nav-link'>
+        <NavLink to='/provider' className='sidebar-nav-link'>
           <FontAwesomeIcon icon='fa-user-secret' className='icon-sidebar'/>
           <span>Proveedores</span>
         </NavLink>
-        <NavLink to='' className='sidebar-nav-link'>
+        <NavLink to='/cxp' className='sidebar-nav-link'>
           <FontAwesomeIcon icon='fa-money-bill' className='icon-sidebar'/>
           <span>Facturas</span>
         </NavLink>
