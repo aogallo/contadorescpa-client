@@ -11,15 +11,16 @@ const SideBar = () => {
         <h2>Contadores</h2>
       </NavLink>
       <nav className='items'>
-        <NavLink to='/about' className='sidebar-nav-link'>
+        {/*<NavLink to='/about' className='sidebar-nav-link'>
           <FontAwesomeIcon icon='fa-user' className='icon-sidebar'/>
           <span>About</span>
         </NavLink>
+        */}
         <NavLink to='/client' className='sidebar-nav-link'>
           <FontAwesomeIcon icon='fa-user' className='icon-sidebar'/>
           <span>Clientes</span>
         </NavLink>
-        <NavLink to='/client' className='sidebar-nav-link'>
+        <NavLink to='/company' className='sidebar-nav-link'>
           <FontAwesomeIcon icon='fa-building' className='icon-sidebar'/>
           <span>Compa&ntilde;ia</span>
         </NavLink>

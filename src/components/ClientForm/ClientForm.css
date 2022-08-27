@@ -8,6 +8,7 @@
 .form-container .form-header {
   margin: 10px 0px;
   font-size: 17px;
+  color: black;
 }
 
 .form-container .form-content {
@@ -24,6 +25,7 @@
 
 .form-container label {
   width: 100px;
+  color: black;
 }
 
 .form-control-container .form-control {

@@ -200,6 +200,7 @@ const ClientForm = () => {
                   name='name'
                   id='name'
                   type='text'
+                  placeholder='Cándido López Canaletti'
                   value={values.name}
                   onChange={handleChange}
                   autoComplete='off'
@@ -220,6 +221,7 @@ const ClientForm = () => {
                   name='nit'
                   id='nit'
                   type='text'
+                  placeholder='678934013'
                   value={values.nit}
                   onChange={handleChange}
                   autoComplete='off'
@@ -238,6 +240,7 @@ const ClientForm = () => {
                 <textarea
                   id='address'
                   className=''
+                  placeholder='57ª Calle 35-67 Zona 24, Guatemala, Guatemala.'
                   name='address'
                   value={values.address}
                   onChange={handleChange}
@@ -280,6 +283,7 @@ const ClientForm = () => {
                 <input
                   className=''
                   name='phone'
+                  placeholder='23344512'
                   id='phne'
                   type='text'
                   value={values.phone}
@@ -301,6 +305,7 @@ const ClientForm = () => {
                   name='idCompany'
                   id='idCompany'
                   onChange={handleChange}
+                  placeholder='Compañia'
                   value={values.idCompany}>
                   {
                     companies &&

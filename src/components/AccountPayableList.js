@@ -15,18 +15,18 @@ const AccountPayableList = ({ title }) => {
 
   return (
     <>
-      <div className='card mb-4'>
-        <div className='card-header d-flex justify-content-between'>
+      <div className=''>
+        <div className='form-header'>
           <section>
             <i className='fas fa-table me-1' />
             {title}
           </section>
-          <Link className='btn btn-primary' to='/cxp/add'>
+          <Link className='' to='/cxp/add'>
             Agregar
           </Link>
         </div>
-        <div className='card-body'>
-          <table className='table table-responsive table-striped'>
+        <div className=''>
+          <table className=''>
             <thead>
               <tr>
                 <th>Serie</th>
