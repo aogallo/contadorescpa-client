@@ -16,7 +16,10 @@
 
 .form-control-container {
   display: flex;
+  gap: 10px;
+  column-gap: 20px;
   align-items: center;
+  justify-content: center;
 }
 
 .form-container label {
@@ -25,28 +28,27 @@
 
 .form-control-container .form-control {
   height: 35px;
-  margin-bottom: 25px;
 }
 
-.form-control-container .form-control input {
+
+.form-control-container select, 
+.form-control-container input {
+  width: 100%;
+  margin-bottom: 25px;
   font-size: 16px;
   font-weight: 400px;
   padding: 10px;
   border-radius: 8px;
   background: #FCFDFE;
   border: 1px solid #F0F1F7;
-  width: 900px;
 }
 
-.form-control-container .form-control-text-area {
-  margin-bottom: 20px;
-}
-
-.form-control-container .form-control-text-area textarea {
-  width: 900px;
+.form-control-container textarea {
+  width: 100%;
   font-family: inherit;
   padding: 10px;
   font-size: 16px;
+  margin-bottom: 25px;
   resize: none;
   border-radius: 8px;
   background: #FCFDFE;
@@ -75,4 +77,12 @@
   cursor: pointer;
   height: 50px;
   border-radius: 10px;
+}
+
+
+/* Medium screens */
+@media all and (max-width: 800px) {
+  .form-content {
+    flex-wrap: wrap;
+  }
 }
