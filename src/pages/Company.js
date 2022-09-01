@@ -10,7 +10,7 @@ const columns = [
   { column: 'Nombre', key: 'name' },
   { column: 'Nit', key: 'nit' },
   { column: 'Fecha de creación', 'key': 'dateBirth' },
-  { column: 'Acciones', key: '' }
+  { column: 'Acciones', key: 'actions' }
 ]
 
 const Company = () => {
@@ -61,7 +61,7 @@ const Company = () => {
       id: company.id,
       name: company.name
     })
-    navigate('/home')
+    // navigate('/home')
   }
 
   return (
@@ -84,30 +84,8 @@ const Company = () => {
         />
       </div>
 
-      <Table columns={columns} data={companies} />
+      <Table columns={columns} data={companies} editRoute='/company/edit/'/>
 
-      {companies && (
-        <div className=''>
-          {companies.map((company) => (
-            <div
-              key={company.id}
-              className=''
-              onClick={() => handleSelectCompany(company)}
-            >
-              <div className=''>
-                <div className=''>{company.name}</div>
-                <div className=''>
-                  <label className=''>NIT: {company.nit}</label>
-                  <label className=''>
-                    Actividad comercial: {company.comercialActivity}
-                  </label>
-                  <label>Fecha: {company.dateBirth}</label>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   )
 }

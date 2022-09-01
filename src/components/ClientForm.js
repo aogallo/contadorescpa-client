@@ -9,6 +9,8 @@ import { GET_ALL_CLIENTS, GET_CLIENT_BY_ID } from '../graphql/Client/queries'
 import { CREATE_CLIENT, UPDATE_CLIENT } from '../graphql/Client/mutations'
 import { GET_ALL_COMPANIES } from '../graphql/Company/queries'
 
+import { validatedFormFields } from 'utils/fieldValidation'
+
 import 'components/ClientForm/ClientForm.css'
 
 const ClientForm = () => {
@@ -47,7 +49,6 @@ const ClientForm = () => {
       setCompanies((prevState) => {
         return [...prevState, ...companiesList.getAllCompanies]
       })
-      console.log('companias ', companiesList.getAllCompanies)
     }
   }, [companiesList])
 
@@ -65,14 +66,9 @@ const ClientForm = () => {
   }, [data])
 
   const validateFields = (values) => {
-    const errors = {}
-    console.log(values)
+    let errors = {}
 
-    if (!values.name) {
-      errors.name = ' Por favor ingresa tu nombre'
-    } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.name)) {
-      errors.name = ' El nombre solo puede contener letras y espacios'
-    }
+    errors = validatedFormFields(values, ['name'])
 
     if (!values.nit) {
       errors.nit = ' Por favor ingresa el número de NIT'

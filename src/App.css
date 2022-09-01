@@ -175,3 +175,94 @@ tbody tr td {
   margin: 7px 8px;
 }
 
+/* Forms */
+.form-container {
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--text-color-gray);
+}
+
+.form-container .form-header {
+  margin: 10px 0px;
+  font-size: 17px;
+  color: black;
+}
+
+.form-container .form-content {
+  margin-top: 15px;
+}
+
+.form-control-container {
+  display: flex;
+  gap: 10px;
+  column-gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container label {
+  width: 100px;
+  color: black;
+}
+
+.form-control-container .form-control {
+  height: 35px;
+}
+
+
+.form-control-container select, 
+.form-control-container input {
+  width: 100%;
+  margin-bottom: 25px;
+  font-size: 16px;
+  font-weight: 400px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #FCFDFE;
+  border: 1px solid #F0F1F7;
+}
+
+.form-control-container textarea {
+  width: 100%;
+  font-family: inherit;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 25px;
+  resize: none;
+  border-radius: 8px;
+  background: #FCFDFE;
+  border: 1px solid #F0F1F7;
+}
+
+
+.form-actions {
+  display: flex;
+  margin: 10px;
+  justify-content: space-evenly;
+}
+
+.form-actions .btn-save {
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  background: var(--blue-main);
+  color: #fff;
+  border: 1px solid var(--blue-main);
+  cursor: pointer;
+}
+
+.form-actions .btn-cancel {
+  width: 200px;
+  cursor: pointer;
+  height: 50px;
+  border-radius: 10px;
+}
+
+
+/* Medium screens */
+@media all and (max-width: 800px) {
+  .form-content {
+    flex-wrap: wrap;
+  }
+}
