@@ -8,7 +8,7 @@ export const GET_ALL_ACCOUNTS_PAYABLE = gql`
         id
         name
       }
-      proveedor {
+      provider {
         id
         name
       }

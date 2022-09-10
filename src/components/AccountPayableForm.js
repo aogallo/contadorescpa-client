@@ -14,6 +14,8 @@ import {
   GET_ALL_ACCOUNTS_PAYABLE
 } from '../graphql/AccountsPayable/queries'
 
+import Message from 'components/Message'
+
 const AccountPayableForm = () => {
   const navigate = useNavigate()
   const params = useParams()
@@ -53,7 +55,26 @@ const AccountPayableForm = () => {
       setIsEditing(true)
       getAccountPayableById({ variables: { id: params.id } })
     }
+
   }, [])
+
+  useEffect(() => {
+    if (docs) {
+      setDocumentTypes(docs.getAllDocumentTypes)
+    }
+  }, [docs])
+
+  useEffect(() => {
+    if (providersData) {
+      setDocumentTypes(providersData.getAllProviders)
+    }
+  }, [providersData])
+
+  useEffect(() => {
+    if (accountsData) {
+      setDocumentTypes(accountsData.getAllAccounts)
+    }
+  }, [accountsData])
 
   useEffect(() => {
     setAccountPayableInitialValues({
@@ -235,9 +256,8 @@ const AccountPayableForm = () => {
 
       setMessage({
         error: false,
-        message: `Cuenta por pagar ${
-          isEditing ? 'actualizada' : 'creada'
-        } correctamente`
+        message: `Cuenta por pagar ${isEditing ? 'actualizada' : 'creada'
+          } correctamente`
       })
       setTimeout(() => {
         setMessage(null)
@@ -249,322 +269,298 @@ const AccountPayableForm = () => {
     }
   }
   return (
-    <div className='col-sm-12'>
-      <div className='card'>
-        <div className='card-header'>
-          <button onClick={handleCancel} className='btn'>
-            <i className='fas fa-arrow-left' />
-          </button>
-          {isEditing ? 'Editar' : 'Agregar'} cuenta por pagar
-        </div>
-        <div className='card-body'>
-          <Formik
-            enableReinitialize
-            initialValues={accountPayableInitialValues}
-            validate={validateFields}
-            onSubmit={handleCreateAccountPayable}
-          >
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit
-            }) => (
-              <form onSubmit={handleSubmit}>
-                {/* Serie */}
-                <div className='input-group mb-3'>
-                  <label htmlFor='serie' className='col-sm-2 form-label'>
-                    Serie
-                  </label>
-                  <div className='col-sm-4'>
-                    <Field
-                      id='serie'
-                      type='text'
-                      name='serie'
-                      className='form-control'
-                      placeholder='Serie'
-                    />
-                  </div>
-                  {/* Document Number */}
-
-                  <label htmlFor='serie' className='mx-2 col-sm-1 form-label'>
-                    Número
-                  </label>
-
-                  <Field
-                    id='documentNumber'
-                    name='documentNumber'
-                    type='text'
-                    placeholder='Número del documento'
-                    className='form-control'
-                  />
-                </div>
-
-                {(touched.serie && errors.serie) ||
-                (touched.documentNumber && errors.documentNumber)
-                  ? (
-                    <div className='container '>
-                      <div className='row'>
-                        <div className='col-6'>
-                          {touched.serie && errors.serie && (
-                            <div className='error' style={{ color: 'red' }}>
-                              {errors.serie}
-                            </div>
-                          )}
-                        </div>
-
-                        <div className='col-6'>
-                          {touched.documentNumber && errors.documentNumber && (
-                            <div className='error' style={{ color: 'red' }}>
-                              {errors.documentNumber}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    )
-                  : null}
-
-                <div className='input-group mb-3'>
-                  {/* Tipo */}
-                  <label
-                    htmlFor='type_document'
-                    className='col-sm-2 form-label'
-                  >
-                    Tipo de documento
-                  </label>
-                  <div className='col-sm-4'>
-                    <Field
-                      component='select'
-                      name='idDocumentType'
-                      className='form-control'
-                    >
-                      {documentTypes &&
-                        documentTypes.map((document) => (
-                          <option key={document.id} value={document.id}>
-                            {document.name}
-                          </option>
-                        ))}
-                    </Field>
-                  </div>
-
-                  {/* Document Date */}
-                  <label
-                    htmlFor='document_date'
-                    className='mx-2 col-sm-1 form-label'
-                  >
-                    Fecha
-                  </label>
-                  <Field
-                    type='date'
-                    id='documentDate'
-                    name='documentDate'
-                    className='form-control'
-                  />
-                </div>
-                {/* Provider */}
-                <div className='mb-3 row'>
-                  <label htmlFor='provider' className='col-sm-2 form-label'>
-                    Proveedor
-                  </label>
-                  <div className='col-sm-10'>
-                    <input
-                      className='form-control'
-                      list='providerList'
-                      id='idProvider'
-                      type='text'
-                      name='idProvider'
-                      value={values.idProvider}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      placeholder='Buscar proveedor...'
-                    />
-                    <datalist id='providerList'>
-                      {providers &&
-                        providers.map((provider) => (
-                          <option
-                            value={`${provider.id} - ${provider.name}`}
-                            key={provider.id}
-                          />
-                        ))}
-                    </datalist>
-                  </div>
-                </div>
-
-                <div className='input-group mb-3'>
-                  {/* Exento */}
-                  <label htmlFor='exento' className='col-sm-2 form-label'>
-                    Exento
-                  </label>
-                  <div className='col-sm-4'>
-                    <input
-                      onChange={handleChangeExento}
-                      value={values.exento}
-                      type='number'
-                      id='exento'
-                      name='exento'
-                      min='0'
-                      className='form-control'
-                    />
-                  </div>
-                  {/* Import */}
-
-                  <label
-                    htmlFor='importation'
-                    className='mx-2 col-sm-1 form-label'
-                  >
-                    Importación
-                  </label>
-                  <input
-                    type='number'
-                    value={values.importation}
-                    onChange={handleChangeImportation}
-                    id='importation'
-                    name='importation'
-                    className='form-control'
-                  />
-                </div>
-
-                <div className='input-group mb-3'>
-                  {/* Service */}
-                  <label htmlFor='service' className='col-sm-2 form-label'>
-                    Servicio
-                  </label>
-                  <div className='col-sm-4'>
-                    <input
-                      value={values.service}
-                      onChange={handleChangeService}
-                      type='number'
-                      id='service'
-                      name='service'
-                      className='form-control'
-                    />
-                  </div>
-
-                  {/* Assets (bienes) */}
-
-                  <label htmlFor='assets' className='mx-2 col-sm-1 form-label'>
-                    Bienes
-                  </label>
-
-                  <input
-                    value={values.asset}
-                    onChange={handleChangeAsset}
-                    type='number'
-                    id='asset'
-                    name='asset'
-                    className='form-control'
-                  />
-                </div>
-
-                {/* Account */}
-                <div className='mb-3 row'>
-                  <label htmlFor='account' className='col-sm-2 form-label'>
-                    Cuenta
-                  </label>
-                  <div className='col-sm-10'>
-                    <Field
-                      className='form-control'
-                      list='accountList'
-                      id='idAccount'
-                      name='idAccount'
-                      value={values.idAccount}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      type='text'
-                      placeholder='Seleccionar cuenta...'
-                    />
-                    <datalist id='accountList'>
-                      {accounts &&
-                        accounts.map((account) => (
-                          <option
-                            key={account.id}
-                            value={`${account.accountNumber} - ${account.name}`}
-                          />
-                        ))}
-                    </datalist>
-                  </div>
-                </div>
-
-                {/* Sub-total */}
-                <div className='mb-3 row'>
-                  <label htmlFor='sub_total' className='col-sm-2 form-label'>
-                    Sub-total
-                  </label>
-                  <div className='col-sm-10'>
-                    <Field
-                      type='text'
-                      readOnly
-                      id='subtotal'
-                      name='subtotal'
-                      className='form-control'
-                    />
-                  </div>
-                </div>
-
-                {/* IVA */}
-                <div className='mb-3 row'>
-                  <label htmlFor='iva' className='col-sm-2 form-label'>
-                    IVA
-                  </label>
-                  <div className='col-sm-10'>
-                    <Field
-                      type='text'
-                      readOnly
-                      id='iva'
-                      name='iva'
-                      className='form-control'
-                    />
-                  </div>
-                </div>
-
-                {/* TOTAL */}
-                <div className='mb-3 row'>
-                  <label htmlFor='total' className='col-sm-2 form-label'>
-                    Total
-                  </label>
-                  <div className='col-sm-10'>
-                    <Field
-                      type='text'
-                      readOnly
-                      id='total'
-                      name='total'
-                      className='form-control'
-                    />
-                  </div>
-                </div>
-
-                {/* Message */}
-                {message && (
-                  <div
-                    className={`message ${
-                      message.error ? 'message-error' : 'message-success'
-                    }`}
-                  >
-                    {message.message}
-                  </div>
-                )}
-
-                <>
-                  <button type='submit' className='btn btn-primary'>
-                    Guardar
-                  </button>
-                  <button
-                    type='button'
-                    className='btn btn-danger'
-                    onClick={(e) => handleCancel(e)}
-                  >
-                    Cancelar
-                  </button>
-                </>
-              </form>
-            )}
-          </Formik>
-        </div>
+    <div className='form-container'>
+      <div className='form-header'>
+        <button onClick={handleCancel} className=''>
+          <i className='fas fa-arrow-left' />
+        </button>
+        {isEditing ? 'Editar' : 'Agregar'} cuenta por pagar
       </div>
-    </div>
+      <div className='form-content'>
+        <Formik
+          enableReinitialize
+          initialValues={accountPayableInitialValues}
+          validate={validateFields}
+          onSubmit={handleCreateAccountPayable}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit
+          }) => (
+            <form onSubmit={handleSubmit}>
+              {/* Serie */}
+              <div className='form-control-container'>
+                <label htmlFor='serie' className=''>
+                  Serie
+                </label>
+                <Field
+                  id='serie'
+                  type='text'
+                  name='serie'
+                  className='form-control'
+                  placeholder='Serie'
+                />
+              </div>
+              {
+                touched.serie && errors.serie && <Message message={errors.serie} />
+              }
+
+              {/* Document Number */}
+              <div className='form-control-container'>
+                <label htmlFor='serie' className=''>
+                  Número
+                </label>
+
+                <Field
+                  id='documentNumber'
+                  name='documentNumber'
+                  type='text'
+                  placeholder='Número del documento'
+                  className='form-control'
+                />
+              </div>
+              {
+                touched.documentNumber && errors.documentNumber && <Message message={errors.documentNumber} />
+              }
+
+              {/* Tipo */}
+              <div className='form-control-container'>
+                <label htmlFor='idDocumentType' className='' >
+                  Tipo de documento
+                </label>
+                <select
+                  name='idDocumentType'
+                  id='idDocumentType'
+                  onChange={handleChange}
+                  placeholder='Tipo de documento'
+                  value={values.idDocumentType}>
+                  {
+                    documentTypes &&
+                    documentTypes.map((document) => <option key={document.id} value={document.id}>{document.name}</option>)
+                  }
+
+                </select>
+              </div>
+              {
+                touched.idDocumentType && errors.idDocumentType && <Message message={errors.idDocumentType} />
+              }
+
+              {/* Document Date */}
+              <div className='form-control-container' >
+                <label htmlFor='documentDate' className='' >
+                  Fecha
+                </label>
+                <Field
+                  type='date'
+                  id='documentDate'
+                  name='documentDate'
+                  className='form-control'
+                />
+              </div>
+              {
+                touched.documentDate && errors.documentDate && <Message message={errors.documentDate} />
+              }
+
+              {/* Provider */}
+              <div className='form-control-container'>
+                <label htmlFor='provider' className=''>
+                  Proveedor
+                </label>
+                <input
+                  className=''
+                  list='providerList'
+                  id='idProvider'
+                  type='text'
+                  name='idProvider'
+                  value={values.idProvider}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder='Buscar proveedor...'
+                />
+                <datalist id='providerList'>
+                  {providers &&
+                    providers.map((provider) => (
+                      <option
+                        value={`${provider.id} - ${provider.name}`}
+                        key={provider.id}
+                      />
+                    ))}
+                </datalist>
+              </div>
+              {
+                touched.idProvider && errors.idProvider && <Message message={errors.idProvider} />
+              }
+
+              <div className='form-control-container-four-columns'>
+                {/* Exento */}
+                <label htmlFor='exento' className=''>
+                  Exento
+                </label>
+                <input
+                  onChange={handleChangeExento}
+                  value={values.exento}
+                  type='number'
+                  id='exento'
+                  name='exento'
+                  min='0'
+                  className='form-control'
+                />
+
+                {/* Import */}
+                <label htmlFor='importation' className='' >
+                  Importación
+                </label>
+                <input
+                  type='number'
+                  value={values.importation}
+                  onChange={handleChangeImportation}
+                  id='importation'
+                  name='importation'
+                  className='form-control'
+                />
+              </div>
+
+              <div className='form-control-container-four-columns'>
+                {/* Service */}
+                <label htmlFor='service' className=''>
+                  Servicio
+                </label>
+                <input
+                  value={values.service}
+                  onChange={handleChangeService}
+                  type='number'
+                  id='service'
+                  name='service'
+                  className='form-control'
+                />
+
+                {/* Assets (bienes) */}
+                <label htmlFor='assets' className='mx-2 col-sm-1 form-label'>
+                  Bienes
+                </label>
+
+                <input
+                  value={values.asset}
+                  onChange={handleChangeAsset}
+                  type='number'
+                  id='asset'
+                  name='asset'
+                  className='form-control'
+                />
+              </div>
+
+              {/* Account */}
+              <div className='form-control-container'>
+                <label htmlFor='account' className=''>
+                  Cuenta
+                </label>
+                <Field
+                  className='form-control'
+                  list='accountList'
+                  id='idAccount'
+                  name='idAccount'
+                  value={values.idAccount}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  type='text'
+                  placeholder='Seleccionar cuenta...'
+                />
+                <datalist id='accountList'>
+                  {accounts &&
+                    accounts.map((account) => (
+                      <option
+                        key={account.id}
+                        value={`${account.accountNumber} - ${account.name}`}
+                      />
+                    ))}
+                </datalist>
+              </div>
+              {
+                touched.idAccount && errors.idAccount && <Message message={errors.idAccount} />
+              }
+
+              {/* Sub-total */}
+              <div className='form-control-container'>
+                <label htmlFor='sub_total' className='col-sm-2 form-label'>
+                  Sub-total
+                </label>
+                <Field
+                  type='text'
+                  readOnly
+                  id='subtotal'
+                  name='subtotal'
+                  className='form-control'
+                />
+              </div>
+              {
+                touched.subtotal && errors.subtotal && <Message message={errors.subtotal} />
+              }
+
+              {/* IVA */}
+              <div className='form-control-container'>
+                <label htmlFor='iva' className=''>
+                  IVA
+                </label>
+                <Field
+                  type='text'
+                  readOnly
+                  id='iva'
+                  name='iva'
+                  className='form-control'
+                />
+              </div>
+              {
+                touched.iva && errors.iva && <Message message={errors.iva} />
+              }
+
+              {/* TOTAL */}
+              <div className='form-control-container'>
+                <label htmlFor='total' className='col-sm-2 form-label'>
+                  Total
+                </label>
+                  <Field
+                    type='text'
+                    readOnly
+                    id='total'
+                    name='total'
+                    className='form-control'
+                  />
+              </div>
+              {
+                touched.total && errors.total && <Message message={errors.total} />
+              }
+
+              {/* Message */}
+              {message && (
+                <div
+                  className={`message ${message.error ? 'message-error' : 'message-success'
+                    }`}
+                >
+                  {message.message}
+                </div>
+              )}
+
+              <div className='form-actions'>
+                <button type='submit' className='btn-save'>
+                  Guardar
+                </button>
+                <button
+                  type='button'
+                  className='btn-cancel'
+                  onClick={(e) => handleCancel(e)}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          )}
+        </Formik>
+      </div>
+    </div >
   )
 }
 

@@ -23,9 +23,12 @@ thead th {
   padding: 15px;
 }
 
+thead th:last-child {
+  width: 100px;
+}
+
 tbody tr td {
-  font-weight: 600; 
-  font-size: 14px;
+  font-size: 12px;
   color: #787d8d;
   padding: 5px 15px;
 }

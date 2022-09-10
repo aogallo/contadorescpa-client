@@ -10,6 +10,16 @@ import { DELETE_CLIENT } from '../graphql/Client/mutations'
 
 import 'components/ClientList/ClientList.css'
 import CustomModal from './Modal/CustomModal'
+import Table from 'components/Table'
+
+const columns = [
+  { column: 'Nombre', key: 'name' },
+  { column: 'Nit', key: 'nit' },
+  { column: 'Dirección', 'key': 'address' },
+  { column: 'Correo', 'key': 'email' },
+  { column: 'Telefono', 'key': 'phone' },
+  { column: 'Acciones', key: 'actions' }
+]
 
 const ClientList = ({ title }) => {
   const { refetch, data } = useQuery(GET_ALL_CLIENTS)
@@ -58,43 +68,7 @@ const ClientList = ({ title }) => {
             <FontAwesomeIcon icon='fa-plus' className='add-icon'/>
           </Link>
         </div>
-        <div className='table-container'>
-          <table className=''>
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>NIT</th>
-                <th>Dirección</th>
-                <th>Correo</th>
-                <th>Teléfono</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {clients.map((client) => (
-                <tr key={client.id} className=''>
-                  <td>{client.name}</td>
-                  <td>{client.nit}</td>
-                  <td>{client.address}</td>
-                  <td>{client.email}</td>
-                  <td>{client.phone}</td>
-                  <td className='table-actions'>
-                    <NavLink
-                      type='button'
-                      to={`/client/edit/${client.id}`}
-                      className='btn-edit'
-                    >
-                      <FontAwesomeIcon icon='fa-edit' className='table-icon'/>
-                    </NavLink>
-                    <a className='btn-delete' onClick={() => handleShowModal(client)}>
-                      <FontAwesomeIcon icon='fa-trash' className='table-icon'/>
-                    </a>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Table columns={columns} editRoute='/client/edit/' data={clients}/>
       </div>
       {showModal && (
         <CustomModal handleClose={handleClose} handleAction={handleAction}/>

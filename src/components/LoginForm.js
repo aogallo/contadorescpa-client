@@ -29,7 +29,7 @@ const LoginForm = (props) => {
   }
   
   return (
-    <div className='container'>
+    <div className='login-container'>
       <div className='logo-container'>
         <h2 className='logo-title'>Contadores Publicos y Auditores</h2>
       </div>
