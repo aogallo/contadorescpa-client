@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Formik, Field } from 'formik'
 import { GET_ALL_DOCUMENT_TYPES } from '../graphql/DocumentType/queries'
 import { GET_ALL_PROVIDERS } from '../graphql/Provider/queries'
 import { GET_ALL_ACCOUNTS } from '../graphql/Account/queries'
@@ -132,8 +131,9 @@ const AccountPayableForm = () => {
 
   const handleChangeImportation = ({ target }) => {
     setAccountPayableInitialValues((prevState) => {
+      console.log('importacion prevState', prevState)
       return {
-        ...accountPayableInitialValues,
+        ...prevState,
         importation: parseFloat(target.value) || 0
       }
     })
@@ -185,11 +185,6 @@ const AccountPayableForm = () => {
       if (!values.documentNumber) {
         errors.documentNumber = 'El número de documento es requerido.'
       }
-      // if (!values.documentType)
-      //   errors.documentType = 'El tipo de documento es requerido.'
-
-      // if (!values.documentDate)
-      //   errors.documentDate = 'La fecha del documento es requerida.'
 
       return errors
     } catch (error) {
@@ -277,289 +272,51 @@ const AccountPayableForm = () => {
         {isEditing ? 'Editar' : 'Agregar'} cuenta por pagar
       </div>
       <div className='form-content'>
-        <Formik
-          enableReinitialize
-          initialValues={accountPayableInitialValues}
-          validate={validateFields}
-          onSubmit={handleCreateAccountPayable}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit
-          }) => (
-            <form onSubmit={handleSubmit}>
-              {/* Serie */}
-              <div className='form-control-container'>
-                <label htmlFor='serie' className=''>
-                  Serie
-                </label>
-                <Field
-                  id='serie'
-                  type='text'
-                  name='serie'
-                  className='form-control'
-                  placeholder='Serie'
-                />
-              </div>
-              {
-                touched.serie && errors.serie && <Message message={errors.serie} />
-              }
+        <form onSubmit={handleCreateAccountPayable}>
+          {/* Serie */}
+          <div className='form-control-container'>
+            <label htmlFor='serie' className=''>
+              Serie
+            </label>
+            <input
+              id='serie'
+              type='text'
+              name='serie'
+              className='form-control'
+              placeholder='Serie'
+            />
+            <i className='fas fa-times-circle'></i>
+            {/*
+              label
+              div
+                input
+                icono
 
-              {/* Document Number */}
-              <div className='form-control-container'>
-                <label htmlFor='serie' className=''>
-                  Número
-                </label>
-
-                <Field
-                  id='documentNumber'
-                  name='documentNumber'
-                  type='text'
-                  placeholder='Número del documento'
-                  className='form-control'
-                />
-              </div>
-              {
-                touched.documentNumber && errors.documentNumber && <Message message={errors.documentNumber} />
-              }
-
-              {/* Tipo */}
-              <div className='form-control-container'>
-                <label htmlFor='idDocumentType' className='' >
-                  Tipo de documento
-                </label>
-                <select
-                  name='idDocumentType'
-                  id='idDocumentType'
-                  onChange={handleChange}
-                  placeholder='Tipo de documento'
-                  value={values.idDocumentType}>
-                  {
-                    documentTypes &&
-                    documentTypes.map((document) => <option key={document.id} value={document.id}>{document.name}</option>)
-                  }
-
-                </select>
-              </div>
-              {
-                touched.idDocumentType && errors.idDocumentType && <Message message={errors.idDocumentType} />
-              }
-
-              {/* Document Date */}
-              <div className='form-control-container' >
-                <label htmlFor='documentDate' className='' >
-                  Fecha
-                </label>
-                <Field
-                  type='date'
-                  id='documentDate'
-                  name='documentDate'
-                  className='form-control'
-                />
-              </div>
-              {
-                touched.documentDate && errors.documentDate && <Message message={errors.documentDate} />
-              }
-
-              {/* Provider */}
-              <div className='form-control-container'>
-                <label htmlFor='provider' className=''>
-                  Proveedor
-                </label>
-                <input
-                  className=''
-                  list='providerList'
-                  id='idProvider'
-                  type='text'
-                  name='idProvider'
-                  value={values.idProvider}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  placeholder='Buscar proveedor...'
-                />
-                <datalist id='providerList'>
-                  {providers &&
-                    providers.map((provider) => (
-                      <option
-                        value={`${provider.id} - ${provider.name}`}
-                        key={provider.id}
-                      />
-                    ))}
-                </datalist>
-              </div>
-              {
-                touched.idProvider && errors.idProvider && <Message message={errors.idProvider} />
-              }
-
-              <div className='form-control-container-four-columns'>
-                {/* Exento */}
-                <label htmlFor='exento' className=''>
-                  Exento
-                </label>
-                <input
-                  onChange={handleChangeExento}
-                  value={values.exento}
-                  type='number'
-                  id='exento'
-                  name='exento'
-                  min='0'
-                  className='form-control'
-                />
-
-                {/* Import */}
-                <label htmlFor='importation' className='label-two' >
-                  Importación
-                </label>
-                <input
-                  type='number'
-                  value={values.importation}
-                  onChange={handleChangeImportation}
-                  id='importation'
-                  name='importation'
-                  className='form-control'
-                />
-              </div>
-
-              <div className='form-control-container-four-columns'>
-                {/* Service */}
-                <label htmlFor='service' className=''>
-                  Servicio
-                </label>
-                <input
-                  value={values.service}
-                  onChange={handleChangeService}
-                  type='number'
-                  id='service'
-                  name='service'
-                  className='form-control'
-                />
-
-                {/* Assets (bienes) */}
-                <label htmlFor='assets' className='label-two'>
-                  Bienes
-                </label>
-
-                <input
-                  value={values.asset}
-                  onChange={handleChangeAsset}
-                  type='number'
-                  id='asset'
-                  name='asset'
-                  className='form-control'
-                />
-              </div>
-
-              {/* Account */}
-              <div className='form-control-container'>
-                <label htmlFor='account' className=''>
-                  Cuenta
-                </label>
-                <Field
-                  className='form-control'
-                  list='accountList'
-                  id='idAccount'
-                  name='idAccount'
-                  value={values.idAccount}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  type='text'
-                  placeholder='Seleccionar cuenta...'
-                />
-                <datalist id='accountList'>
-                  {accounts &&
-                    accounts.map((account) => (
-                      <option
-                        key={account.id}
-                        value={`${account.accountNumber} - ${account.name}`}
-                      />
-                    ))}
-                </datalist>
-              </div>
-              {
-                touched.idAccount && errors.idAccount && <Message message={errors.idAccount} />
-              }
-
-              {/* Sub-total */}
-              <div className='form-control-container'>
-                <label htmlFor='sub_total' className=''>
-                  Sub-total
-                </label>
-                <Field
-                  type='text'
-                  readOnly
-                  id='subtotal'
-                  name='subtotal'
-                  className='form-control'
-                  disabled
-                />
-              </div>
-              {
-                touched.subtotal && errors.subtotal && <Message message={errors.subtotal} />
-              }
-
-              {/* IVA */}
-              <div className='form-control-container'>
-                <label htmlFor='iva' className=''>
-                  IVA
-                </label>
-                <Field
-                  type='text'
-                  readOnly
-                  id='iva'
-                  name='iva'
-                  className='form-control'
-                />
-              </div>
-              {
-                touched.iva && errors.iva && <Message message={errors.iva} />
-              }
-
-              {/* TOTAL */}
-              <div className='form-control-container'>
-                <label htmlFor='total' className='col-sm-2 form-label'>
-                  Total
-                </label>
-                  <Field
-                    type='text'
-                    readOnly
-                    id='total'
-                    name='total'
-                    className='form-control'
-                  />
-              </div>
-              {
-                touched.total && errors.total && <Message message={errors.total} />
-              }
-
-              {/* Message */}
-              {message && (
-                <div
-                  className={`message ${message.error ? 'message-error' : 'message-success'
-                    }`}
-                >
-                  {message.message}
-                </div>
-              )}
-
-              <div className='form-actions'>
-                <button type='submit' className='btn-save'>
-                  Guardar
-                </button>
-                <button
-                  type='button'
-                  className='btn-cancel'
-                  onClick={(e) => handleCancel(e)}
-                >
-                  Cancelar
-                </button>
-              </div>
-            </form>
+              */}
+          </div>
+          {/* Message */}
+          {message && (
+            <div
+              className={`message ${message.error ? 'message-error' : 'message-success'
+                }`}
+            >
+              {message.message}
+            </div>
           )}
-        </Formik>
+
+          <div className='form-actions'>
+            <button type='submit' className='btn-save'>
+              Guardar
+            </button>
+            <button
+              type='button'
+              className='btn-cancel'
+              onClick={(e) => handleCancel(e)}
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
       </div>
     </div >
   )
