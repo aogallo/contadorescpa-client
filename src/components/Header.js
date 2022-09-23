@@ -15,18 +15,19 @@ const Header = () => {
   }
 
   return (
-    <div className='navigation'>
+    <header className='header'>
       <div className='search-container'>
         <div className='search'>
+          <i class="fas fa-solid fa-glass"></i>
           <input type='text' placeholder='Buscar' />
         </div>
       </div>
-      <div className='profile'>
+      <div className='header__profile'>
         <span>|</span>
         <h3>{user?.username}</h3>
         <img src='https://marketplace.canva.com/EAE6OJ2qP8U/1/0/1600w/canva-gamer-with-glasses-character-twitch-profile-picture-CVfgWIJGgRo.jpg' />
       </div>
-    </div>
+    </header>
   )
 }
 
