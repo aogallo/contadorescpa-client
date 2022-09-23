@@ -3,6 +3,7 @@
 
 :root {
   --white: white;
+  --main-bg-color: #E5E7EB;
 }
 
 * {
@@ -18,6 +19,7 @@ html {
 body {
   font-family: 'Roboto', sans-serif;
   min-height: 100%;
+  background: var(--main-bg-color);
 }
 
 .sidebar {
@@ -31,12 +33,13 @@ body {
 
 .header {
   grid-area: header;
-  background-color: #85aedd;
+  /* background-color: #85aedd; */
 }
 
 .main {
   grid-area: main;
-  background-color: #afd6af;
+  /* background-color: #afd6af; */
+  padding: 15px;
 }
 
 .grid-container {

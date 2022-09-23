@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import 'components/Table/Table.css'
 
 
 const Table = ({ columns, data, editRoute, }) => {
@@ -28,7 +29,7 @@ const Table = ({ columns, data, editRoute, }) => {
     )}
   const rowKeys = columns.map((column) => column['key'])
   const rows = data && data.map((element) => (
-    <tr key={element.id}>
+    <tr key={element.id} className='table__row'>
        {
         rowKeys.map((row) => 
           row === 'actions' ? actionsButtons(element) :
@@ -37,10 +38,10 @@ const Table = ({ columns, data, editRoute, }) => {
     </tr >
   ))
 return (
-  <div className='table-container'>
-    <table>
+  <div className='table'>
+    <table className='table__content'>
       <thead>
-        <tr>
+        <tr className='table__row'>
           {
             columns &&
             columns.map((column) => <th key={column['key']}>{column['column']}</th>)
