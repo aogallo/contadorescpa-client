@@ -29,7 +29,7 @@ const Table = ({ columns, data, editRoute, }) => {
   const rowKeys = columns.map((column) => column['key'])
   const rows = data && data.map((element) => (
     <tr key={element.id}>
-      {
+       {
         rowKeys.map((row) => 
           row === 'actions' ? actionsButtons(element) :
           <td key={row}> { element[row] } </td>)
