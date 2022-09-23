@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useMutation, useQuery } from '@apollo/client'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import CustomModal from './Modal/CustomModal'
-
 import { GET_ALL_CLIENTS } from '../graphql/Client/queries'
 import { DELETE_CLIENT } from '../graphql/Client/mutations'
 
@@ -65,7 +62,6 @@ const ClientList = ({ title }) => {
       <div className=''>
         <div className='btn-add'>
           <Link to='/client/add'>
-            <FontAwesomeIcon icon='fa-plus' className='add-icon'/>
           </Link>
         </div>
         <Table columns={columns} editRoute='/client/edit/' data={clients}/>

@@ -1,5 +1,4 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './CustomModal.css'
 
 const CustomModal = (props) => {
@@ -21,7 +20,6 @@ const CustomModal = (props) => {
         </div>
         <div className='modal-content'>
           <div className='modal-icon'>
-            <FontAwesomeIcon icon='fa-exclamation' />
           </div>
           <p className='modal-text'>
             Esta seguro de eliminar el registro?
@@ -32,8 +30,7 @@ const CustomModal = (props) => {
             <span>Cancelar</span>
           </button>
           <button className='btn-delete' onClick={handleSubmit}>
-            <FontAwesomeIcon icon='fa-trash' className='model-table-icon' />
-            <span>Eliminar</span>
+            <span>Eliinar</span>
           </button>
         </div>
       </div>

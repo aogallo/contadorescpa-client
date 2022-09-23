@@ -235,6 +235,32 @@ tbody tr td {
   border: 1px solid #F0F1F7;
 }
 
+.form-control-container-four-columns {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-control-container-four-columns label {
+  width: 100px;
+  color: black;
+}
+
+.form-control-container-four-columns .label-two {
+  margin-left: 10px;
+}
+
+
+.form-control-container-four-columns input {
+  flex: 1 0 21%;
+  margin-bottom: 25px;
+  font-size: 16px;
+  font-weight: 400px;
+  width: 25%;
+  padding: 10px;
+  border-radius: 8px;
+  background: #FCFDFE;
+  border: 1px solid #F0F1F7;
+}
 
 .form-actions {
   display: flex;
@@ -266,3 +292,5 @@ tbody tr td {
     flex-wrap: wrap;
   }
 }
+
+

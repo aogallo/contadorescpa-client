@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { AppContext } from '../context/AppContext'
 import { types } from '../types/types'
 
@@ -19,12 +18,10 @@ const Header = () => {
     <div className='navigation'>
       <div className='search-container'>
         <div className='search'>
-          <i><FontAwesomeIcon icon='fa-search' /></i>
           <input type='text' placeholder='Buscar' />
         </div>
       </div>
       <div className='profile'>
-        <i><FontAwesomeIcon icon='fa-bell' /></i>
         <span>|</span>
         <h3>{user?.username}</h3>
         <img src='https://marketplace.canva.com/EAE6OJ2qP8U/1/0/1600w/canva-gamer-with-glasses-character-twitch-profile-picture-CVfgWIJGgRo.jpg' />

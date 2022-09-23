@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const Table = ({ columns, data, editRoute, }) => {
@@ -12,25 +11,25 @@ const Table = ({ columns, data, editRoute, }) => {
     return (
       <td className='table-actions' key={element.id}>
       <NavLink
-      type='button'
-      to={`${editRoute}${element.id}`}
+        type='button'
+        to={`${editRoute}${element.id}`}
       // to={`/client/edit/14`}
-      className='btn-edit'
+        className='btn-edit'
       >
-        <FontAwesomeIcon icon='fa-edit' className='table-icon'/>
+        <i className="fas fa-solid fa-pen"></i>
       </NavLink>
       <a 
-      className='btn-delete' 
-      onClick={() => handleShowModal(element)}
+        className='btn-delete' 
+        onClick={() => handleShowModal(element)}
       >
-        <FontAwesomeIcon icon='fa-trash' className='table-icon'/>
+        <i className="fas fa-solid fa-trash"></i>
       </a>
       </td>
     )}
   const rowKeys = columns.map((column) => column['key'])
   const rows = data && data.map((element) => (
     <tr key={element.id}>
-      {
+       {
         rowKeys.map((row) => 
           row === 'actions' ? actionsButtons(element) :
           <td key={row}> { element[row] } </td>)
