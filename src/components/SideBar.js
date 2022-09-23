@@ -12,34 +12,32 @@ const SideBar = () => {
   }
 
   return (
-    <section id="menu">
-      <NavLink to='' className="logo">
+    <aside className='sidebar'>
+      <NavLink to='' className="sidebar__header">
         <img src='https://marketplace.canva.com/EAE6OJ2qP8U/1/0/1600w/canva-gamer-with-glasses-character-twitch-profile-picture-CVfgWIJGgRo.jpg' alt='' />
         <h2>Contadores</h2>
       </NavLink>
-      <nav className='items'>
-        <NavLink to='/client' className='sidebar-nav-link'>
-          <i className="fas fa-solid fa-user icon-sidebar"></i>
-          <span>Clientes</span>
-        </NavLink>
-        <NavLink to='/company' className='sidebar-nav-link'>
-          <i className="fas fa-solid fa-building icon-sidebar"></i>
-          <span>Compa&ntilde;ia</span>
-        </NavLink>
-        <NavLink to='/provider' className='sidebar-nav-link'>
-          <i className="fas fa-solid fa-users icon-sidebar"></i>
-          <span>Proveedores</span>
-        </NavLink>
-        <NavLink to='/cxp' className='sidebar-nav-link'>
-          <i className="fas fa-solid fa-money-bill icon-sidebar"></i>
-          <span>Facturas</span>
-        </NavLink>
-        <a className='sidebar-nav-link logout' onClick={handleLogut}>
-          <i className="fas fa-solid fa-arrow-right-from-bracket icon-sidebar"></i>
-          <span>Salir</span>
-        </a>
-      </nav>
-    </section>
+      <NavLink to='/client' className='sidebar__link'>
+        <i className="fas fa-solid fa-user sidebar__link__icon"></i>
+        <span>Clientes</span>
+      </NavLink>
+      <NavLink to='/company' className='sidebar__link'>
+        <i className="fas fa-solid fa-building sidebar__link__icon"></i>
+        <span>Compa&ntilde;ia</span>
+      </NavLink>
+      <NavLink to='/provider' className='sidebar__link'>
+        <i className="fas fa-solid fa-users sidebar__link__icon"></i>
+        <span>Proveedores</span>
+      </NavLink>
+      <NavLink to='/cxp' className='sidebar__link'>
+        <i className="fas fa-solid fa-money-bill sidebar__link__icon"></i>
+        <span>Facturas</span>
+      </NavLink>
+      <a className='sidebar__link' onClick={handleLogut}>
+        <i className="fas fa-solid fa-arrow-right-from-bracket sidebar__link__icon"></i>
+        <span>Salir</span>
+      </a>
+    </aside>
   )
 }
 
