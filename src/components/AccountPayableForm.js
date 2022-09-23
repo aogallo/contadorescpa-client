@@ -411,7 +411,7 @@ const AccountPayableForm = () => {
                 />
 
                 {/* Import */}
-                <label htmlFor='importation' className='' >
+                <label htmlFor='importation' className='label-two' >
                   Importación
                 </label>
                 <input
@@ -439,7 +439,7 @@ const AccountPayableForm = () => {
                 />
 
                 {/* Assets (bienes) */}
-                <label htmlFor='assets' className='mx-2 col-sm-1 form-label'>
+                <label htmlFor='assets' className='label-two'>
                   Bienes
                 </label>
 
@@ -485,7 +485,7 @@ const AccountPayableForm = () => {
 
               {/* Sub-total */}
               <div className='form-control-container'>
-                <label htmlFor='sub_total' className='col-sm-2 form-label'>
+                <label htmlFor='sub_total' className=''>
                   Sub-total
                 </label>
                 <Field
@@ -494,6 +494,7 @@ const AccountPayableForm = () => {
                   id='subtotal'
                   name='subtotal'
                   className='form-control'
+                  disabled
                 />
               </div>
               {

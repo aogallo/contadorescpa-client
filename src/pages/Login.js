@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
@@ -17,7 +17,20 @@ const Login = () => {
   const [messageError, setMessageError] = useState('')
   const { dispatch } = useContext(AppContext)
 
-
+  useEffect(() => {
+      if (data) {
+        const user = {
+          token: data.login.token,
+          ...data.login.user
+        }
+        dispatch({
+          type: types.login,
+    payload: user
+        })
+        //resetForm()
+        navigate('/')
+      }
+  }, [data])
   const validateFields = (valores) => {
     const errores = {}
 
@@ -40,18 +53,6 @@ const Login = () => {
       })
 
       console.log('data', data)
-      if (data) {
-        const user = {
-          token: data.login.token,
-          ...data.login.user
-        }
-        dispatch({
-          type: types.login,
-          payload: user
-        })
-        //resetForm()
-        // navigate('/')
-      }
     } catch (error) {
       setMessageError(error.message)
       setTimeout(() => {

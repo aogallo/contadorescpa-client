@@ -62,3 +62,9 @@
   transition: 0.3s ease;
 }
 
+.logout {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
