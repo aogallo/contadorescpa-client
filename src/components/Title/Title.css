@@ -1,29 +1,28 @@
-.title-page {
+.title__name {
   color: #444a53;
   font-size: 24px;
-  font-weight: 700;
 }
 
-.breadcrumb {
+.title__breadcrumb {
   display: flex;
   list-style: none;
   margin: 10px 0 10px 10px;
 }
 
 
-.breadcrumb-item {
+.title__breadcrumb__item {
   text-decoration: none;
   margin-right: 5px;
   color: inherit;
 }
 
-.breadcrumb-item h4 {
+.title__breadcrumb__item h4 {
   display: inline-block;
   margin-right: 1px;
 }
 
 
-.breadcrumb-item:last-child{
+.title__breadcrumb__item:last-child{
   cursor: default;
   color: rgb(134,141, 151);
 }

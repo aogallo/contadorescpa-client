@@ -1,0 +1,62 @@
+import React from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import 'components/Table/Table.css'
+
+
+const Table = ({ columns, data, editRoute, }) => {
+  const handleShowModal = (element) => {
+    console.log(element) 
+  }
+
+  const actionsButtons = (element) => {
+    return (
+      <td className='table-actions' key={element.id}>
+      <NavLink
+        type='button'
+        to={`${editRoute}${element.id}`}
+      // to={`/client/edit/14`}
+        className='btn-edit'
+      >
+        <i className="fas fa-solid fa-pen"></i>
+      </NavLink>
+      <a 
+        className='btn-delete' 
+        onClick={() => handleShowModal(element)}
+      >
+        <i className="fas fa-solid fa-trash"></i>
+      </a>
+      </td>
+    )}
+  const rowKeys = columns.map((column) => column['key'])
+  const rows = data && data.map((element) => (
+    <tr key={element.id} className='table__row'>
+       {
+        rowKeys.map((row) => 
+          row === 'actions' ? actionsButtons(element) :
+          <td key={row}> { element[row] } </td>)
+      }
+    </tr >
+  ))
+return (
+  <div className='table'>
+    <table className='table__content'>
+      <thead>
+        <tr className='table__row'>
+          {
+            columns &&
+            columns.map((column) => <th key={column['key']}>{column['column']}</th>)
+          }
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows
+        }
+      </tbody>
+
+    </table>
+  </div>
+)
+}
+
+export default Table

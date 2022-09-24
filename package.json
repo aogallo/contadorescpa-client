@@ -4,19 +4,15 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.7",
-    "@fortawesome/fontawesome-svg-core": "^6.1.2",
-    "@fortawesome/free-regular-svg-icons": "^6.1.2",
-    "@fortawesome/free-solid-svg-icons": "^6.1.2",
-    "@fortawesome/react-fontawesome": "^0.2.0",
     "@popperjs/core": "^2.11.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "formik": "^2.2.9",
     "graphql": "^16.2.0",
     "jwt-decode": "^3.1.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "react-moment": "^1.1.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.0",
     "redux": "^4.1.2",
@@ -30,7 +26,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "fixlinter": "standard --fix",
-    "dev": "PORT=3001 NODE_ENV=development react-scripts start"
+    "dev": "PORT=3001 NODE_ENV=development react-scripts start",
+    "lint": "eslint ./src/"
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +56,11 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^8.23.0",
+    "eslint-config-react-app": "^7.0.1",
     "standard": "^17.0.0"
-  }
+  },
+  "pre-commit": [
+    "lint"
+  ]
 }

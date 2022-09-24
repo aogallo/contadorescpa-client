@@ -17,7 +17,6 @@ const LoginForm = (props) => {
     if (name === 'password') {
       setPassword(value)
     }
-    // navigate('/')
   }
 
   const handleSubmit = (e) => {
@@ -29,7 +28,7 @@ const LoginForm = (props) => {
   }
   
   return (
-    <div className='container'>
+    <div className='login-container'>
       <div className='logo-container'>
         <h2 className='logo-title'>Contadores Publicos y Auditores</h2>
       </div>
@@ -37,7 +36,7 @@ const LoginForm = (props) => {
         <h2 className='title'>Iniciar sesi&oacute;n en CPA</h2>
         <h3 className='sub-title'>Ingrese su usuaruio y contrase&ntilde;a</h3>
       </section>
-      <form>
+      <form onSubmit={handleSubmit}>
         <section className='form-group'>
           <label htmlFor='username' className='form-label'>Usuario</label>
           <input type='text' 
@@ -45,6 +44,7 @@ const LoginForm = (props) => {
             id='username' 
             name='username'
             value={username}
+            required
             onChange={handleChange}
             placeholder = 'Ingrese su usuario'/>
         </section>
@@ -60,12 +60,13 @@ const LoginForm = (props) => {
             id='password' 
             name='password'
             value={password}
+            required
             onChange={handleChange}
             placeholder='Ingrese su contraseña'/>
         </section>
         
         <section className='form-group'>
-          <button type='submit' onClick={handleSubmit}>Ingresar</button>
+          <button type='submit'>Ingresar</button>
         </section>
       </form>
     </div>

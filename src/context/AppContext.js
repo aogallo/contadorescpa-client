@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useEffect, useState } from 'react'
 import { authReducer } from '../reducer/authReducer'
+import { types } from 'types/types'
 
 export const AppContext = createContext()
 
@@ -24,8 +25,15 @@ const AppProvider = ({ children }) => {
     setCompany(company)
   }
 
+  const logout = () => {
+    dispatch({
+      type: types.logout,
+      payload: user
+    })
+  }
+
   return (
-    <AppContext.Provider value={{ user, company, saveCompany, dispatch }}>
+    <AppContext.Provider value={{ user, company, saveCompany, dispatch, logout }}>
       {children}
     </AppContext.Provider>
   )
