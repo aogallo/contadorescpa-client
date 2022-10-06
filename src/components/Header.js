@@ -18,7 +18,7 @@ const Header = () => {
     <header className='header'>
       <div className='search-container'>
         <div className='search'>
-          <i class="fas fa-solid fa-glass"></i>
+          <i className="fas fa-solid fa-glass"></i>
           <input type='text' placeholder='Buscar' />
         </div>
       </div>

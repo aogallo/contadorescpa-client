@@ -28,7 +28,7 @@ const Layout = () => {
       <div className='grid-container'>
         <Header />
         <SideBarComponent />
-        <article className='main'>
+        <div className='main'>
           <Routes>
             <Route path='/about' element={<AboutView />} />
             <Route path='/client' element={<ClientView />}>
@@ -57,7 +57,7 @@ const Layout = () => {
             <Route path='/company' element={<Company />}></Route>
             <Route path='*' element={<Error404 />} />
           </Routes>
-        </article>
+        </div>
       </div>
     </Suspense>
   )

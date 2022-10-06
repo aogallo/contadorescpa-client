@@ -134,7 +134,7 @@ const ProviderForm = () => {
     }
   }
   return (
-    <div className='container-fluid px-4'>
+    <>
       <div className='col-sm-12'>
         <div className='card'>
           <div className='card-header'>
@@ -284,7 +284,7 @@ const ProviderForm = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

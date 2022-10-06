@@ -12,10 +12,10 @@ const Provider = () => {
   ])
 
   return (
-    <section className='container-fluid px-4'>
+    <>
       <Title title='Proveedores' breadCrumb={breadCrumb} />
       <Outlet />
-    </section>
+    </>
   )
 }
 

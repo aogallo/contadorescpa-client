@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
-import './SideBar/SideBar.css'
+// import './SideBar/SideBar.css'
 import { AppContext } from '../context/AppContext'
 import { useNavigate } from 'react-router-dom'
 
@@ -14,7 +14,7 @@ const SideBar = () => {
   return (
     <aside className='sidebar'>
       <NavLink to='' className="sidebar__header">
-        <img src='https://marketplace.canva.com/EAE6OJ2qP8U/1/0/1600w/canva-gamer-with-glasses-character-twitch-profile-picture-CVfgWIJGgRo.jpg' alt='' />
+    {/*<img src='https://marketplace.canva.com/EAE6OJ2qP8U/1/0/1600w/canva-gamer-with-glasses-character-twitch-profile-picture-CVfgWIJGgRo.jpg' alt='' />*/}
         <h2>Contadores</h2>
       </NavLink>
       <NavLink to='/client' className='sidebar__link'>

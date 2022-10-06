@@ -1,10 +1,4 @@
-@import-normalize;
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;1,700&display=swap');
-
-:root {
-  --white: white;
-  --main-bg-color: #E5E7EB;
-}
 
 * {
   box-sizing: border-box;
@@ -43,10 +37,11 @@ body {
 }
 
 .grid-container {
-  height: 100vh;
+  /* height: 100vh; */
   display: grid;
-  grid-template: 
+  grid-template:
     'sidebar header' 60px
+    'sidebar main'
     'sidebar main' auto /
     300px auto;
 }
