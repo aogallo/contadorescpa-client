@@ -13,6 +13,7 @@ import {
   GET_ALL_ACCOUNTS_PAYABLE
 } from '../graphql/AccountsPayable/queries'
 
+import 'components/AccountPayableForm/AccountPayableForm.css'
 import Message from 'components/Message'
 
 const AccountPayableForm = () => {
@@ -264,60 +265,73 @@ const AccountPayableForm = () => {
     }
   }
   return (
-    <div className='form-container'>
-      <div className='form-header'>
+    <div className='form'>
+      <div className='form__header'>
         <button onClick={handleCancel} className=''>
           <i className='fas fa-arrow-left' />
         </button>
         {isEditing ? 'Editar' : 'Agregar'} cuenta por pagar
       </div>
-      <div className='form-content'>
-        <form onSubmit={handleCreateAccountPayable}>
-          {/* Serie */}
-          <div className='form-control-container'>
-            <label htmlFor='serie' className=''>
-              Serie
-            </label>
+      <form onSubmit={handleCreateAccountPayable} className='form__content'>
+        {/* Serie */}
+        <div className='form__content__group'>
+          <label htmlFor='serie' className='form__content__group__label'>
+            Serie
+          </label>
+          <div className='form__content__group__input'>
             <input
               id='serie'
               type='text'
               name='serie'
-              className='form-control'
-              placeholder='Serie'
+              placeholder='Serie test'
+              className='form__input'
             />
-            <i className='fas fa-times-circle'></i>
-            {/*
-              label
-              div
-                input
-                icono
-
-              */}
+            <i className='form__validation-state fas fa-times-circle'></i>
+            <p className='form__input-error'>Error</p>
           </div>
-          {/* Message */}
-          {message && (
-            <div
-              className={`message ${message.error ? 'message-error' : 'message-success'
-                }`}
-            >
-              {message.message}
-            </div>
-          )}
+        </div>
 
-          <div className='form-actions'>
-            <button type='submit' className='btn-save'>
-              Guardar
-            </button>
-            <button
-              type='button'
-              className='btn-cancel'
-              onClick={(e) => handleCancel(e)}
-            >
-              Cancelar
-            </button>
+        {/* Document Number */}
+        <div className='form__content__group'>
+          <label htmlFor='documentNumber' className='form__content__group__label'>
+            Número
+          </label>
+          <div className='form__content__group__input'>
+            <input
+              id='documentNumber'
+              name='documentNumber'
+              type='text'
+              placeholder='Número del documento'
+              className='form__input'
+            />
+            <i className='form__validation-state fas fa-times-circle'></i>
+            <p className='form__input-error'>Error</p>
           </div>
-        </form>
-      </div>
+        </div>
+
+        {/* Message */}
+        {message && (
+          <div
+            className={`message ${message.error ? 'message-error' : 'message-success'
+              }`}
+          >
+            {message.message}
+          </div>
+        )}
+
+        <div className='form-actions'>
+          <button type='submit' className='btn-save'>
+            Guardar
+          </button>
+          <button
+            type='button'
+            className='btn-cancel'
+            onClick={(e) => handleCancel(e)}
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
     </div >
   )
 }
