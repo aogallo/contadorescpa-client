@@ -25,7 +25,7 @@ const Layout = () => {
 
   return (
     <Suspense fallback={<div>loagind....</div>} >
-      <div className='grid-container'>
+      <div className='grid_container'>
         <Header />
         <SideBarComponent />
         <div className='main'>
