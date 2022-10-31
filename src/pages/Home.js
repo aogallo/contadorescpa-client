@@ -10,10 +10,10 @@ const Home = () => {
   }, [])
 
   return (
-    <div className='container-fluid px-4'>
+    <>
       <h1>Bienvenid@ {user.username}</h1>
       <h2>Compañia seleccionada: {company.name}</h2>
-    </div>
+    </>
   )
 }
 

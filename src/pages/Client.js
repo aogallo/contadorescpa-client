@@ -9,7 +9,7 @@ const Client = () => {
     {
       name: 'Inicio',
       path: '/',
-      active: 'active' 
+      active: 'active'
     },
     {
       name: 'Clientes',
@@ -19,11 +19,11 @@ const Client = () => {
   ]
 
   return (
-    <div className='container-fluid px-4'>
+    <>
       <Title title='Clientes' breadCrumb={breadCrumb} />
 
       <Outlet />
-    </div>
+    </>
   )
 }
 

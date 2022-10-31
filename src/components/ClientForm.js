@@ -4,7 +4,7 @@ import { Formik, Field } from 'formik'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
 
-import Message from 'components/Message'
+import Message from 'components/Message/Message'
 import { GET_ALL_CLIENTS, GET_CLIENT_BY_ID } from '../graphql/Client/queries'
 import { CREATE_CLIENT, UPDATE_CLIENT } from '../graphql/Client/mutations'
 import { GET_ALL_COMPANIES } from '../graphql/Company/queries'
@@ -21,7 +21,7 @@ const ClientForm = () => {
   const navigate = useNavigate()
   const params = useParams()
 
-  const [companies, setCompanies] = useState([{id: 0, name: 'Seleccione una Compañia'}])
+  const [companies, setCompanies] = useState([{ id: 0, name: 'Seleccione una Compañia' }])
   const { company } = useContext(AppContext)
   const [message, setMessage] = useState(null)
   const [isEditing, setIsEditing] = useState(false)
