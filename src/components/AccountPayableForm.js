@@ -14,7 +14,7 @@ import {
 } from '../graphql/AccountsPayable/queries'
 
 import 'components/AccountPayableForm/AccountPayableForm.css'
-import Message from 'components/Message'
+import Message from 'components/Message/Message'
 
 const AccountPayableForm = () => {
   const navigate = useNavigate()
