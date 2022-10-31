@@ -24,7 +24,7 @@ const About = () => {
     if (data) {
       setCompanies(data.getAllCompanies)
       setFilterCompanies(data.getAllCompanies)
-			setBreadCrumb('') 
+      setBreadCrumb('')
     }
   }, [data])
 
@@ -57,7 +57,7 @@ const About = () => {
   }
 
   return (
-    <div className='container-fluid px-4'>
+    <>
       <Title title='Compañias' breadCrumb={breadCrumb} />
 
       <div className='form-inline input-group'>
@@ -98,7 +98,7 @@ const About = () => {
           ))}
         </div>
       )}
-    </div>
+    </>
   )
 }
 

@@ -9,7 +9,7 @@ import { types } from '../types/types'
 import { Formik, Form } from 'formik'
 
 import LoginForm from 'components/LoginForm'
-import './Login/Login.css'
+// import './Login/Login.css'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -18,18 +18,18 @@ const Login = () => {
   const { dispatch } = useContext(AppContext)
 
   useEffect(() => {
-      if (data) {
-        const user = {
-          token: data.login.token,
-          ...data.login.user
-        }
-        dispatch({
-          type: types.login,
-    payload: user
-        })
-        //resetForm()
-        navigate('/')
+    if (data) {
+      const user = {
+        token: data.login.token,
+        ...data.login.user
       }
+      dispatch({
+        type: types.login,
+        payload: user
+      })
+      //resetForm()
+      navigate('/')
+    }
   }, [data])
   const validateFields = (valores) => {
     const errores = {}
@@ -63,7 +63,7 @@ const Login = () => {
   }
 
   return (
-    <LoginForm handleLogin={handleLogin}/>
+    <LoginForm handleLogin={handleLogin} messageError={messageError} />
   )
 }
 
