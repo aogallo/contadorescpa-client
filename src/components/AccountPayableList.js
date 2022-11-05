@@ -8,8 +8,9 @@ const columns = [
   { column: 'Serie', key: 'serie' },
   { column: 'Numero', key: 'documentNumber' },
   { column: 'Fecha', 'key': 'documentDate' },
-  { column: 'Proveedor', 'key': 'idProveedor' },
-  { column: 'Cuenta', 'key': 'idAccount' },
+  { column: 'Tipo de documento', 'key': 'documentTypeName' },
+  { column: 'Proveedor', 'key': 'providerName' },
+  { column: 'Cuenta', 'key': 'accountName' },
   { column: 'Acciones', key: 'actions' }
 ]
 
@@ -18,7 +19,32 @@ const AccountPayableList = ({ title }) => {
   const [accountsPayable, setAccountsPayable] = useState([])
 
   useEffect(() => {
-    if (data) setAccountsPayable(data.getAllAccountPayable)
+    if (data) {
+      const newAccountsPayableData = data.getAllAccountPayable.map(accountPayable => {
+        const {
+          account: {
+            id: idAccount,
+            name: accountName
+          },
+          provider: {
+            id: idProvider,
+            name: providerName
+          },
+          documentType: {
+            name: documentTypeName
+          }
+        } = accountPayable
+        return {
+          ...accountPayable,
+          idAccount,
+          accountName,
+          idProvider,
+          providerName,
+          documentTypeName
+        }
+      })
+      setAccountsPayable(newAccountsPayableData)
+    }
   }, [data])
 
   return (

@@ -5,8 +5,10 @@
   --primary-color: #246dec;
   --secondary-color: #DBAE58;
   --white-color: #ffffff;
+  --blue-color: #246dec;
   --red-color: #cc4c43;
   --border-color: #d2d2d3;
+  --gray-color-150: #f4f6fb;
   --sidebar-background: #21232d;
   --sidebar-color: #9799ab;
 }
@@ -164,3 +166,100 @@ body {
   color: var(--red-color);
 }
 
+.table {
+}
+
+.table__content {
+  /* padding: 10px; */
+  border: 1px solid var(--white-color);
+  border-radius: 10px;
+  max-height: 550px;
+  width: 100%;
+  overflow: hidden;
+  background: var(--white-color);
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table__header {
+  /* box-shadow: 0 5px 5px var(--border-color); */
+  box-shadow: 0 6px 7px -4px var(--gray-color-150);
+}
+
+.table__title {
+  width: 200px;
+  /* background: blue; */
+  padding: 1rem 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.table__row:nth-child(even) {
+  background-color: var(--gray-color-150);
+}
+
+.table__row-content{
+  padding: 1rem 2rem;
+  /* background: red; */
+  font-weight: 300;
+  font-size: 14px;
+  height: 45px;
+  text-align: center;
+}
+
+.table__action {
+  margin: 5px 0;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn__action {
+  background: var(--main-bg-color);
+  align-self: center;
+  padding: 4px;
+  border-radius: 5px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.btn__action-edit {
+  color: var(--blue-color);
+}
+
+.btn__action-delete {
+  color: var(--red-color)
+}
+
+/* Title */
+.title {
+  margin-bottom: 10px;
+}
+.title__name {
+  font-weight: 700;
+  font-size: 20px;
+  height: 20px;
+}
+
+.title__breadcrumb {
+  display: flex;
+  height: 20px;
+}
+
+.title__breadcrumb__item {
+  display: flex;
+  /* background: red; */
+  align-items: center;
+  color: var(--blue-color);
+}
+
+.active {
+  color: var(--sidebar-color);
+}
+
+.title__breadcrumb__symbol {
+  margin: 0 5px;
+}
