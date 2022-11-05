@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom'
 import './Title/Title.css'
 
 const Title = ({ title, breadCrumb }) => {
-  console.log(breadCrumb)
   return (
     <div className='title'>
       <h3 className='title__name'>{title}</h3>
