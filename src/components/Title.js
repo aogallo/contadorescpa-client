@@ -10,8 +10,12 @@ const Title = ({ title, breadCrumb }) => {
         {breadCrumb
           ? breadCrumb.map((b) => {
             return (
-              <NavLink className={`title__breadcrumb__item`} key={b.name} to={b.path}>
-                <h4>{b.name}</h4> {b.active && <span>/</span> }
+              <NavLink
+                // className={`title__breadcrumb__item ${b.active && 'title__breadcrumb__item-active'}`}
+                className={`title__breadcrumb__item`}
+                key={b.name}
+                to={b.path}>
+                <h4>{b.name}</h4> {b.active && <span className='title__breadcrumb__symbol'>/</span >}
               </NavLink>
             )
           })

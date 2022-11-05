@@ -47,18 +47,15 @@ const Login = () => {
 
   const handleLogin = async (valores) => {
     try {
-      console.log('handleLogin', valores)
       await login({
         variables: { username: valores.username, password: valores.password }
       })
 
-      console.log('data', data)
     } catch (error) {
       setMessageError(error.message)
       setTimeout(() => {
         setMessageError('')
       }, 5000)
-      console.log('error', error)
     }
   }
 

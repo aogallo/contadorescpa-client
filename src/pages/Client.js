@@ -9,12 +9,12 @@ const Client = () => {
     {
       name: 'Inicio',
       path: '/',
-      active: 'active'
+      active: true
     },
     {
       name: 'Clientes',
       path: '/client',
-      active: ''
+      active: false
     }
   ]
 

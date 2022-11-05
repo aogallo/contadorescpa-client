@@ -8,8 +8,6 @@ const PrivateRoute = ({ children }) => {
   const { user } = useContext(AppContext)
   const decode = user.token ? jwt(user.token) : { logged: false, exp: 0 }
 
-  console.log('private routes', user)
-
   if (decode.exp < Date.now() / 1000) user.logged = false
 
   return user.logged ? children : <Navigate to='/login' />

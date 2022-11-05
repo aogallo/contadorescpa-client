@@ -9,7 +9,7 @@ export const GET_ALL_PROVIDERS = gql`
       email
       phone
       creditDay
-      company {
+      companies {
         id
         name
         nit
