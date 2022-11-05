@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import Title from '../components/Title'
+import Title from 'components/Title'
 
 const AccountsPayable = () => {
   return (
