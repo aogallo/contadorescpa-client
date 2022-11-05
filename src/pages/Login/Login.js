@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
-import { LOGIN } from '../graphql/Login/mutations'
+import { LOGIN } from 'graphql/Login/mutations'
 
-import { AppContext } from '../context/AppContext'
-import { types } from '../types/types'
+import { AppContext } from 'context/AppContext'
+import { types } from 'types/types'
 import { Formik, Form } from 'formik'
 
 import LoginForm from 'components/LoginForm'

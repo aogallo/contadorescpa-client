@@ -1,11 +1,11 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import Login from '../pages/Login'
+import Login from 'pages/Login/Login'
 import PrivateRoute from './PrivateRoute'
 
 import PublicRoute from './PublicRoute'
-import Layout from '../pages/Layout'
+import Layout from 'pages/Layout/Layout'
 
 const AppRouter = () => {
   return (
