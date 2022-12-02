@@ -263,3 +263,72 @@ body {
 .title__breadcrumb__symbol {
   margin: 0 5px;
 }
+
+.card__container {
+  /* padding: 8px; */
+  /* border: 1px solid red; */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 8px;
+}
+
+.card {
+  height: 100px;
+  width: 350px;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.card__title {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  /* cursor: pointer; */
+}
+
+.card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.card__label {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.card__text {
+  font-weight: 300;
+  font-size: 15px;
+}
+
+.company__container {
+  padding: 0px 10px;
+}
+
+.search__container {
+  /* border: 1px solid red; */
+  display: flex;
+  padding: 20px;
+  width: 500px;
+  height: 40px;
+  background-color: white;
+  border-radius: 30px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.search__icon {
+  font-size: 20px;
+}
+
+.search__input {
+  flex: 1;
+  height: 40px;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  padding-left: 10px;
+}

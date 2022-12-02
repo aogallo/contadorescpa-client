@@ -1,10 +1,14 @@
-import React, { lazy, Suspense } from 'react'
+import { AppContext } from 'context/AppContext'
+import SelectedCompany from 'pages/SelectedCompany/SelectedCompany'
+import React, { lazy, Suspense, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { Route, Routes } from 'react-router-dom'
 
 const Layout = () => {
+  const { company } = useContext(AppContext)
+
   const Header = lazy(async () => await import('components/Header'))
-  const AboutView = lazy(async () => await import('pages/About/About'))
   const ClientView = lazy(async () => await import('pages/Client/Client'))
   const ClientListView = lazy(async () => await import('components/ClientList'))
   const ClientFormView = lazy(async () => await import('components/ClientForm'))
@@ -25,40 +29,48 @@ const Layout = () => {
 
   return (
     <Suspense fallback={<div>loagind....</div>} >
-      <div className='grid_container'>
-        <Header />
-        <SideBarComponent />
-        <div className='main'>
+      {
+        company?.id ?
+          <>
+            <div className='grid_container'>
+              <Header />
+              <SideBarComponent />
+              <div className='main'>
+                <Routes>
+                  <Route path='/client' element={<ClientView />}>
+                    <Route path='' element={<ClientListView />} />
+                    <Route path='add' element={<ClientFormView />} />
+                    <Route path='edit/:id' element={<ClientFormView />} />
+                  </Route>
+                  <Route path='/provider' element={<ProviderView />}>
+                    <Route
+                      path=''
+                      element={<ProviderList title='Listado de proveedores' />}
+                    />
+                    <Route path='add' element={<ProviderForm />} />
+                    <Route path='edit/:id' element={<ProviderForm />} />
+                  </Route>
+                  <Route path='/cxp' element={<AccountsPayable />}>
+                    <Route
+                      path=''
+                      element={
+                        <AccountPayableList title='Listado de cuentas por pagar' />
+                      }
+                    />
+                    <Route path='add' element={<AccountPayableForm />} />
+                    <Route path='edit/:id' element={<AccountPayableForm />} />
+                  </Route>
+                  <Route path='/company' element={<Company />}></Route>
+                  <Route path='*' element={<ErrorView />} />
+                </Routes>
+              </div>
+            </div>
+          </> :
           <Routes>
-            <Route path='/about' element={<AboutView />} />
-            <Route path='/client' element={<ClientView />}>
-              <Route path='' element={<ClientListView />} />
-              <Route path='add' element={<ClientFormView />} />
-              <Route path='edit/:id' element={<ClientFormView />} />
-            </Route>
-            <Route path='/provider' element={<ProviderView />}>
-              <Route
-                path=''
-                element={<ProviderList title='Listado de proveedores' />}
-              />
-              <Route path='add' element={<ProviderForm />} />
-              <Route path='edit/:id' element={<ProviderForm />} />
-            </Route>
-            <Route path='/cxp' element={<AccountsPayable />}>
-              <Route
-                path=''
-                element={
-                  <AccountPayableList title='Listado de cuentas por pagar' />
-                }
-              />
-              <Route path='add' element={<AccountPayableForm />} />
-              <Route path='edit/:id' element={<AccountPayableForm />} />
-            </Route>
-            <Route path='/company' element={<Company />}></Route>
-            <Route path='*' element={<ErrorView />} />
+            <Route path='/selected-company' element={<SelectedCompany />}></Route>
           </Routes>
-        </div>
-      </div>
+
+      }
     </Suspense>
   )
 }

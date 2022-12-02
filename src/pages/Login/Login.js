@@ -6,7 +6,6 @@ import { LOGIN } from 'graphql/Login/mutations'
 
 import { AppContext } from 'context/AppContext'
 import { types } from 'types/types'
-import { Formik, Form } from 'formik'
 
 import LoginForm from 'components/LoginForm'
 // import './Login/Login.css'
@@ -28,7 +27,7 @@ const Login = () => {
         payload: user
       })
       //resetForm()
-      navigate('/')
+      navigate('/selected-company')
     }
   }, [data])
   const validateFields = (valores) => {

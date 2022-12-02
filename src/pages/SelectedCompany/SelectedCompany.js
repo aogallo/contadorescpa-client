@@ -5,7 +5,7 @@ import { AppContext } from 'context/AppContext'
 import Title from 'components/Title'
 import { useNavigate } from 'react-router-dom'
 
-const About = () => {
+const SelectedCompany = () => {
   const { data } = useQuery(GET_ALL_COMPANIES)
   const navigate = useNavigate()
   const { saveCompany } = useContext(AppContext)
@@ -57,18 +57,13 @@ const About = () => {
   }
 
   return (
-    <>
+    <div className='company__container'>
       <Title title='Compañias' breadCrumb={breadCrumb} />
-
-      <div className='form-inline input-group'>
-        <div className='input-group-prepend'>
-          <span className='input-group-text' id='basic-addon1'>
-            <i className='fas fa-search' />
-          </span>
-        </div>
+      <div className='search__container'>
+        <i className='search__icon fas fa-search' />
         <input
           type='text'
-          className='form-control'
+          className='search__input'
           name='search'
           placeholder='Buscar compañia'
           onChange={handleSearch}
@@ -77,29 +72,31 @@ const About = () => {
       </div>
 
       {companies && (
-        <div className='container row'>
+        <div className='card__container'>
           {companies.map((company) => (
             <div
               key={company.id}
-              className='col-sm-4'
+              className=''
               onClick={() => handleSelectCompany(company)}
             >
-              <div className='card w-20 mt-2 card-custom'>
-                <div className='card-header'>{company.name}</div>
-                <div className='card-body'>
-                  <label className='form-label'>NIT: {company.nit}</label>
-                  <label className='form-label'>
-                    Actividad comercial: {company.comercialActivity}
+              <div className='card'>
+                <div className='card__title'>{company.name}</div>
+                <div className='card__body'>
+                  <label className='card__label'>
+                    NIT: <span className='card__text'>{company.nit}</span>
                   </label>
-                  <label>Fecha: {company.dateBirth}</label>
+                  <label className='card__label'>
+                    Actividad comercial: <span className='card__text'>{company.comercialActivity}</span>
+                  </label>
+                  <label className='card__label'>Fecha: <span className='card__text'>{company.dateBirth}</span></label>
                 </div>
               </div>
             </div>
           ))}
         </div>
       )}
-    </>
+    </div>
   )
 }
 
-export default About
+export default SelectedCompany
