@@ -13,7 +13,6 @@ import SelectedCompany from 'pages/SelectedCompany/SelectedCompany'
 const AppRouter = () => {
   const { company } = useContext(AppContext)
   console.log('company', company)
-  // const renderLayout = company?.id ? <Layout /> : <SelectedCompany />
   return (
     <BrowserRouter>
       <Routes>

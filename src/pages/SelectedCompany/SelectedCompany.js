@@ -53,7 +53,7 @@ const SelectedCompany = () => {
       id: company.id,
       name: company.name
     })
-    navigate('/home')
+    navigate('/')
   }
 
   return (

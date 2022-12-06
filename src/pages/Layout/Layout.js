@@ -1,12 +1,13 @@
-import { AppContext } from 'context/AppContext'
 import SelectedCompany from 'pages/SelectedCompany/SelectedCompany'
-import React, { lazy, Suspense, useContext } from 'react'
+import React, { lazy, Suspense } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Route, Routes } from 'react-router-dom'
 
+import useCustomContext from 'hooks/useCustomContext'
+
 const Layout = () => {
-  const { company } = useContext(AppContext)
+  const { company } = useCustomContext()
 
   const Header = lazy(async () => await import('components/Header'))
   const ClientView = lazy(async () => await import('pages/Client/Client'))

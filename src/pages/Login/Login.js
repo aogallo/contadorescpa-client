@@ -14,7 +14,7 @@ const Login = () => {
   const navigate = useNavigate()
   const [login, { data }] = useMutation(LOGIN)
   const [messageError, setMessageError] = useState('')
-  const { dispatch } = useContext(AppContext)
+  const { dispatch, company } = useContext(AppContext)
 
   useEffect(() => {
     if (data) {
@@ -26,6 +26,7 @@ const Login = () => {
         type: types.login,
         payload: user
       })
+      console.log("company from login", company)
       //resetForm()
       navigate('/selected-company')
     }
