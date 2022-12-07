@@ -15,7 +15,10 @@ const columns = [
 ]
 
 const AccountPayableList = ({ title }) => {
-  const { loading, data } = useQuery(GET_ALL_ACCOUNTS_PAYABLE)
+  const { loading, data } = useQuery(GET_ALL_ACCOUNTS_PAYABLE, {
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'network-only'
+  })
   const [accountsPayable, setAccountsPayable] = useState([])
 
   useEffect(() => {

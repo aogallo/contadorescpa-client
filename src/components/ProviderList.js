@@ -16,7 +16,10 @@ const columns = [
 ]
 
 const ProviderList = ({ title }) => {
-  const { loading, refetch, data } = useQuery(GET_ALL_PROVIDERS)
+  const { loading, refetch, data } = useQuery(GET_ALL_PROVIDERS, {
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'network-only'
+  })
   const [deleteProviderById] = useMutation(DELETE_PROVIDER)
   const [providers, setProviders] = useState([])
   const [providerDelete, setProviderDelete] = useState(null)

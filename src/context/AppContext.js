@@ -30,6 +30,7 @@ const AppProvider = ({ children }) => {
       type: types.logout,
       payload: user
     })
+    setCompany('')
   }
 
   return (
