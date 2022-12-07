@@ -26,8 +26,6 @@ const Login = () => {
         type: types.login,
         payload: user
       })
-      console.log("company from login", company)
-      //resetForm()
       navigate('/selected-company')
     }
   }, [data])

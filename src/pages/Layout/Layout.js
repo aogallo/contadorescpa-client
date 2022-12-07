@@ -1,13 +1,25 @@
 import SelectedCompany from 'pages/SelectedCompany/SelectedCompany'
-import React, { lazy, Suspense } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { lazy, Suspense, useEffect } from 'react'
 
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 
 import useCustomContext from 'hooks/useCustomContext'
+import { isTokenExpired } from 'utils/token'
 
 const Layout = () => {
-  const { company } = useCustomContext()
+  const { user, company } = useCustomContext()
+  const navigate = useNavigate()
+  const logged = isTokenExpired(user.token)
+
+  useEffect(() => {
+    if (!logged) {
+      navigate('/login')
+    }
+
+    if (!company.id) {
+      navigate('/selected-company')
+    }
+  }, [logged])
 
   const Header = lazy(async () => await import('components/Header'))
   const ClientView = lazy(async () => await import('pages/Client/Client'))

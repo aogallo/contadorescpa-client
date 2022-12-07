@@ -1,14 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_COMPANIES } from 'graphql/Company/queries'
-import { AppContext } from 'context/AppContext'
 import Title from 'components/Title'
 import { useNavigate } from 'react-router-dom'
+import useCustomContext from 'hooks/useCustomContext'
+import { isTokenExpired } from 'utils/token'
 
 const SelectedCompany = () => {
   const { data } = useQuery(GET_ALL_COMPANIES)
   const navigate = useNavigate()
-  const { saveCompany } = useContext(AppContext)
+  const { company, saveCompany, user } = useCustomContext()
   const [companies, setCompanies] = useState([])
   const [filterCompanies, setFilterCompanies] = useState([])
   const [search, setSearch] = useState('')
@@ -19,6 +20,17 @@ const SelectedCompany = () => {
       active: false
     }
   ])
+  const logged = isTokenExpired(user.token)
+
+  useEffect(() => {
+    if (!logged) {
+      navigate('/login')
+    }
+
+    if (company?.id) {
+      navigate('/')
+    }
+  }, [logged])
 
   useEffect(() => {
     if (data) {

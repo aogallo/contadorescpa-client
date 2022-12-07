@@ -3,11 +3,16 @@ import jwtDecode from 'jwt-decode'
 export const isTokenExpired = (token = '') => {
   try {
     console.log("token", token)
+    if (!token) return false
     const { exp } = jwtDecode(token)
 
-    console.log("exp", exp)
+    const today = Date.now()
+    const expToCompare = exp * 1000
 
-    if (Date.now() >= exp * 1000) {
+    console.log('today', today)
+    console.log('expToCompare', expToCompare)
+
+    if (today >= expToCompare) {
       return false
     } else {
       return true

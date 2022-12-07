@@ -237,6 +237,7 @@ body {
 /* Title */
 .title {
   margin-bottom: 10px;
+  margin-left: inherit;
 }
 .title__name {
   font-weight: 700;
@@ -268,13 +269,16 @@ body {
   /* padding: 8px; */
   /* border: 1px solid red; */
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 8px;
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .card {
-  height: 100px;
-  width: 350px;
+  height: 120px;
+  width: 330px;
   border: 1px solid black;
   border-radius: 10px;
   padding: 5px;
@@ -306,6 +310,8 @@ body {
 
 .company__container {
   padding: 0px 10px;
+  margin-left: 20px;
+  margin-right: 10px;
 }
 
 .search__container {
@@ -316,6 +322,7 @@ body {
   height: 40px;
   background-color: white;
   border-radius: 30px;
+  margin-left: inherit;
   margin-bottom: 10px;
   align-items: center;
 }

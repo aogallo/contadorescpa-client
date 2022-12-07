@@ -14,7 +14,10 @@ const columns = [
 ]
 
 const Company = () => {
-  const { data } = useQuery(GET_ALL_COMPANIES)
+  const { data } = useQuery(GET_ALL_COMPANIES, {
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'network-only'
+  })
   const navigate = useNavigate()
   const { saveCompany } = useContext(AppContext)
   const [companies, setCompanies] = useState([])
