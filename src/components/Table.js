@@ -1,6 +1,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+
 import 'components/Table/Table.css'
+import { BiEdit, BiTrash } from 'react-icons/bi'
 
 
 const Table = ({ columns, data, editRoute, }) => {
@@ -18,7 +20,7 @@ const Table = ({ columns, data, editRoute, }) => {
             // to={`/client/edit/14`}
             className='btn__action-edit'
           >
-            <i className="fas fa-solid fa-pen"></i>
+            <BiEdit />
           </NavLink>
         </span>
         <span className='btn__action'>
@@ -26,7 +28,7 @@ const Table = ({ columns, data, editRoute, }) => {
             className='btn__action-delete'
             onClick={() => handleShowModal(element)}
           >
-            <i className="fas fa-solid fa-trash"></i>
+            <BiTrash />
           </a>
         </span>
       </td>
