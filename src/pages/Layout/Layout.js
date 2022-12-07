@@ -19,7 +19,7 @@ const Layout = () => {
     if (!company.id) {
       navigate('/selected-company')
     }
-  }, [logged])
+  }, [logged, company])
 
   const Header = lazy(async () => await import('components/Header'))
   const ClientView = lazy(async () => await import('pages/Client/Client'))

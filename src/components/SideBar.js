@@ -1,11 +1,12 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { AppContext } from '../context/AppContext'
-import { useNavigate } from 'react-router-dom'
+
+
+import useCustomContext from 'hooks/useCustomContext'
+import { BiArchive, BiBuilding, BiUser, BiLogOut } from 'react-icons/bi'
 
 const SideBar = () => {
-  const navigate = useNavigate()
-  const { logout } = useContext(AppContext)
+  const { logout } = useCustomContext()
   const handleLogut = () => {
     logout()
   }
@@ -17,23 +18,25 @@ const SideBar = () => {
         <h2 className=''>Contadores</h2>
       </NavLink>
       <NavLink to='/client' className='sidebar__link'>
-        <i className="fas fa-solid fa-user sidebar__icon"></i>
+        {/*<i className="fas fa-solid fa-user sidebar__icon"></i>*/}
+        <BiUser />
         <span className='sidebar__subtitle'>Clientes</span>
       </NavLink>
       <NavLink to='/company' className='sidebar__link'>
-        <i className="fas fa-solid fa-building sidebar__icon"></i>
+        {/*<i className="fas fa-solid fa-building sidebar__icon"></i>*/}
+        <BiBuilding />
         <span className='sidebar__subtitle'>Compa&ntilde;ia</span>
       </NavLink>
       <NavLink to='/provider' className='sidebar__link'>
-        <i className="fas fa-solid fa-users sidebar__icon"></i>
+        <BiUser />
         <span className='sidebar__subtitle'>Proveedores</span>
       </NavLink>
       <NavLink to='/cxp' className='sidebar__link'>
-        <i className="fas fa-solid fa-money-bill sidebar__icon"></i>
+        <BiArchive />
         <span className='sidebar__subtitle'>Facturas</span>
       </NavLink>
       <a className='sidebar__link' onClick={handleLogut}>
-        <i className="fas fa-solid fa-arrow-right-from-bracket sidebar__icon"></i>
+        <BiLogOut />
         <span className='sidebar__subtitle'>Salir</span>
       </a>
     </aside>
