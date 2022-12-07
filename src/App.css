@@ -93,6 +93,7 @@ body {
   height: 2rem;
   text-decoration: none;
   font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .login-container {
@@ -200,11 +201,11 @@ body {
   background-color: var(--gray-color-150);
 }
 
-.table__row-content{
+.table__row-content {
   padding: 1rem 2rem;
   /* background: red; */
   font-weight: 300;
-  font-size: 14px;
+  font-size: 12px;
   height: 45px;
   text-align: center;
 }

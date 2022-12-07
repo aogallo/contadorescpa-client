@@ -3,6 +3,7 @@ import { AppContext } from '../context/AppContext'
 import { types } from '../types/types'
 
 import 'components/Header/Header.css'
+import { BiSearch } from 'react-icons/bi'
 
 const Header = () => {
   const { dispatch } = useContext(AppContext)
@@ -17,6 +18,7 @@ const Header = () => {
   return (
     <header className='header'>
       <div className='header__form'>
+        <BiSearch />
         <i className="fas fa-solid fa-glass"></i>
         <input type='text' className='header__input' placeholder='Buscar' />
       </div>
