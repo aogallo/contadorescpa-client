@@ -5,9 +5,6 @@ const Error404 = () => {
   return (
     <>
       <h2>Página en mantenimiento</h2>
-      <div>
-        <img src='../img/error-404-monochrome.sv' alt='Página en mantenimiento' />
-      </div>
     </>
   )
 }
