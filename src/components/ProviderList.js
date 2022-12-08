@@ -64,7 +64,8 @@ const ProviderList = ({ title }) => {
           <Link to='/provider/add'></Link>
         </div>
         <Table columns={columns}
-          data={providers} />
+          data={providers}
+          editRoute='edit/' />
       </div>
     </>
   )
