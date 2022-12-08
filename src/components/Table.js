@@ -17,7 +17,6 @@ const Table = ({ columns, data, editRoute, }) => {
           <NavLink
             type='button'
             to={`${editRoute}${element.id}`}
-            // to={`/client/edit/14`}
             className='btn__action-edit'
           >
             <BiEdit />

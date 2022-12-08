@@ -22,7 +22,6 @@ const ClientForm = () => {
   const params = useParams()
 
   const [companies, setCompanies] = useState([{ id: 0, name: 'Seleccione una Compañia' }])
-  const { company } = useContext(AppContext)
   const [message, setMessage] = useState(null)
   const [isEditing, setIsEditing] = useState(false)
   const [clientValues, setClientValues] = useState({
@@ -36,8 +35,6 @@ const ClientForm = () => {
   })
 
   useEffect(() => {
-    // if (!company.name) navigate('/')
-
     if (params.id) {
       setIsEditing(true)
       getClientById({ variables: { id: params.id } })
@@ -54,13 +51,15 @@ const ClientForm = () => {
 
   useEffect(() => {
     if (data) {
+      console.log("data", data.getClientById)
       setClientValues({
         id: data.getClientById.id,
         name: data.getClientById.name,
         nit: data.getClientById.nit,
         address: data.getClientById.address,
         email: data.getClientById.email,
-        phone: data.getClientById.phone
+        phone: data.getClientById.phone,
+        // idCompany: data.getClientById.idCompany
       })
     }
   }, [data])
@@ -123,7 +122,6 @@ const ClientForm = () => {
           refetchQueries: [{ query: GET_ALL_CLIENTS }]
         })
       } else {
-        console.log(values)
         await createClient({
           variables: {
             client: {
@@ -161,16 +159,12 @@ const ClientForm = () => {
   }
 
   return (
-    <div className='form-container'>
-      <div className='form-header'>
-        {/*<button onClick={handleCancel} className=''>
-          <i className='fas fa-arrow-left' />
-        </button>*/}
+    <div className='container'>
+      <div className='container__title'>
         {isEditing ? 'Editar' : 'Agregar'} Cliente
       </div>
-      <div className='form-content'>
+      <div className='form'>
         {/* INICIO DE FORMULARIO */}
-
         <Formik
           enableReinitialize
           initialValues={clientValues}
@@ -185,60 +179,111 @@ const ClientForm = () => {
             errors,
             handleBlur
           }) => (
-            <form className='' onSubmit={handleSubmit}>
-              {/* Name */}
-              <div className='form-control-container'>
-                <label htmlFor='name' className=''>
-                  Nombre
-                </label>
-                <input
-                  className=''
-                  name='name'
-                  id='name'
-                  type='text'
-                  placeholder='Cándido López Canaletti'
-                  value={values.name}
-                  onChange={handleChange}
-                  autoComplete='off'
-                  onBlur={handleBlur}
-                />
-              </div>
-              {touched.name && errors.name && (
-                <Message message={errors.name} />
-              )}
+            <form className='form__container' onSubmit={handleSubmit}>
+              <div className='form__group--column'>
+                {/* Name */}
+                <div className='form__control'>
+                  <label htmlFor='name' className='form__label'>
+                    Nombre
+                  </label>
+                  <input
+                    className='form__input'
+                    name='name'
+                    id='name'
+                    type='text'
+                    placeholder='Cándido López Canaletti'
+                    value={values.name}
+                    onChange={handleChange}
+                    autoComplete='off'
+                    onBlur={handleBlur}
+                  />
+                  {touched.name && errors.name && (
+                    <Message message={errors.name} />
+                  )}
+                </div>
 
-              {/* NIT */}
-              <div className='form-control-container'>
-                <label htmlFor='nit' className=''>
-                  NIT
-                </label>
-                <input
-                  className=''
-                  name='nit'
-                  id='nit'
-                  type='text'
-                  placeholder='678934013'
-                  value={values.nit}
-                  onChange={handleChange}
-                  autoComplete='off'
-                  onBlur={handleBlur}
-                />
+                {/* NIT */}
+                <div className='form__control'>
+                  <label htmlFor='nit' className='form__label'>
+                    NIT
+                  </label>
+                  <input
+                    className='form__input'
+                    name='nit'
+                    id='nit'
+                    type='text'
+                    placeholder='678934013'
+                    value={values.nit}
+                    onChange={handleChange}
+                    autoComplete='off'
+                    onBlur={handleBlur}
+                  />
+                  {touched.nit && errors.nit && (
+                    <Message message={errors.nit} />
+                  )}
+                </div>
               </div>
-              {touched.nit && errors.nit && (
-                <Message message={errors.nit} />
-              )}
+
+              <div className='form__group--column'>
+                {/* Phone */}
+                <div className='form__control'>
+                  <label htmlFor='phone' className='form__label'>
+                    Teléfono
+                  </label>
+                  <input
+                    className='form__input'
+                    name='phone'
+                    placeholder='23344512'
+                    id='phne'
+                    type='text'
+                    value={values.phone}
+                    onChange={handleChange}
+                    autoComplete='off'
+                    onBlur={handleBlur}
+                  />
+                  {
+                    touched.phone && errors.phone && (
+                      <Message message={errors.phone} />
+                    )
+                  }
+                </div>
+
+                {/* Email */}
+                <div className='form__control'>
+                  <label htmlFor='email' className='form__label'>
+                    Correo
+                  </label>
+                  <input
+                    className='form__input'
+                    name='email'
+                    id='email'
+                    type='text'
+                    placeholder='name@example.com'
+                    value={values.email}
+                    onChange={handleChange}
+                    autoComplete='off'
+                    onBlur={handleBlur}
+                  />
+                </div>
+                {
+                  touched.email && errors.email && (
+                    <Message message={errors.email} />
+                  )
+                }
+              </div>
 
               {/* Address */}
-              <div className='form-control-container'>
-                <label htmlFor='address' className=''>
+              <div className='form__control'>
+                <label htmlFor='address' className='form__label'>
                   Dirección
                 </label>
                 <textarea
                   id='address'
-                  className=''
+                  className='form__input form__input--textarea'
                   placeholder='57ª Calle 35-67 Zona 24, Guatemala, Guatemala.'
                   name='address'
                   value={values.address}
+                  rows="5"
                   onChange={handleChange}
                   autoComplete='off'
                   onBlur={handleBlur}
@@ -248,56 +293,11 @@ const ClientForm = () => {
                 <Message message={errors.address} />
               )}
 
-              {/* Email */}
-              <div className='form-control-container'>
-                <label htmlFor='email' className=''>
-                  Correo
-                </label>
-                <input
-                  className=''
-                  name='email'
-                  id='email'
-                  type='text'
-                  placeholder='name@example.com'
-                  value={values.email}
-                  onChange={handleChange}
-                  autoComplete='off'
-                  onBlur={handleBlur}
-                />
-              </div>
-              {
-                touched.email && errors.email && (
-                  <Message message={errors.email} />
-                )
-              }
-
-              {/* Phone */}
-              <div className='form-control-container'>
-                <label htmlFor='phone' className=''>
-                  Teléfono
-                </label>
-                <input
-                  className=''
-                  name='phone'
-                  placeholder='23344512'
-                  id='phne'
-                  type='text'
-                  value={values.phone}
-                  onChange={handleChange}
-                  autoComplete='off'
-                  onBlur={handleBlur}
-                />
-              </div>
-              {
-                touched.phone && errors.phone && (
-                  <Message message={errors.phone} />
-                )
-              }
-
               {/* Company */}
-              <div className='form-control-container'>
-                <label htmlFor='idCompany'>Compa&ntilde;ia</label>
+              <div className='form__control'>
+                <label htmlFor='idCompany' className='form__label'>Compa&ntilde;ia</label>
                 <select
+                  className='form__input'
                   name='idCompany'
                   id='idCompany'
                   onChange={handleChange}
@@ -327,13 +327,13 @@ const ClientForm = () => {
                 )
               }
 
-              <div className='form-actions'>
-                <button type='submit' className='btn-save'>
+              <div className='form__buttons--group'>
+                <button type='submit' className='btn form__submit'>
                   Guardar
                 </button>
                 <button
                   type='button'
-                  className='btn-cancel'
+                  className='btn form__cancel'
                   onClick={handleCancel}
                 >
                   Cancelar
