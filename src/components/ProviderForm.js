@@ -12,6 +12,7 @@ import {
   CREATE_PROVIDER,
   UPDATE_PROVIDER
 } from '../graphql/Provider/mutations'
+import CustomInput from './CustomInput/CustomInput'
 
 const ProviderForm = () => {
   const navigate = useNavigate()
@@ -119,9 +120,8 @@ const ProviderForm = () => {
 
       setMessage({
         error: false,
-        message: `Proveedor ${
-          isEditing ? 'actualizado' : 'creado'
-        } correctamente`
+        message: `Proveedor ${isEditing ? 'actualizado' : 'creado'
+          } correctamente`
       })
       setTimeout(() => {
         setMessage(null)
@@ -135,153 +135,125 @@ const ProviderForm = () => {
   }
   return (
     <>
-      <div className='col-sm-12'>
-        <div className='card'>
-          <div className='card-header'>
-            <button onClick={handleCancel} className='btn'>
-              <i className='fas fa-arrow-left' />
-            </button>
-            {isEditing ? 'Editar' : 'Agregar'} Proveedor
-          </div>
-          <div className='card-body'>
-            <Formik
-              enableReinitialize
-              initialValues={providerValues}
-              validate={handleValidate}
-              onSubmit={handleCreateProvider}
-            >
-              {({ errors, touched }) => (
-                <Form>
-                  {/* Name */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='name' className='col-sm-2 form-label'>
-                      Nombre
-                    </label>
-                    <div className='col-sm-10'>
-                      <Field
-                        id='name'
-                        name='name'
-                        type='text'
-                        className='form-control'
-                      />
-                    </div>
-                    {touched.name && errors.name && (
-                      <div className='error' style={{ color: 'red' }}>
-                        {errors.name}
-                      </div>
-                    )}
-                  </div>
+      <div className=''>
+        <button onClick={handleCancel} className=''>
+          Agregar
+        </button>
+        {isEditing ? 'Editar' : 'Agregar'} Proveedor
+      </div>
+      <div className='container container__column'>
+        <div className=''>
+          <Formik
+            enableReinitialize
+            initialValues={providerValues}
+            validate={handleValidate}
+            onSubmit={handleCreateProvider}
+          >
+            {({ values, errors, touched }) => (
+              <Form>
+                {/* Name */}
+                <CustomInput
+                  label='Nombre'
+                  name='name'
+                  placeholder='Juan'
+                  value={values.name}
+                  touch={touched.name}
+                  errors={errors}
+                  changeState={setProviderValues}
+                  state={providerValues}
+                />
 
-                  {/* NIT */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='nit' className='col-sm-2 form-label'>
-                      NIT
-                    </label>
-                    <div className='col-sm-10'>
-                      <Field
-                        id='nit'
-                        name='nit'
-                        type='text'
-                        className='form-control'
-                      />
-                    </div>
-                    {touched.nit && errors.nit && (
-                      <div className='error' style={{ color: 'red' }}>
-                        {errors.nit}
-                      </div>
-                    )}
-                  </div>
+                {/* NIT */}
+                <CustomInput
+                  label='NIT'
+                  name='nit'
+                  placeholder='1233335'
+                  value={values.nit}
+                  touch={touched.nit}
+                  errors={errors}
+                  changeState={setProviderValues}
+                  state={providerValues}
+                />
 
-                  {/* Address */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='address' className='col-sm-2 form-label'>
-                      Dirección
-                    </label>
-                    <div className='col-sm-10'>
-                      <Field
-                        id='address'
-                        name='address'
-                        className='form-control'
-                      />
-                    </div>
-                  </div>
+                {/* Address */}
+                <CustomInput
+                  label='Dirección'
+                  name='address'
+                  placeholder='Guatemala ciudad capital'
+                  value={values.address}
+                  touch={touched.address}
+                  errors={errors}
+                  changeState={setProviderValues}
+                  state={providerValues}
+                />
 
-                  {/* Email */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='email' className='col-sm-2 form-label'>
-                      Correo
-                    </label>
-                    <div className='col-sm-10'>
-                      <Field
-                        name='email'
-                        type='email'
-                        id='email'
-                        className='form-control'
-                      />
-                    </div>
-                    {touched.email && errors.email && (
-                      <div className='error' style={{ color: 'red' }}>
-                        {errors.email}
-                      </div>
-                    )}
-                  </div>
+                {/* Email */}
+                <CustomInput
+                  label='Correo'
+                  name='email'
+                  placeholder='juan@gmail.com'
+                  value={values.email}
+                  touch={touched.email}
+                  errors={errors}
+                  changeState={setProviderValues}
+                  state={providerValues}
+                />
 
-                  {/* Phone */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='phone' className='col-sm-2 form-label'>
-                      Teléfono
-                    </label>
-                    <div className='col-sm-10'>
-                      <Field
-                        className='form-control'
-                        name='phone'
-                        type='text'
-                      />
-                    </div>
-                  </div>
+                {/* Phone */}
+                <CustomInput
+                  label='Teléfono'
+                  name='phone'
+                  placeholder='22401129'
+                  value={values.phone}
+                  touch={touched.phone}
+                  errors={errors}
+                  changeState={setProviderValues}
+                  state={providerValues}
+                />
 
-                  {/* Credit day */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='creditDay' className='col-sm-2 form-label'>
-                      Días de credito
-                    </label>
-                    <div className='col-sm-10'>
-                      <Field
-                        name='creditDay'
-                        type='text'
-                        className='form-control'
-                        id='creditDay'
-                      />
-                    </div>
-                  </div>
-                  {message && (
-                    <div
-                      className={`message ${
-                        message.error ? 'message-error' : 'message-success'
+                {/* Credit day */}
+                <CustomInput
+                  label='Días de credito'
+                  name='creditDay'
+                  placeholder='11'
+                  value={values.creditDay}
+                  touch={touched.creditDay}
+                  errors={errors}
+                  changeState={setProviderValues}
+                  state={providerValues}
+                />
+
+                {message && (
+                  <div
+                    className={`message ${message.error ? 'message-error' : 'message-success'
                       }`}
-                    >
-                      {message.message}
-                    </div>
-                  )}
-                  <div className=''>
-                    <button
-                      type='submit'
-                      className='btn btn-primary'
-                    >
-                      Guardar
-                    </button>
-                    <button
-                      type='button'
-                      onClick={handleCancel}
-                      className='btn btn-danger'
-                    >
-                      Cancelar
-                    </button>
+                  >
+                    {message.message}
                   </div>
-                </Form>
-              )}
-            </Formik>
-          </div>
+                )}
+
+                <div className='form__buttons--group'>
+                  <button
+                    type='submit'
+                    className='btn form__submit'
+                  >
+                    Guardar
+                  </button>
+                  <button
+                    type='button'
+                    onClick={handleCancel}
+                    className='btn form__cancel'
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+        <div>
+          <span>Añadir compañia</span>
+
         </div>
       </div>
     </>

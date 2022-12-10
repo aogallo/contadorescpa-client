@@ -102,6 +102,28 @@ body {
   cursor: pointer;
 }
 
+.company {
+  /* background-color: red; */
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin: 0 1rem;
+  margin-bottom: 5px;
+}
+
+.company__list {
+  margin-top: 10px;
+  width: 270px;
+  background: var(--sidebar-background);
+  color: var(--white-color);
+  border-radius: 10px;
+  padding: 8px;
+  border-color: var(--main-bg-color);
+}
+
+.company__label {
+  color: var(--sidebar-color);
+}
+
 .login-container {
   display: flex;
   height: 100vh;
@@ -406,4 +428,10 @@ body {
   border: 1px solid var(--red-color);
   font-weight: 700;
   color: var(--white-color)
+}
+
+.container__column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
