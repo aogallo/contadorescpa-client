@@ -8,7 +8,7 @@ import { GET_ALL_COMPANIES } from 'graphql/Company/queries'
 
 const SideBar = () => {
   const { data } = useQuery(GET_ALL_COMPANIES)
-  const { logout, company, saveCompany } = useCustomContext()
+  const { company, logout, saveCompany, user } = useCustomContext()
   const [companies, setCompanies] = useState([])
   const handleLogut = () => {
     logout()
@@ -58,6 +58,9 @@ const SideBar = () => {
               </option>)
           }
         </select>
+      </div>
+      <div className='user'>
+        <span className='sidebar__link sidebar__link--user'>{user?.username}</span>
       </div>
       <NavLink to='/client' className='sidebar__link'>
         <BiUser />

@@ -62,7 +62,7 @@ body {
   height: 100vh;
   display: grid;
   grid-template:
-    'sidebar header' 60px
+    /* 'sidebar header' 60px */
     'sidebar main'
     'sidebar main' auto /
     300px auto;
@@ -434,4 +434,12 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+}
+
+.user {
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+.sidebar__link--user {
+  font-size: 25px;
 }

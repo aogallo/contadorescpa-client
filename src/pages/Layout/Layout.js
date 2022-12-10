@@ -21,7 +21,7 @@ const Layout = () => {
     }
   }, [logged, company])
 
-  const Header = lazy(async () => await import('components/Header/Header'))
+  // const Header = lazy(async () => await import('components/Header/Header'))
   const ClientView = lazy(async () => await import('pages/Client/Client'))
   const ClientListView = lazy(async () => await import('components/ClientList'))
   const ClientFormView = lazy(async () => await import('components/ClientForm'))
@@ -46,7 +46,7 @@ const Layout = () => {
         company?.id ?
           <>
             <div className='grid_container'>
-              <Header />
+              {/*<Header />*/}
               <SideBarComponent />
               <div className='main'>
                 <Routes>
