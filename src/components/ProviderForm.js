@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form } from 'formik'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useLazyQuery, useMutation } from '@apollo/client'
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
 import { AppContext } from '../context/AppContext'
 
 import {
@@ -13,13 +13,24 @@ import {
   UPDATE_PROVIDER
 } from '../graphql/Provider/mutations'
 import CustomInput from './CustomInput/CustomInput'
+import { BiTrash } from 'react-icons/bi'
+import Tabs from './Tabs/Tabs'
+import { GET_ALL_COMPANIES } from 'graphql/Company/queries'
+import { CREATE_PROVIDER_COMPANY } from 'graphql/ProviderCompany/mutation'
 
 const ProviderForm = () => {
   const navigate = useNavigate()
   const params = useParams()
   const { company } = useContext(AppContext)
+  const { data: companiesData } = useQuery(GET_ALL_COMPANIES)
+  const [companies, setCompanies] = useState([])
+  const [selectedCompany, setSelectedCompany] = useState({
+    id: 0,
+    name: 'Seleccione una compañia'
+  })
   const [message, setMessage] = useState(null)
   const [createProvider] = useMutation(CREATE_PROVIDER)
+  const [createProviderCompany] = useMutation(CREATE_PROVIDER_COMPANY)
   const [updateProvider] = useMutation(UPDATE_PROVIDER)
   const [isEditing, setIsEditing] = useState(false)
   const [getProviderById, { data }] = useLazyQuery(GET_PROVIDER_BY_ID)
@@ -34,6 +45,13 @@ const ProviderForm = () => {
   })
 
   useEffect(() => {
+    if (companiesData) {
+
+      setCompanies(companiesData.getAllCompanies)
+    }
+  }, [companiesData])
+
+  useEffect(() => {
     if (!company.name) navigate('/')
 
     if (params.id) {
@@ -44,6 +62,7 @@ const ProviderForm = () => {
 
   useEffect(() => {
     if (data) {
+      console.log("provider", data.getProviderById)
       setProviderValues({
         id: data.getProviderById.id,
         name: data.getProviderById.name,
@@ -51,7 +70,8 @@ const ProviderForm = () => {
         address: data.getProviderById.address,
         email: data.getProviderById.email,
         phone: data.getProviderById.phone,
-        creditDay: data.getProviderById.creditDay
+        creditDay: data.getProviderById.creditDay,
+        companies: data.getProviderById.companies
       })
     }
   }, [data])
@@ -67,6 +87,8 @@ const ProviderForm = () => {
     if (!values.name) {
       errors.name = 'Por favor ingrese el nombre'
     }
+
+    console.log('values', values)
     if (!values.nit) {
       errors.nit = 'Por favor ingrese el NIT'
     }
@@ -95,7 +117,6 @@ const ProviderForm = () => {
               email: values.email,
               phone: values.phone,
               creditDay: Number(values.creditDay),
-              idCompany: company.id
             }
           },
           refetchQueries: [{ query: GET_ALL_PROVIDERS }]
@@ -133,129 +154,180 @@ const ProviderForm = () => {
       console.log(error)
     }
   }
+
+  const handleRemoveCompany = () => {
+    console.log('Remove company')
+  }
+
+  const handleSelectedCompany = async (idCompany) => {
+    const companyFind = providerValues.companies.filter(company => company.id === idCompany)
+    if (companyFind.length == 0) {
+      await createProviderCompany({
+        variables: {
+          providerCompany: {
+            id: 0,
+            idCompany,
+            idProvider: providerValues.id
+          }
+        },
+        refetchQueries: [{ query: GET_ALL_PROVIDERS }]
+      })
+    }
+  }
+
+  const titles = ['Proveedor', 'Asociar compañia con proveedor']
+  const content = [
+    <div className='container container--tabs'>
+      <div className=''>
+        <Formik
+          enableReinitialize
+          initialValues={providerValues}
+          validate={handleValidate}
+          onSubmit={handleCreateProvider}
+        >
+          {({ values, errors, touched }) => (
+            <Form>
+              {/* Name */}
+              <CustomInput
+                label='Nombre'
+                name='name'
+                placeholder='Juan'
+                value={values.name}
+                touch={touched.name}
+                errors={errors}
+                changeState={setProviderValues}
+                state={providerValues}
+              />
+
+              {/* NIT */}
+              <CustomInput
+                label='NIT'
+                name='nit'
+                placeholder='1233335'
+                value={values.nit}
+                touch={touched.nit}
+                errors={errors}
+                changeState={setProviderValues}
+                state={providerValues}
+              />
+
+              {/* Address */}
+              <CustomInput
+                label='Dirección'
+                name='address'
+                placeholder='Guatemala ciudad capital'
+                value={values.address}
+                touch={touched.address}
+                errors={errors}
+                changeState={setProviderValues}
+                state={providerValues}
+              />
+
+              {/* Email */}
+              <CustomInput
+                label='Correo'
+                name='email'
+                placeholder='juan@gmail.com'
+                value={values.email}
+                touch={touched.email}
+                errors={errors}
+                changeState={setProviderValues}
+                state={providerValues}
+              />
+
+              {/* Phone */}
+              <CustomInput
+                label='Teléfono'
+                name='phone'
+                placeholder='22401129'
+                value={values.phone}
+                touch={touched.phone}
+                errors={errors}
+                changeState={setProviderValues}
+                state={providerValues}
+              />
+
+              {/* Credit day */}
+              <CustomInput
+                label='Días de credito'
+                name='creditDay'
+                placeholder='11'
+                value={values.creditDay}
+                touch={touched.creditDay}
+                errors={errors}
+                changeState={setProviderValues}
+                state={providerValues}
+              />
+
+              {message && (
+                <div
+                  className={`message ${message.error ? 'message-error' : 'message-success'
+                    }`}
+                >
+                  {message.message}
+                </div>
+              )}
+
+              <div className='form__buttons--group'>
+                <button
+                  type='submit'
+                  className='btn form__submit'
+                >
+                  Guardar
+                </button>
+                <button
+                  type='button'
+                  onClick={handleCancel}
+                  className='btn form__cancel'
+                >
+                  Cancelar
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </div>
+    ,
+    <div className='container container--tabs'>
+      {/* Company */}
+      <CustomInput
+        label='Compañia'
+        name='company'
+        placeholder='11'
+        type='select'
+        arrayToSelect={companies}
+        changeStateSelected={handleSelectedCompany}
+        value={selectedCompany}
+      />
+      <div className='badges'
+      >
+        {
+          providerValues.companies && (
+            providerValues.companies.map(company => (
+              <span key={company.id} className='badge'>
+                <span className='badge__name'>
+                  {company.name}
+                </span>
+                <span
+                  onClick={handleRemoveCompany}
+                  className='btn__action btn__action-delete'>
+                  <BiTrash />
+                </span>
+              </span>
+            )
+            )
+          )
+        }
+      </div>
+    </div>
+  ]
+
   return (
     <>
-      <div className=''>
-        <button onClick={handleCancel} className=''>
-          Agregar
-        </button>
-        {isEditing ? 'Editar' : 'Agregar'} Proveedor
-      </div>
-      <div className='container container__column'>
-        <div className=''>
-          <Formik
-            enableReinitialize
-            initialValues={providerValues}
-            validate={handleValidate}
-            onSubmit={handleCreateProvider}
-          >
-            {({ values, errors, touched }) => (
-              <Form>
-                {/* Name */}
-                <CustomInput
-                  label='Nombre'
-                  name='name'
-                  placeholder='Juan'
-                  value={values.name}
-                  touch={touched.name}
-                  errors={errors}
-                  changeState={setProviderValues}
-                  state={providerValues}
-                />
-
-                {/* NIT */}
-                <CustomInput
-                  label='NIT'
-                  name='nit'
-                  placeholder='1233335'
-                  value={values.nit}
-                  touch={touched.nit}
-                  errors={errors}
-                  changeState={setProviderValues}
-                  state={providerValues}
-                />
-
-                {/* Address */}
-                <CustomInput
-                  label='Dirección'
-                  name='address'
-                  placeholder='Guatemala ciudad capital'
-                  value={values.address}
-                  touch={touched.address}
-                  errors={errors}
-                  changeState={setProviderValues}
-                  state={providerValues}
-                />
-
-                {/* Email */}
-                <CustomInput
-                  label='Correo'
-                  name='email'
-                  placeholder='juan@gmail.com'
-                  value={values.email}
-                  touch={touched.email}
-                  errors={errors}
-                  changeState={setProviderValues}
-                  state={providerValues}
-                />
-
-                {/* Phone */}
-                <CustomInput
-                  label='Teléfono'
-                  name='phone'
-                  placeholder='22401129'
-                  value={values.phone}
-                  touch={touched.phone}
-                  errors={errors}
-                  changeState={setProviderValues}
-                  state={providerValues}
-                />
-
-                {/* Credit day */}
-                <CustomInput
-                  label='Días de credito'
-                  name='creditDay'
-                  placeholder='11'
-                  value={values.creditDay}
-                  touch={touched.creditDay}
-                  errors={errors}
-                  changeState={setProviderValues}
-                  state={providerValues}
-                />
-
-                {message && (
-                  <div
-                    className={`message ${message.error ? 'message-error' : 'message-success'
-                      }`}
-                  >
-                    {message.message}
-                  </div>
-                )}
-
-                <div className='form__buttons--group'>
-                  <button
-                    type='submit'
-                    className='btn form__submit'
-                  >
-                    Guardar
-                  </button>
-                  <button
-                    type='button'
-                    onClick={handleCancel}
-                    className='btn form__cancel'
-                  >
-                    Cancelar
-                  </button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
-        <div>
-          <span>Añadir compañia</span>
-
-        </div>
-      </div>
+      <Tabs
+        content={content}
+        titles={titles} />
     </>
   )
 }

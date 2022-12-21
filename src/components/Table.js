@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import 'components/Table/Table.css'
 import { BiEdit, BiTrash } from 'react-icons/bi'
 
+import 'components/Table/Table.css'
+import Editor from './Editor/Editor'
 
 const Table = ({ columns, data, editRoute, }) => {
+  const [showEditor, setShowEditor] = useState(false)
   const handleShowModal = (element) => {
     console.log(element)
   }
@@ -39,7 +41,11 @@ const Table = ({ columns, data, editRoute, }) => {
       {
         rowKeys.map((row) =>
           row === 'actions' ? actionsButtons(element) :
-            <td className='table__row-content' key={row}> {element[row] ? element[row] : '-'} </td>)
+            <td
+              className='table__row-content'
+              key={row}>
+              {element[row] ? element[row] : '-'}
+            </td>)
       }
     </tr >
   ))
@@ -50,7 +56,11 @@ const Table = ({ columns, data, editRoute, }) => {
           <tr className='table__header'>
             {
               columns &&
-              columns.map((column) => <th className='table__title' key={column['key']}>{column['column']}</th>)
+              columns.map((column) => (
+                <th className='table__title' key={column['key']}>
+                  {column['column']}
+                </th>
+              ))
             }
           </tr>
         </thead>
@@ -61,6 +71,9 @@ const Table = ({ columns, data, editRoute, }) => {
         </tbody>
 
       </table>
+      {
+        showEditor && (<Editor />)
+      }
     </div>
   )
 }

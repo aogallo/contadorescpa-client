@@ -3,6 +3,7 @@ import React from 'react'
 const CustomInput = ({
   state,
   changeState,
+  changeStateSelected,
   type,
   label,
   placeholder,
@@ -14,10 +15,13 @@ const CustomInput = ({
   touch,
   errors
 }) => {
-  console.log('touch', touch)
-  console.log('errors', errors[name])
   const onChange = (e) => {
-    changeState({ ...state, [name]: e.target.value })
+    const value = e.target.value
+    if (type === 'select') {
+      changeStateSelected(value)
+    } else {
+      changeState({ ...state, [name]: value })
+    }
   }
 
   const validation = () => {
@@ -49,7 +53,10 @@ const CustomInput = ({
       value={value}>
       {
         arrayToSelect &&
-        arrayToSelect.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)
+        arrayToSelect.map((item) =>
+          <option key={item.id} value={item.id}>
+            {item.name}
+          </option>)
       }
     </select>
   }

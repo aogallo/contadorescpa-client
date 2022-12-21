@@ -276,13 +276,12 @@ const ClientForm = () => {
                 <label htmlFor='address' className='form__label'>
                   Dirección
                 </label>
-                <textarea
+                <input
                   id='address'
-                  className='form__input form__input--textarea'
+                  className='form__input'
                   placeholder='57ª Calle 35-67 Zona 24, Guatemala, Guatemala.'
                   name='address'
                   value={values.address}
-                  rows="5"
                   onChange={handleChange}
                   autoComplete='off'
                   onBlur={handleBlur}
