@@ -15,3 +15,8 @@ export const CREATE_PROVIDER_COMPANY = gql`
   }
 }
 `
+export const DELETE_PROVIDER_COMPANY_BY_ID = gql`
+mutation DeleteProviderCompanyById($providerCompany: ProviderCompanyInput) {
+  deleteProviderCompanyById(providerCompany: $providerCompany)
+}
+`

@@ -16,7 +16,7 @@ import CustomInput from './CustomInput/CustomInput'
 import { BiTrash } from 'react-icons/bi'
 import Tabs from './Tabs/Tabs'
 import { GET_ALL_COMPANIES } from 'graphql/Company/queries'
-import { CREATE_PROVIDER_COMPANY } from 'graphql/ProviderCompany/mutation'
+import { CREATE_PROVIDER_COMPANY, DELETE_PROVIDER_COMPANY_BY_ID } from 'graphql/ProviderCompany/mutation'
 
 const ProviderForm = () => {
   const navigate = useNavigate()
@@ -30,6 +30,7 @@ const ProviderForm = () => {
   })
   const [message, setMessage] = useState(null)
   const [createProvider] = useMutation(CREATE_PROVIDER)
+  const [deleteProviderCompanyById] = useMutation(DELETE_PROVIDER_COMPANY_BY_ID)
   const [createProviderCompany] = useMutation(CREATE_PROVIDER_COMPANY)
   const [updateProvider] = useMutation(UPDATE_PROVIDER)
   const [isEditing, setIsEditing] = useState(false)
@@ -62,7 +63,6 @@ const ProviderForm = () => {
 
   useEffect(() => {
     if (data) {
-      console.log("provider", data.getProviderById)
       setProviderValues({
         id: data.getProviderById.id,
         name: data.getProviderById.name,
@@ -88,7 +88,6 @@ const ProviderForm = () => {
       errors.name = 'Por favor ingrese el nombre'
     }
 
-    console.log('values', values)
     if (!values.nit) {
       errors.nit = 'Por favor ingrese el NIT'
     }
@@ -155,8 +154,17 @@ const ProviderForm = () => {
     }
   }
 
-  const handleRemoveCompany = () => {
-    console.log('Remove company')
+  const handleRemoveCompany = async ({ id }) => {
+    await deleteProviderCompanyById({
+      variables: {
+        providerCompany: {
+          id: 0,
+          idCompany: id,
+          idProvider: providerValues.id
+        }
+      },
+      refetchQueries: [{ query: GET_ALL_PROVIDERS }]
+    })
   }
 
   const handleSelectedCompany = async (idCompany) => {
@@ -310,7 +318,7 @@ const ProviderForm = () => {
                   {company.name}
                 </span>
                 <span
-                  onClick={handleRemoveCompany}
+                  onClick={() => handleRemoveCompany(company)}
                   className='btn__action btn__action-delete'>
                   <BiTrash />
                 </span>
