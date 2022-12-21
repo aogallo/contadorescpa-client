@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
-import { Formik, Field } from 'formik'
+import { Formik } from 'formik'
 import { useNavigate, useParams } from 'react-router-dom'
-import { AppContext } from '../context/AppContext'
 
 import Message from 'components/Message/Message'
 import { GET_ALL_CLIENTS, GET_CLIENT_BY_ID } from '../graphql/Client/queries'
@@ -277,13 +276,12 @@ const ClientForm = () => {
                 <label htmlFor='address' className='form__label'>
                   Dirección
                 </label>
-                <textarea
+                <input
                   id='address'
-                  className='form__input form__input--textarea'
+                  className='form__input'
                   placeholder='57ª Calle 35-67 Zona 24, Guatemala, Guatemala.'
                   name='address'
                   value={values.address}
-                  rows="5"
                   onChange={handleChange}
                   autoComplete='off'
                   onBlur={handleBlur}

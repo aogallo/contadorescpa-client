@@ -41,7 +41,8 @@
       "jest"
     ],
     "globals": [
-      "localStorage"
+      "localStorage",
+      "React"
     ]
   },
   "browserslist": {

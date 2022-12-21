@@ -21,7 +21,6 @@ const Client = () => {
   return (
     <>
       <Title title='Clientes' breadCrumb={breadCrumb} />
-
       <Outlet />
     </>
   )

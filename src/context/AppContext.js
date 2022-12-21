@@ -34,7 +34,14 @@ const AppProvider = ({ children }) => {
   }
 
   return (
-    <AppContext.Provider value={{ user, company, saveCompany, dispatch, logout }}>
+    <AppContext.Provider
+      value={{
+        user,
+        company,
+        saveCompany,
+        dispatch,
+        logout
+      }}>
       {children}
     </AppContext.Provider>
   )
