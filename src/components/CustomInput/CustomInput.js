@@ -12,6 +12,7 @@ const CustomInput = ({
   arrayToSelect,
   regularExpression,
   validateFunction,
+  pattern,
   touch,
   errors
 }) => {
@@ -41,6 +42,7 @@ const CustomInput = ({
     onChange={onChange}
     placeholder={placeholder}
     value={value}
+    pattern={pattern}
   />
 
   if (type === 'select') {

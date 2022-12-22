@@ -15,6 +15,9 @@ import {
 
 import 'components/AccountPayableForm/AccountPayableForm.css'
 import Message from 'components/Message/Message'
+import { Form, Formik } from 'formik'
+import CustomInput from './CustomInput/CustomInput'
+import CustomDatePicker from './CustomDatePicker/CustomDatePicker'
 
 const AccountPayableForm = () => {
   const navigate = useNavigate()
@@ -25,6 +28,7 @@ const AccountPayableForm = () => {
   const [getAccountPayableById, { data: accountPayableById }] = useLazyQuery(
     GET_ACCOUNT_PAYABLE_BY_ID
   )
+  const [fecha, setFecha] = useState(new Date())
   const [message, setMessage] = useState(null)
   const [createAccountPayable] = useMutation(CREATE_ACCOUNT_PAYABLE)
   const [updateAccountPayable] = useMutation(UPDATE_ACCOUNT_PAYABLE)
@@ -40,7 +44,7 @@ const AccountPayableForm = () => {
       idAccount: '',
       serie: '',
       documentNumber: '',
-      documentDate: '',
+      documentDate: new Date(),
       exento: 0,
       importation: 0,
       service: 0,
@@ -132,7 +136,6 @@ const AccountPayableForm = () => {
 
   const handleChangeImportation = ({ target }) => {
     setAccountPayableInitialValues((prevState) => {
-      console.log('importacion prevState', prevState)
       return {
         ...prevState,
         importation: parseFloat(target.value) || 0
@@ -142,20 +145,28 @@ const AccountPayableForm = () => {
 
   useEffect(() => {
     if (accountPayableById) {
-      const documentDate = new Date(
-        accountPayableById.getAccountPayableById.documentDate
-      )
+      const [day, month, year] = accountPayableById.getAccountPayableById.documentDate.split('/')
+
+      const documentDate = new Date(year, month - 1, day)
+      console.log('documentDate', typeof documentDate)
+      // console.log(accountPayableById.getAccountPayableById.documentDate.split('/'))
+      // console.log('documentDate date', documentDate.toISOString())
+      // console.log('documentDate year ', documentDate.getFullYear())
+      // console.log('documentDate moth', documentDate.getMonth())
+      // console.log('documentDate day', documentDate.getDate())
       setAccountPayableInitialValues({
         id: accountPayableById.getAccountPayableById.id,
         idDocumentType:
           accountPayableById.getAccountPayableById.documentType.id,
-        idProvider: `${accountPayableById.getAccountPayableById.proveedor.id} - ${accountPayableById.getAccountPayableById.proveedor.name}`,
+        idProvider: `${accountPayableById.getAccountPayableById.provider.id} - ${accountPayableById.getAccountPayableById.provider.name}`,
         idAccount: `${accountPayableById.getAccountPayableById.account.accountNumber} - ${accountPayableById.getAccountPayableById.account.name}`,
         serie: accountPayableById.getAccountPayableById.serie,
         documentNumber: accountPayableById.getAccountPayableById.documentNumber,
-        documentDate: `${documentDate.getFullYear()}-${String(
-          documentDate.getMonth() + 1
-        ).padStart(2, 0)}-${String(documentDate.getDate()).padStart(2, 0)}`,
+        // documentDate: `${documentDate.getFullYear()}-${String(
+        //   documentDate.getDate()
+        // ).padStart(2, 0)}-${String(documentDate.getMonth()).padStart(2, 0)}`,
+        // documentDate: `${year}-${day}-${month}`,
+        documentDate: documentDate,
         exento: accountPayableById.getAccountPayableById.exento,
         importation: accountPayableById.getAccountPayableById.importation,
         service: accountPayableById.getAccountPayableById.service,
@@ -264,75 +275,50 @@ const AccountPayableForm = () => {
       console.log(error)
     }
   }
+
+  const handleValidate = (values) => {
+    const errors = {}
+
+    return errors
+  }
+
   return (
-    <div className='form'>
-      <div className='form__header'>
-        <button onClick={handleCancel} className=''>
-          <i className='fas fa-arrow-left' />
-        </button>
-        {isEditing ? 'Editar' : 'Agregar'} cuenta por pagar
+    <div className='container'>
+      <div>
+        <Formik
+          enableReinitialize
+          initialValues={accountPayableInitialValues}
+          validate={handleValidate}
+          onSubmit={handleCreateAccountPayable}
+        >
+          {({ values, errors, touched }) => (
+            <Form>
+              {/* Document Type*/}
+              <CustomInput
+                changeStateSelected={() => console.log('test')}
+                errors={errors}
+                label='Tipo de documento'
+                name='idDocumentType'
+                value={values.idDocumentType}
+                arrayToSelect={documentTypes}
+                type='select'
+                placeholder='Seleccionar tipo'
+                touch={touched.idDocumentType}
+                state={accountPayableInitialValues}
+              />
+              {/* Document Date*/}
+              <CustomDatePicker
+                label='Fecha de documento'
+                value={values.documentDate}
+                name='documentDate'
+                changeDate={setAccountPayableInitialValues}
+                state={accountPayableInitialValues}
+              />
+            </Form>
+          )}
+        </Formik>
       </div>
-      <form onSubmit={handleCreateAccountPayable} className='form__content'>
-        {/* Serie */}
-        <div className='form__content__group'>
-          <label htmlFor='serie' className='form__content__group__label'>
-            Serie
-          </label>
-          <div className='form__content__group__input'>
-            <input
-              id='serie'
-              type='text'
-              name='serie'
-              placeholder='Serie test'
-              className='form__input'
-            />
-            <i className='form__validation-state fas fa-times-circle'></i>
-            <p className='form__input-error'>Error</p>
-          </div>
-        </div>
-
-        {/* Document Number */}
-        <div className='form__content__group'>
-          <label htmlFor='documentNumber' className='form__content__group__label'>
-            Número
-          </label>
-          <div className='form__content__group__input'>
-            <input
-              id='documentNumber'
-              name='documentNumber'
-              type='text'
-              placeholder='Número del documento'
-              className='form__input'
-            />
-            <i className='form__validation-state fas fa-times-circle'></i>
-            <p className='form__input-error'>Error</p>
-          </div>
-        </div>
-
-        {/* Message */}
-        {message && (
-          <div
-            className={`message ${message.error ? 'message-error' : 'message-success'
-              }`}
-          >
-            {message.message}
-          </div>
-        )}
-
-        <div className='form-actions'>
-          <button type='submit' className='btn-save'>
-            Guardar
-          </button>
-          <button
-            type='button'
-            className='btn-cancel'
-            onClick={(e) => handleCancel(e)}
-          >
-            Cancelar
-          </button>
-        </div>
-      </form>
-    </div >
+    </div>
   )
 }
 

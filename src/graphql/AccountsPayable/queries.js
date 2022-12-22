@@ -40,7 +40,7 @@ export const GET_ACCOUNT_PAYABLE_BY_ID = gql`
         id
         name
       }
-      proveedor {
+      provider {
         id
         name
       }

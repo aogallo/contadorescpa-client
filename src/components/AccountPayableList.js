@@ -60,7 +60,11 @@ const AccountPayableList = ({ title }) => {
         <Link className='' to='/cxp/add'>
           Agregar
         </Link>
-        <Table columns={columns} data={accountsPayable} />
+        <Table
+          columns={columns}
+          data={accountsPayable}
+          editRoute='edit/'
+        />
       </div>
     </>
   )

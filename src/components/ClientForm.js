@@ -50,7 +50,6 @@ const ClientForm = () => {
 
   useEffect(() => {
     if (data) {
-      console.log("data", data.getClientById)
       setClientValues({
         id: data.getClientById.id,
         name: data.getClientById.name,

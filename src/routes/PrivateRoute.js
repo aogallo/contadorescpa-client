@@ -9,8 +9,6 @@ const PrivateRoute = ({ children }) => {
   const { user } = useContext(AppContext)
   const logged = isTokenExpired(user.token)
 
-  console.log('private route', logged)
-
   return logged ? children : <Navigate to='/login' />
   // return children
 }
