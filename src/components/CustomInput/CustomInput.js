@@ -28,6 +28,9 @@ const CustomInput = ({
     changeState({ ...state, [name]: value })
   }
 
+  console.log('array', arrayToSelect)
+  console.log('array type', typeof arrayToSelect)
+
   const validation = () => {
     if (regularExpression) {
       console.log('regularExpression', regularExpression)
@@ -50,7 +53,7 @@ const CustomInput = ({
     value={value}
   />
 
-  if (type === 'select') {
+  if (type === 'select' && (typeof (arrayToSelect) == 'object' || typeof (arrayToSelect) == 'array')) {
     inputToRender = <select
       name={name}
       type={type}

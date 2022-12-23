@@ -23,7 +23,11 @@ const AppProvider = ({ children }) => {
   }, [user])
 
   const saveCompany = (company) => {
-    setCompany(company)
+    setCompany({
+      id: company.id,
+      name: company.name,
+      providers: [{ id: 0, name: 'Seleccionar proveedor' }].concat(company.providers)
+    })
   }
 
   const logout = () => {

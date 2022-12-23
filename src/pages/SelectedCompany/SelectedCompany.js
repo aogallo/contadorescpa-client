@@ -61,11 +61,7 @@ const SelectedCompany = () => {
   }
 
   const handleSelectCompany = (company) => {
-    saveCompany({
-      id: company.id,
-      name: company.name,
-      providers: company.providers
-    })
+    saveCompany(company)
     navigate('/')
   }
 

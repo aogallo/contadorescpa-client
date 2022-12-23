@@ -36,21 +36,20 @@ export const formattedAccountPayableForState = ({ getAccountPayableById: account
   }
 }
 
-export const initialDataAccountPayable = () => {
-  return {
-    id: 0,
-    idDocumentType: '',
-    idProviderCompany: '',
-    idAccount: '',
-    serie: '',
-    documentNumber: '',
-    documentDate: new Date(),
-    exento: 0,
-    importation: 0,
-    service: 0,
-    asset: 0,
-    subtotal: 0,
-    iva: 0,
-    total: 0
-  }
+export const initialDataAccountPayable = {
+  id: 0,
+  idDocumentType: '',
+  idProviderCompany: '',
+  idAccount: '',
+  serie: '',
+  documentNumber: '',
+  documentDate: new Date(),
+  exento: 0,
+  importation: 0,
+  service: 0,
+  asset: 0,
+  subtotal: 0,
+  iva: 0,
+  total: 0
 }
+
