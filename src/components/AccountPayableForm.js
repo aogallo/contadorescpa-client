@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
 import { useNavigate, useParams } from 'react-router-dom'
 import { GET_ALL_DOCUMENT_TYPES } from '../graphql/DocumentType/queries'
-import { GET_ALL_PROVIDERS } from '../graphql/Provider/queries'
 import { GET_ALL_ACCOUNTS } from '../graphql/Account/queries'
 import {
   CREATE_ACCOUNT_PAYABLE,
@@ -14,52 +13,35 @@ import {
 } from '../graphql/AccountsPayable/queries'
 
 import 'components/AccountPayableForm/AccountPayableForm.css'
-import Message from 'components/Message/Message'
 import { Form, Formik } from 'formik'
 import CustomInput from './CustomInput/CustomInput'
 import CustomDatePicker from './CustomDatePicker/CustomDatePicker'
+import useCustomContext from 'hooks/useCustomContext'
+import { calculateTotal } from 'utils/calculateValues'
+import { formattedAccountPayableForState, formattedDateToSave, initialDataAccountPayable } from './AccountPayableForm/utils/formatterData'
 
 const AccountPayableForm = () => {
+  const { company } = useCustomContext()
   const navigate = useNavigate()
   const params = useParams()
   const { data: docs } = useQuery(GET_ALL_DOCUMENT_TYPES)
-  const { data: providersData } = useQuery(GET_ALL_PROVIDERS)
   const { data: accountsData } = useQuery(GET_ALL_ACCOUNTS)
   const [getAccountPayableById, { data: accountPayableById }] = useLazyQuery(
     GET_ACCOUNT_PAYABLE_BY_ID
   )
-  const [fecha, setFecha] = useState(new Date())
-  const [message, setMessage] = useState(null)
   const [createAccountPayable] = useMutation(CREATE_ACCOUNT_PAYABLE)
   const [updateAccountPayable] = useMutation(UPDATE_ACCOUNT_PAYABLE)
+  const [message, setMessage] = useState(null)
   const [documentTypes, setDocumentTypes] = useState([])
-  const [providers, setProviders] = useState([])
   const [isEditing, setIsEditing] = useState(false)
   const [accounts, setAccounts] = useState([])
-  const [accountPayableInitialValues, setAccountPayableInitialValues] =
-    useState({
-      id: 0,
-      idDocumentType: '',
-      idProvider: '',
-      idAccount: '',
-      serie: '',
-      documentNumber: '',
-      documentDate: new Date(),
-      exento: 0,
-      importation: 0,
-      service: 0,
-      asset: 0,
-      subtotal: 0,
-      iva: 0,
-      total: 0
-    })
+  const [accountPayableInitialValues, setAccountPayableInitialValues] = useState(initialDataAccountPayable)
 
   useEffect(() => {
     if (params.id) {
       setIsEditing(true)
       getAccountPayableById({ variables: { id: params.id } })
     }
-
   }, [])
 
   useEffect(() => {
@@ -67,12 +49,6 @@ const AccountPayableForm = () => {
       setDocumentTypes(docs.getAllDocumentTypes)
     }
   }, [docs])
-
-  useEffect(() => {
-    if (providersData) {
-      setDocumentTypes(providersData.getAllProviders)
-    }
-  }, [providersData])
 
   useEffect(() => {
     if (accountsData) {
@@ -83,11 +59,7 @@ const AccountPayableForm = () => {
   useEffect(() => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,
-      total:
-        parseFloat(accountPayableInitialValues.exento) +
-        parseFloat(accountPayableInitialValues.importation) +
-        parseFloat(accountPayableInitialValues.service) +
-        parseFloat(accountPayableInitialValues.asset)
+      total: calculateTotal(accountPayableInitialValues)
     })
   }, [
     accountPayableInitialValues.exento,
@@ -111,78 +83,14 @@ const AccountPayableForm = () => {
     })
   }, [accountPayableInitialValues.iva])
 
-  const handleChangeService = ({ target }) => {
-    setAccountPayableInitialValues({
-      ...accountPayableInitialValues,
-      service: parseFloat(target.value) || 0
-    })
-  }
-
-  const handleChangeAsset = ({ target }) => {
-    setAccountPayableInitialValues({
-      ...accountPayableInitialValues,
-      asset: parseFloat(target.value) || 0
-    })
-  }
-
-  const handleChangeExento = ({ target }) => {
-    setAccountPayableInitialValues((prevState) => {
-      return {
-        ...accountPayableInitialValues,
-        exento: parseFloat(target.value) || 0
-      }
-    })
-  }
-
-  const handleChangeImportation = ({ target }) => {
-    setAccountPayableInitialValues((prevState) => {
-      return {
-        ...prevState,
-        importation: parseFloat(target.value) || 0
-      }
-    })
-  }
-
-  useEffect(() => {
-    if (accountPayableById) {
-      const [day, month, year] = accountPayableById.getAccountPayableById.documentDate.split('/')
-
-      const documentDate = new Date(year, month - 1, day)
-      console.log('documentDate', typeof documentDate)
-      // console.log(accountPayableById.getAccountPayableById.documentDate.split('/'))
-      // console.log('documentDate date', documentDate.toISOString())
-      // console.log('documentDate year ', documentDate.getFullYear())
-      // console.log('documentDate moth', documentDate.getMonth())
-      // console.log('documentDate day', documentDate.getDate())
-      setAccountPayableInitialValues({
-        id: accountPayableById.getAccountPayableById.id,
-        idDocumentType:
-          accountPayableById.getAccountPayableById.documentType.id,
-        idProvider: `${accountPayableById.getAccountPayableById.provider.id} - ${accountPayableById.getAccountPayableById.provider.name}`,
-        idAccount: `${accountPayableById.getAccountPayableById.account.accountNumber} - ${accountPayableById.getAccountPayableById.account.name}`,
-        serie: accountPayableById.getAccountPayableById.serie,
-        documentNumber: accountPayableById.getAccountPayableById.documentNumber,
-        // documentDate: `${documentDate.getFullYear()}-${String(
-        //   documentDate.getDate()
-        // ).padStart(2, 0)}-${String(documentDate.getMonth()).padStart(2, 0)}`,
-        // documentDate: `${year}-${day}-${month}`,
-        documentDate: documentDate,
-        exento: accountPayableById.getAccountPayableById.exento,
-        importation: accountPayableById.getAccountPayableById.importation,
-        service: accountPayableById.getAccountPayableById.service,
-        asset: accountPayableById.getAccountPayableById.asset,
-        subtotal: accountPayableById.getAccountPayableById.subtotal,
-        iva: accountPayableById.getAccountPayableById.iva,
-        total: accountPayableById.getAccountPayableById.total
-      })
-    }
-  }, [accountPayableById])
-
   useEffect(() => {
     if (docs) setDocumentTypes(docs.getAllDocumentTypes)
-    if (providersData) setProviders(providersData.getAllProviders)
     if (accountsData) setAccounts(accountsData.getAllAccounts)
-  }, [docs, providersData, accountsData])
+    if (accountPayableById) {
+      setAccountPayableInitialValues(formattedAccountPayableForState(accountPayableById))
+      console.log('data', accountPayableInitialValues)
+    }
+  }, [docs, accountsData, accountPayableById])
 
   const handleCancel = (e) => {
     e.preventDefault()
@@ -217,22 +125,7 @@ const AccountPayableForm = () => {
         // EDIT
         await updateAccountPayable({
           variables: {
-            accountPayable: {
-              id: values.id,
-              idDocumentType: values.idDocumentType,
-              idProvider: values.idProvider.split('-')[0].trim(),
-              idAccount: getIdAccount(values.idAccount.split('-')[0].trim()),
-              serie: values.serie,
-              documentNumber: values.documentNumber,
-              documentDate: values.documentDate,
-              exento: values.exento.toString(),
-              importation: values.importation.toString(),
-              service: values.service.toString(),
-              asset: values.asset.toString(),
-              subtotal: values.subtotal.toString(),
-              iva: values.iva.toString(),
-              total: values.total.toString()
-            }
+            accountPayable: formattedDateToSave(values)
           },
           refetchQueries: [{ query: GET_ALL_ACCOUNTS_PAYABLE }]
         })
@@ -240,22 +133,7 @@ const AccountPayableForm = () => {
         // ADD
         await createAccountPayable({
           variables: {
-            accountPayable: {
-              id: 0,
-              idDocumentType: values.idDocumentType,
-              idProvider: values.idProvider.split('-')[0].trim(),
-              idAccount: getIdAccount(values.idAccount.split('-')[0].trim()),
-              serie: values.serie,
-              documentNumber: values.documentNumber,
-              documentDate: values.documentDate,
-              exento: values.exento.toString(),
-              importation: values.importation.toString(),
-              service: values.service.toString(),
-              asset: values.asset.toString(),
-              subtotal: values.subtotal.toString(),
-              iva: values.iva.toString(),
-              total: values.total.toString()
-            }
+            accountPayable: formattedDateToSave(values)
           },
           refetchQueries: [{ query: GET_ALL_ACCOUNTS_PAYABLE }]
         })
@@ -272,7 +150,10 @@ const AccountPayableForm = () => {
         resetForm()
       }, 1500)
     } catch (error) {
-      console.log(error)
+      setMessage({
+        error: true,
+        message: error.message
+      })
     }
   }
 
@@ -293,27 +174,184 @@ const AccountPayableForm = () => {
         >
           {({ values, errors, touched }) => (
             <Form>
-              {/* Document Type*/}
+              <div className='form__grid--row'>
+                {/* Document Type*/}
+                <CustomInput
+                  arrayToSelect={documentTypes}
+                  changeState={setAccountPayableInitialValues}
+                  errors={errors}
+                  label='Tipo de documento'
+                  name='idDocumentType'
+                  placeholder='Seleccionar tipo'
+                  state={accountPayableInitialValues}
+                  touch={touched.idDocumentType}
+                  type='select'
+                  value={values.idDocumentType}
+                />
+
+                {/* Document Date*/}
+                <CustomDatePicker
+                  changeDate={setAccountPayableInitialValues}
+                  label='Fecha de documento'
+                  name='documentDate'
+                  state={accountPayableInitialValues}
+                  value={values.documentDate}
+                />
+              </div>
+
+              <div className='form__grid--row'>
+                {/* Provider */}
+                <CustomInput
+                  arrayToSelect={company.providers}
+                  changeState={setAccountPayableInitialValues}
+                  errors={errors}
+                  label='Proveedor'
+                  name='idProviderCompany'
+                  placeholder='Seleccionar proveedor'
+                  state={accountPayableInitialValues}
+                  touch={touched.idProviderCompany}
+                  type='select'
+                  value={values.idProviderCompany}
+                />
+
+                {/* Account */}
+                <CustomInput
+                  arrayToSelect={accounts}
+                  changeState={setAccountPayableInitialValues}
+                  errors={errors}
+                  label='Cuenta'
+                  name='idAccount'
+                  placeholder='Seleccionar cuenta'
+                  state={accountPayableInitialValues}
+                  touch={touched.idAccount}
+                  type='select'
+                  value={values.idAccount}
+                />
+              </div>
+
+              <div className='form__grid--row'>
+                {/* Exento */}
+                <CustomInput
+                  changeState={setAccountPayableInitialValues}
+                  errors={errors}
+                  label='Exento'
+                  name='exento'
+                  placeholder='0.00'
+                  state={accountPayableInitialValues}
+                  touch={touched.exento}
+                  type='number'
+                  value={values.exento}
+                />
+
+                {/* Import */}
+                <CustomInput
+                  changeState={setAccountPayableInitialValues}
+                  errors={errors}
+                  label='Importación'
+                  name='importation'
+                  placeholder='0.00'
+                  state={accountPayableInitialValues}
+                  touch={touched.importation}
+                  type='number'
+                  value={values.importation}
+                />
+              </div>
+
+              <div className='form__grid--row'>
+                {/* Service */}
+                <CustomInput
+                  changeState={setAccountPayableInitialValues}
+                  errors={errors}
+                  label='Servicio'
+                  name='service'
+                  placeholder='0.00'
+                  state={accountPayableInitialValues}
+                  touch={touched.service}
+                  type='number'
+                  value={values.service}
+                />
+
+                {/* Assets (bienes) */}
+                <CustomInput
+                  changeState={setAccountPayableInitialValues}
+                  errors={errors}
+                  label='Bienes'
+                  name='asset'
+                  placeholder='0.00'
+                  state={accountPayableInitialValues}
+                  touch={touched.asset}
+                  type='number'
+                  value={values.asset}
+                />
+              </div>
+
+
+              {/* Sub-total */}
               <CustomInput
-                changeStateSelected={() => console.log('test')}
+                changeState={setAccountPayableInitialValues}
+                disabled
                 errors={errors}
-                label='Tipo de documento'
-                name='idDocumentType'
-                value={values.idDocumentType}
-                arrayToSelect={documentTypes}
-                type='select'
-                placeholder='Seleccionar tipo'
-                touch={touched.idDocumentType}
+                label='Sub-total'
+                name='subtotal'
+                placeholder='0.00'
                 state={accountPayableInitialValues}
+                touch={touched.subtotal}
+                type='number'
+                value={values.subtotal}
               />
-              {/* Document Date*/}
-              <CustomDatePicker
-                label='Fecha de documento'
-                value={values.documentDate}
-                name='documentDate'
-                changeDate={setAccountPayableInitialValues}
+
+              {/* IVA */}
+              <CustomInput
+                changeState={setAccountPayableInitialValues}
+                disabled
+                errors={errors}
+                label='IVA'
+                name='iva'
+                placeholder='0.00'
                 state={accountPayableInitialValues}
+                touch={touched.iva}
+                type='number'
+                value={values.iva}
               />
+
+              {/* Total */}
+              <CustomInput
+                changeState={setAccountPayableInitialValues}
+                disabled
+                errors={errors}
+                label='Total'
+                name='total'
+                placeholder='0.00'
+                state={accountPayableInitialValues}
+                touch={touched.total}
+                type='number'
+                value={values.total}
+              />
+
+              {/* Message */}
+              {
+                message && (
+                  <div
+                    className={`message ${message.error ? 'message-error' : 'message-success'
+                      }`}
+                  >
+                    {message.message}
+                  </div>
+                )
+              }
+
+              <div className='form__buttons--group'>
+                <button type='submit' className='btn form__submit'>
+                  Guardar
+                </button>
+                <button
+                  type='button'
+                  className='btn form__cancel'
+                  onClick={handleCancel}
+                >
+                  Cancelar
+                </button>
+              </div>
             </Form>
           )}
         </Formik>

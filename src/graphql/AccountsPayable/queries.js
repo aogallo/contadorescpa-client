@@ -13,6 +13,10 @@ export const GET_ALL_ACCOUNTS_PAYABLE = gql`
         id
         name
       }
+      company {
+        id
+        name
+      }
       account {
         id
         accountNumber
@@ -40,7 +44,12 @@ export const GET_ACCOUNT_PAYABLE_BY_ID = gql`
         id
         name
       }
+      idProviderCompany
       provider {
+        id
+        name
+      }
+      company {
         id
         name
       }

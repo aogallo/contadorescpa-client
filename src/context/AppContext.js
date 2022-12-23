@@ -6,7 +6,8 @@ export const AppContext = createContext()
 
 const companyInitial = {
   id: null,
-  name: ''
+  name: '',
+  providers: []
 }
 
 const init = () => {
@@ -30,7 +31,7 @@ const AppProvider = ({ children }) => {
       type: types.logout,
       payload: user
     })
-    setCompany('')
+    setCompany(companyInitial)
   }
 
   return (

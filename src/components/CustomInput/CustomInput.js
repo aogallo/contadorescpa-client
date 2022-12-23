@@ -1,28 +1,31 @@
 import React from 'react'
 
 const CustomInput = ({
-  state,
+  arrayToSelect,
   changeState,
   changeStateSelected,
-  type,
+  disabled,
+  errors,
   label,
-  placeholder,
   name,
-  value,
-  arrayToSelect,
-  regularExpression,
-  validateFunction,
   pattern,
+  placeholder,
+  regularExpression,
+  readOnly,
+  state,
   touch,
-  errors
+  type,
+  validateFunction,
+  value,
 }) => {
   const onChange = (e) => {
     const value = e.target.value
-    if (type === 'select') {
-      changeStateSelected(value)
-    } else {
-      changeState({ ...state, [name]: value })
-    }
+    // if (type === 'select') {
+    //   changeStateSelected(value)
+    // } else {
+    //   changeState({ ...state, [name]: value })
+    // }
+    changeState({ ...state, [name]: value })
   }
 
   const validation = () => {
@@ -37,12 +40,14 @@ const CustomInput = ({
 
   let inputToRender = <input
     className='form__input'
+    disabled={disabled}
     name={name}
-    type={type}
     onChange={onChange}
-    placeholder={placeholder}
-    value={value}
     pattern={pattern}
+    placeholder={placeholder}
+    readOnly={readOnly}
+    type={type}
+    value={value}
   />
 
   if (type === 'select') {

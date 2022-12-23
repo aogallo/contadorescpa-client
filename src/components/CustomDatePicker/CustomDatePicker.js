@@ -4,18 +4,18 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 const CustomDatePicker = ({
-  touch,
+  changeDate,
   errors,
   label,
   name,
-  value,
+  touch,
   state,
-  changeDate
+  value,
 }) => {
-  const handleChange = (value) => {
+  const handleChange = (date) => {
     changeDate({
       ...state,
-      [name]: value
+      [name]: date
     })
   }
 
@@ -24,7 +24,9 @@ const CustomDatePicker = ({
       <label htmlFor={name} className='form__label'>
         {label}
       </label>
-      <DatePicker className='form__input'
+      <DatePicker
+        className='form__input'
+        todayButton="Hoy"
         selected={value}
         onChange={(date) => handleChange(date)}
         dateFormat='dd/MM/yyyy'
