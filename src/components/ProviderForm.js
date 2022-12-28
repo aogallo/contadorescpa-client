@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Formik, Form } from 'formik'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
-import { AppContext } from '../context/AppContext'
 
 import {
   GET_ALL_PROVIDERS,
@@ -21,12 +20,16 @@ import {
   initialProviderData,
   formatterData
 } from './Providers/utils/formatterData'
+import useCustomContext from 'hooks/useCustomContext'
 
 const ProviderForm = () => {
   const navigate = useNavigate()
   const params = useParams()
-  const { company } = useContext(AppContext)
-  const { data: companiesData } = useQuery(GET_ALL_COMPANIES)
+  const { company, updateProvidersCompany } = useCustomContext()
+  const { data: companiesData } = useQuery(GET_ALL_COMPANIES, {
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'network-only'
+  })
   const [companies, setCompanies] = useState([])
   const [message, setMessage] = useState(null)
   const [createProvider] = useMutation(CREATE_PROVIDER)
@@ -151,14 +154,17 @@ const ProviderForm = () => {
           idProvider: providerValues.id
         }
       },
-      refetchQueries: [{ query: GET_ALL_PROVIDERS }]
-      // refetchQueries: ['GET_ALL_PROVIDERS', '']
+      refetchQueries: [
+        {
+          query: GET_ALL_PROVIDERS
+        },
+        {
+          query: GET_ALL_COMPANIES
+        }]
     })
   }
 
   const handleSelectedCompany = async (idCompany) => {
-    console.log('data', idCompany)
-    console.log('companie', providerValues.companies)
     const companyFind = providerValues.companies.filter(company => company.id === idCompany)
     if (companyFind.length == 0) {
       await createProviderCompany({
@@ -169,11 +175,12 @@ const ProviderForm = () => {
             idProvider: providerValues.id
           }
         },
-        // refetchQueries: [{ query: GET_ALL_PROVIDERS }]
-        refetchQueries: ['GET_ALL_PROVIDERS', 'GET_ALL_COMPANIES']
+        refetchQueries: [{ query: GET_ALL_PROVIDERS }, { query: GET_ALL_COMPANIES }]
       })
-      setSelectedCompany([])
+      const newProviders = company.providers.concat(companyFind)
+      updateProvidersCompany(newProviders)
     }
+
   }
 
   const titles = ['Proveedor', 'Asociar compañia con proveedor']

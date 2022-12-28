@@ -22,6 +22,18 @@ const AppProvider = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(user))
   }, [user])
 
+
+  const updateProvidersCompany = (providers) => {
+    console.log(';providers', providers)
+    setCompany((preState) => {
+
+      return {
+        ...preState,
+        providers
+      }
+    })
+  }
+
   const saveCompany = (company) => {
     setCompany({
       id: company.id,
@@ -45,7 +57,8 @@ const AppProvider = ({ children }) => {
         company,
         saveCompany,
         dispatch,
-        logout
+        logout,
+        updateProvidersCompany
       }}>
       {children}
     </AppContext.Provider>
