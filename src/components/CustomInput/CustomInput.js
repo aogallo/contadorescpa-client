@@ -20,16 +20,13 @@ const CustomInput = ({
 }) => {
   const onChange = (e) => {
     const value = e.target.value
-    // if (type === 'select') {
-    //   changeStateSelected(value)
-    // } else {
-    //   changeState({ ...state, [name]: value })
-    // }
-    changeState({ ...state, [name]: value })
+    if (type === 'select' && name == 'company') {
+      changeStateSelected(value)
+    } else {
+      changeState({ ...state, [name]: value })
+    }
+    // changeState({ ...state, [name]: value })
   }
-
-  console.log('array', arrayToSelect)
-  console.log('array type', typeof arrayToSelect)
 
   const validation = () => {
     if (regularExpression) {

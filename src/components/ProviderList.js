@@ -61,7 +61,7 @@ const ProviderList = ({ title }) => {
     <>
       <div className=''>
         <div className=''>
-          <Link to='/provider/add'></Link>
+          <Link to='/provider/add'>Agregar proveedor</Link>
         </div>
         <Table columns={columns}
           data={providers}

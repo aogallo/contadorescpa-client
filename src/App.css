@@ -516,3 +516,16 @@ body {
   background-color: var(--white-color);
   border: 1px solid blue;
 }
+
+.form__totals {
+  margin-top: 25px;
+}
+
+.form__group--total {
+  display: grid;
+  grid-template-columns: repeat(2, 100px);
+}
+
+.table__row--span {
+  display: table-footer-group;
+}

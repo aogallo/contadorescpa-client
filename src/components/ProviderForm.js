@@ -17,6 +17,10 @@ import { BiTrash } from 'react-icons/bi'
 import Tabs from './Tabs/Tabs'
 import { GET_ALL_COMPANIES } from 'graphql/Company/queries'
 import { CREATE_PROVIDER_COMPANY, DELETE_PROVIDER_COMPANY_BY_ID } from 'graphql/ProviderCompany/mutation'
+import {
+  initialProviderData,
+  formatterData
+} from './Providers/utils/formatterData'
 
 const ProviderForm = () => {
   const navigate = useNavigate()
@@ -24,10 +28,6 @@ const ProviderForm = () => {
   const { company } = useContext(AppContext)
   const { data: companiesData } = useQuery(GET_ALL_COMPANIES)
   const [companies, setCompanies] = useState([])
-  const [selectedCompany, setSelectedCompany] = useState({
-    id: 0,
-    name: 'Seleccione una compañia'
-  })
   const [message, setMessage] = useState(null)
   const [createProvider] = useMutation(CREATE_PROVIDER)
   const [deleteProviderCompanyById] = useMutation(DELETE_PROVIDER_COMPANY_BY_ID)
@@ -35,20 +35,12 @@ const ProviderForm = () => {
   const [updateProvider] = useMutation(UPDATE_PROVIDER)
   const [isEditing, setIsEditing] = useState(false)
   const [getProviderById, { data }] = useLazyQuery(GET_PROVIDER_BY_ID)
-  const [providerValues, setProviderValues] = useState({
-    id: 0,
-    name: '',
-    nit: '',
-    address: '',
-    email: '',
-    phone: '',
-    creditDay: ''
-  })
+  const [selectedCompany, setSelectedCompany] = useState([])
+  const [providerValues, setProviderValues] = useState(initialProviderData)
 
   useEffect(() => {
     if (companiesData) {
-
-      setCompanies(companiesData.getAllCompanies)
+      setCompanies([{ id: 0, name: 'Seleccionar compañia', }].concat(companiesData.getAllCompanies))
     }
   }, [companiesData])
 
@@ -63,16 +55,7 @@ const ProviderForm = () => {
 
   useEffect(() => {
     if (data) {
-      setProviderValues({
-        id: data.getProviderById.id,
-        name: data.getProviderById.name,
-        nit: data.getProviderById.nit,
-        address: data.getProviderById.address,
-        email: data.getProviderById.email,
-        phone: data.getProviderById.phone,
-        creditDay: data.getProviderById.creditDay,
-        companies: data.getProviderById.companies
-      })
+      setProviderValues(formatterData(data))
     }
   }, [data])
 
@@ -116,6 +99,7 @@ const ProviderForm = () => {
               email: values.email,
               phone: values.phone,
               creditDay: Number(values.creditDay),
+              companies: []
             }
           },
           refetchQueries: [{ query: GET_ALL_PROVIDERS }]
@@ -131,10 +115,12 @@ const ProviderForm = () => {
               email: values.email,
               phone: values.phone,
               creditDay: Number(values.creditDay),
-              idCompany: company.id
+              companies: []
             }
           },
           refetchQueries: [{ query: GET_ALL_PROVIDERS }]
+          // refetchQueries: [ 'GET_ALL_PROVIDERS ']
+
         })
       }
 
@@ -146,7 +132,9 @@ const ProviderForm = () => {
       setTimeout(() => {
         setMessage(null)
         resetForm()
+        // if (isEditing) {
         navigate(-1)
+        // }
       }, 1500)
     } catch (error) {
       setMessage({ error: true, message: error.message })
@@ -164,10 +152,13 @@ const ProviderForm = () => {
         }
       },
       refetchQueries: [{ query: GET_ALL_PROVIDERS }]
+      // refetchQueries: ['GET_ALL_PROVIDERS', '']
     })
   }
 
   const handleSelectedCompany = async (idCompany) => {
+    console.log('data', idCompany)
+    console.log('companie', providerValues.companies)
     const companyFind = providerValues.companies.filter(company => company.id === idCompany)
     if (companyFind.length == 0) {
       await createProviderCompany({
@@ -178,8 +169,10 @@ const ProviderForm = () => {
             idProvider: providerValues.id
           }
         },
-        refetchQueries: [{ query: GET_ALL_PROVIDERS }]
+        // refetchQueries: [{ query: GET_ALL_PROVIDERS }]
+        refetchQueries: ['GET_ALL_PROVIDERS', 'GET_ALL_COMPANIES']
       })
+      setSelectedCompany([])
     }
   }
 
@@ -306,7 +299,7 @@ const ProviderForm = () => {
         type='select'
         arrayToSelect={companies}
         changeStateSelected={handleSelectedCompany}
-        value={selectedCompany}
+        value={selectedCompany.id}
       />
       <div className='badges'
       >

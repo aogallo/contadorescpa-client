@@ -63,7 +63,7 @@ const AccountPayableForm = () => {
   useEffect(() => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,
-      iva: accountPayableInitialValues.total * 0.12
+      iva: (accountPayableInitialValues.total / 1.12) * 0.12
     })
   }, [accountPayableInitialValues.total])
 
@@ -162,11 +162,36 @@ const AccountPayableForm = () => {
           onSubmit={handleCreateAccountPayable}
         >
           {({ values, errors, touched }) => {
-            console.log('values', values)
-            console.log('accounts', typeof accounts)
-            console.log('accounts', accounts)
             return (
               <Form>
+                <div className='form__grid--row'>
+                  {/* Document Date*/}
+                  <CustomInput
+                    changeState={setAccountPayableInitialValues}
+                    errors={errors}
+                    label='Serie'
+                    name='serie'
+                    placeholder='Ingresar el número de serie'
+                    state={accountPayableInitialValues}
+                    touch={touched.serie}
+                    type='text'
+                    value={values.serie}
+                  />
+
+                  {/* Document Number*/}
+                  <CustomInput
+                    changeState={setAccountPayableInitialValues}
+                    errors={errors}
+                    label='Documento de documento'
+                    name='documentNumber'
+                    placeholder='Ingresar el número de documento'
+                    state={accountPayableInitialValues}
+                    touch={touched.documentNumber}
+                    type='text'
+                    value={values.documentNumber}
+                  />
+                </div>
+
                 <div className='form__grid--row'>
                   {/* Document Type*/}
                   <CustomInput
@@ -278,48 +303,25 @@ const AccountPayableForm = () => {
                   />
                 </div>
 
+                <div className='form__totals'>
+                  {/* IVA */}
+                  <div className='form__group--total'>
+                    <label htmlFor='iva' className='form__label'>IVA:</label>
+                    <span name='iva' className='form__label'>{values.iva}</span>
+                  </div>
 
-                {/* Sub-total */}
-                <CustomInput
-                  changeState={setAccountPayableInitialValues}
-                  disabled
-                  errors={errors}
-                  label='Sub-total'
-                  name='subtotal'
-                  placeholder='0.00'
-                  state={accountPayableInitialValues}
-                  touch={touched.subtotal}
-                  type='number'
-                  value={values.subtotal}
-                />
+                  {/* Sub-total */}
+                  <div className='form__group--total'>
+                    <label htmlFor='subtotal' className='form__label'>Sub-total:</label>
+                    <span name='subtotal' className='form__label'>{values.subtotal}</span>
+                  </div>
 
-                {/* IVA */}
-                <CustomInput
-                  changeState={setAccountPayableInitialValues}
-                  disabled
-                  errors={errors}
-                  label='IVA'
-                  name='iva'
-                  placeholder='0.00'
-                  state={accountPayableInitialValues}
-                  touch={touched.iva}
-                  type='number'
-                  value={values.iva}
-                />
-
-                {/* Total */}
-                <CustomInput
-                  changeState={setAccountPayableInitialValues}
-                  disabled
-                  errors={errors}
-                  label='Total'
-                  name='total'
-                  placeholder='0.00'
-                  state={accountPayableInitialValues}
-                  touch={touched.total}
-                  type='number'
-                  value={values.total}
-                />
+                  {/* Total */}
+                  <div className='form__group--total'>
+                    <label htmlFor='total' className='form__label'>Total:</label>
+                    <span name='total' className='form__label'>{values.total}</span>
+                  </div>
+                </div>
 
                 {/* Message */}
                 {

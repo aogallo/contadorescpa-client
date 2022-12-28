@@ -1,6 +1,8 @@
 export const calculateTotal = ({ exento, importation, service, asset }) => {
-  return parseFloat(exento) +
+  return (
+    parseFloat(asset) +
     parseFloat(importation) +
-    parseFloat(service) +
-    parseFloat(asset)
+    parseFloat(service)
+  )
+    - parseFloat(exento)
 }

@@ -1,4 +1,5 @@
 export const formattedDateToSave = (accountPayable) => {
+  console.log('datos', accountPayable)
   const { documentDate } = accountPayable
   const dateFormatted = `${documentDate.getFullYear()}${documentDate.getUTCMonth() + 1}${documentDate.getUTCDate()}`
 
@@ -48,8 +49,37 @@ export const initialDataAccountPayable = {
   importation: 0,
   service: 0,
   asset: 0,
-  subtotal: 0,
-  iva: 0,
-  total: 0
+  subtotal: 0.00,
+  iva: 0.00,
+  total: 0.00
 }
 
+export const formatterDataToTable = ({ getAllAccountPayable = [] }) => {
+  if (getAllAccountPayable.length == 0) return []
+
+  const newAccountsPayableData = getAllAccountPayable.map(accountPayable => {
+    const {
+      account: {
+        id: idAccount,
+        name: accountName
+      },
+      provider: {
+        id: idProvider,
+        name: providerName
+      },
+      documentType: {
+        name: documentTypeName
+      }
+    } = accountPayable
+    return {
+      ...accountPayable,
+      idAccount,
+      accountName,
+      idProvider,
+      providerName,
+      documentTypeName
+    }
+  })
+
+  return newAccountsPayableData
+}
