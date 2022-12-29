@@ -1,4 +1,5 @@
 import React from 'react'
+import Select from 'react-select'
 
 const CustomInput = ({
   arrayToSelect,
@@ -51,21 +52,13 @@ const CustomInput = ({
   />
 
   if (type === 'select' && (typeof (arrayToSelect) == 'object' || typeof (arrayToSelect) == 'array')) {
-    inputToRender = <select
-      name={name}
-      type={type}
-      onChange={onChange}
-      placeholder={placeholder}
-      className='form__input'
-      value={value}>
+    const newOptions = arrayToSelect.map(element => (
       {
-        arrayToSelect &&
-        arrayToSelect.map((item) =>
-          <option key={item.id} value={item.id}>
-            {item.name}
-          </option>)
+        value: element.id,
+        label: element.name
       }
-    </select>
+    ))
+    inputToRender = <Select options={newOptions} />
   }
 
   return (

@@ -25,27 +25,37 @@ import useCustomContext from 'hooks/useCustomContext'
 const ProviderForm = () => {
   const navigate = useNavigate()
   const params = useParams()
-  const { company, updateProvidersCompany } = useCustomContext()
-  const { data: companiesData } = useQuery(GET_ALL_COMPANIES, {
+  const { company, saveCompany } = useCustomContext()
+  const { data: companiesData, loading: loadingCompanies, error: errorCompanies, networkStatus } = useQuery(GET_ALL_COMPANIES, {
     fetchPolicy: 'network-only',
-    nextFetchPolicy: 'network-only'
+    nextFetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    // onCompleted: (data) => {
+    // }
   })
   const [companies, setCompanies] = useState([])
   const [message, setMessage] = useState(null)
   const [createProvider] = useMutation(CREATE_PROVIDER)
   const [deleteProviderCompanyById] = useMutation(DELETE_PROVIDER_COMPANY_BY_ID)
-  const [createProviderCompany] = useMutation(CREATE_PROVIDER_COMPANY)
+  const [createProviderCompany, { reset: resetMutationCreateProviderCompany }] = useMutation(CREATE_PROVIDER_COMPANY)
   const [updateProvider] = useMutation(UPDATE_PROVIDER)
   const [isEditing, setIsEditing] = useState(false)
   const [getProviderById, { data }] = useLazyQuery(GET_PROVIDER_BY_ID)
-  const [selectedCompany, setSelectedCompany] = useState([])
+  const [selectedCompany] = useState([])
   const [providerValues, setProviderValues] = useState(initialProviderData)
 
   useEffect(() => {
     if (companiesData) {
-      setCompanies([{ id: 0, name: 'Seleccionar compañia', }].concat(companiesData.getAllCompanies))
+      setCompanies([{id:'0', name: 'Seleccionar compañia'}].concat(companiesData.getAllCompanies))
+      if (company?.id != 0) {
+        const newCompanyData = companiesData.getAllCompanies.find(companyServer => companyServer.id === company.id)
+        if (newCompanyData && newCompanyData.providers.length !== company.providers.length-1) {
+          saveCompany(newCompanyData)
+        }
+      }
     }
-  }, [companiesData])
+
+  }, [companiesData, loadingCompanies, errorCompanies])
 
   useEffect(() => {
     if (!company.name) navigate('/')
@@ -122,8 +132,6 @@ const ProviderForm = () => {
             }
           },
           refetchQueries: [{ query: GET_ALL_PROVIDERS }]
-          // refetchQueries: [ 'GET_ALL_PROVIDERS ']
-
         })
       }
 
@@ -175,10 +183,10 @@ const ProviderForm = () => {
             idProvider: providerValues.id
           }
         },
-        refetchQueries: [{ query: GET_ALL_PROVIDERS }, { query: GET_ALL_COMPANIES }]
+        refetchQueries: [{ query: GET_ALL_PROVIDERS }, { query: GET_ALL_COMPANIES }],
+        awaitRefetchQueries: true,
       })
-      const newProviders = company.providers.concat(companyFind)
-      updateProvidersCompany(newProviders)
+      resetMutationCreateProviderCompany()
     }
 
   }
