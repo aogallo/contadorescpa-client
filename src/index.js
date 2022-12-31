@@ -42,7 +42,7 @@ const link = from([
     new HttpLink({
       uri:
         NODE_ENV === 'development'
-          ? 'http://localhost:4000' // REACT_APP_GRAPQHL_API_DEVELOPMENT
+          ? REACT_APP_GRAPQHL_API_DEVELOPMENT
           : REACT_APP_GRAPQHL_API_PRODUCTION,
       credentials: 'same-origin',
       fetchOptions: {

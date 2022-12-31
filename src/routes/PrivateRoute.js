@@ -1,18 +1,15 @@
 import React, { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
-import jwt from 'jwt-decode'
+import { AppContext } from 'context/AppContext'
 
-import { AppContext } from '../context/AppContext'
+import { isTokenExpired } from 'utils/token'
+
 
 const PrivateRoute = ({ children }) => {
   const { user } = useContext(AppContext)
-  const decode = user.token ? jwt(user.token) : { logged: false, exp: 0 }
+  const logged = isTokenExpired(user.token)
 
-  console.log('private routes', user)
-
-  if (decode.exp < Date.now() / 1000) user.logged = false
-
-  return user.logged ? children : <Navigate to='/login' />
+  return logged ? children : <Navigate to='/login' />
   // return children
 }
 export default PrivateRoute

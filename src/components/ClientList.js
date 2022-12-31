@@ -19,7 +19,10 @@ const columns = [
 ]
 
 const ClientList = ({ title }) => {
-  const { refetch, data } = useQuery(GET_ALL_CLIENTS)
+  const { refetch, data } = useQuery(GET_ALL_CLIENTS, {
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'network-only'
+  })
   const [deleteClientById] = useMutation(DELETE_CLIENT)
   const [clients, setClients] = useState([])
   const [clientDelete, setClientDelete] = useState(null)
@@ -28,7 +31,6 @@ const ClientList = ({ title }) => {
 
   useEffect(() => {
     if (data) setClients(data.getAllClients)
-    console.log(data)
   }, [data])
 
   const handleClose = () => {
@@ -67,7 +69,7 @@ const ClientList = ({ title }) => {
         <Table columns={columns} editRoute='/client/edit/' data={clients}/>
       </div>
       {showModal && (
-        <CustomModal handleClose={handleClose} handleAction={handleAction}/>
+        <CustomModal handleClose={handleClose} handleAction={handleAction} />
       )}
     </>
   )

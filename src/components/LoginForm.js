@@ -1,16 +1,13 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Message from './Message/Message'
 
 const LoginForm = (props) => {
-  const navigate = useNavigate()
   const [username, setUserName] = useState('')
   const [password, setPassword] = useState('')
 
   const handleChange = (e) => {
     e.preventDefault()
     const { name, value } = e.target
-    console.log(e.target.name)
     if (name === 'username') {
       setUserName(value)
     }

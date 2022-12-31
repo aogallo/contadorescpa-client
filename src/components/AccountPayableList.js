@@ -1,24 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
-import { GET_ALL_ACCOUNTS_PAYABLE } from '../graphql/AccountsPayable/queries'
+import { GET_ACCOUNTS_PAYABLE_BY_ID_COMPANY } from '../graphql/AccountsPayable/queries'
 import { Link, NavLink } from 'react-router-dom'
 import Table from 'components/Table'
+import useCustomContext from 'hooks/useCustomContext'
+import { formatterDataToTable } from './AccountPayableForm/utils/formatterData'
 
 const columns = [
   { column: 'Serie', key: 'serie' },
   { column: 'Numero', key: 'documentNumber' },
   { column: 'Fecha', 'key': 'documentDate' },
-  { column: 'Proveedor', 'key': 'idProveedor' },
-  { column: 'Cuenta', 'key': 'idAccount' },
+  { column: 'Tipo de documento', 'key': 'documentTypeName' },
+  { column: 'Proveedor', 'key': 'providerName' },
+  { column: 'Cuenta', 'key': 'accountName' },
   { column: 'Acciones', key: 'actions' }
 ]
 
 const AccountPayableList = ({ title }) => {
-  const { loading, data } = useQuery(GET_ALL_ACCOUNTS_PAYABLE)
+  const { company } = useCustomContext()
+  const { loading, data } = useQuery(GET_ACCOUNTS_PAYABLE_BY_ID_COMPANY,
+    {
+      variables: {
+        id: company.id
+      },
+      fetchPolicy: 'network-only',
+      nextFetchPolicy: 'network-only'
+    })
   const [accountsPayable, setAccountsPayable] = useState([])
 
   useEffect(() => {
-    if (data) setAccountsPayable(data.getAllAccountPayable)
+    if (data) {
+      setAccountsPayable(formatterDataToTable(data))
+    }
   }, [data])
 
   return (
@@ -31,7 +44,11 @@ const AccountPayableList = ({ title }) => {
         <Link className='' to='/cxp/add'>
           Agregar
         </Link>
-        <Table columns={columns} data={accountsPayable} />
+        <Table
+          columns={columns}
+          data={accountsPayable}
+          editRoute='edit/'
+        />
       </div>
     </>
   )

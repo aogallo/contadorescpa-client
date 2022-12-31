@@ -8,23 +8,19 @@ export const CREATE_ACCOUNT_PAYABLE = gql`
         id
         name
       }
-      proveedor {
+      idProviderCompany
+      provider {
         id
         name
-        nit
-        address
-        email
-        phone
-        creditDay
-        company {
-          id
-          name
-        }
+      }
+      company {
+        id
+        name
       }
       account {
+        id
         accountNumber
         name
-        id
       }
       serie
       documentNumber

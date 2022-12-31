@@ -1,39 +1,84 @@
-import React, { useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { AppContext } from '../context/AppContext'
-import { useNavigate } from 'react-router-dom'
+
+import useCustomContext from 'hooks/useCustomContext'
+import { BiArchive, BiBuilding, BiBuildings, BiUser, BiLogOut } from 'react-icons/bi'
+import { useQuery } from '@apollo/client'
+import { GET_ALL_COMPANIES } from 'graphql/Company/queries'
 
 const SideBar = () => {
-  const navigate = useNavigate()
-  const { logout } = useContext(AppContext)
+  const { data } = useQuery(GET_ALL_COMPANIES)
+  const { company, logout, saveCompany, user } = useCustomContext()
+  const [companies, setCompanies] = useState([])
   const handleLogut = () => {
     logout()
+  }
+
+  useEffect(() => {
+    if (data) {
+      setCompanies(data.getAllCompanies)
+    }
+  }, [data])
+
+
+  const handleChange = (e) => {
+    e.preventDefault()
+    const id = e.target.value
+    const selectedCompany = companies.filter(company => company.id === id)[0]
+    saveCompany(selectedCompany)
   }
 
   return (
     <aside className='sidebar'>
       <NavLink to='' className="sidebar__title">
-        {/*<img src='https://marketplace.canva.com/EAE6OJ2qP8U/1/0/1600w/canva-gamer-with-glasses-character-twitch-profile-picture-CVfgWIJGgRo.jpg' alt='' />*/}
         <h2 className=''>Contadores</h2>
       </NavLink>
+      <div className='company'>
+        <label htmlFor='idCompany' className='company__label'>Compa&ntilde;ia</label>
+        <select
+          className='company__list'
+          name='company'
+          id='company'
+          onChange={handleChange}
+          placeholder='Compañia'
+          value={company.id}>
+          {
+            companies &&
+            companies.map((company) =>
+              <option className='company__item'
+                key={company.id}
+                value={company.id}>
+                {company.name}
+              </option>)
+          }
+        </select>
+      </div>
+      <div className='user'>
+        <span className='sidebar__link sidebar__link--user'>{user?.username}</span>
+      </div>
       <NavLink to='/client' className='sidebar__link'>
-        <i className="fas fa-solid fa-user sidebar__icon"></i>
+        <BiUser />
         <span className='sidebar__subtitle'>Clientes</span>
       </NavLink>
       <NavLink to='/company' className='sidebar__link'>
-        <i className="fas fa-solid fa-building sidebar__icon"></i>
+        <BiBuilding />
         <span className='sidebar__subtitle'>Compa&ntilde;ia</span>
       </NavLink>
       <NavLink to='/provider' className='sidebar__link'>
-        <i className="fas fa-solid fa-users sidebar__icon"></i>
+        <BiUser />
         <span className='sidebar__subtitle'>Proveedores</span>
       </NavLink>
       <NavLink to='/cxp' className='sidebar__link'>
-        <i className="fas fa-solid fa-money-bill sidebar__icon"></i>
+        <BiArchive />
         <span className='sidebar__subtitle'>Facturas</span>
       </NavLink>
+      <NavLink to='/selected-company' className='sidebar__link'
+        onClick={() => saveCompany({ id: null, name: '' })}>
+        <BiBuildings />
+        <span className='sidebar__subtitle'>Seleccionar compañia</span>
+      </NavLink>
       <a className='sidebar__link' onClick={handleLogut}>
-        <i className="fas fa-solid fa-arrow-right-from-bracket sidebar__icon"></i>
+        <BiLogOut />
         <span className='sidebar__subtitle'>Salir</span>
       </a>
     </aside>

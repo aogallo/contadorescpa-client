@@ -12,9 +12,12 @@
     "graphql": "^16.2.0",
     "jwt-decode": "^3.1.2",
     "react": "^16.14.0",
+    "react-datepicker": "^4.8.0",
     "react-dom": "^16.14.0",
+    "react-icons": "^4.7.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.0",
+    "react-select": "^5.7.0",
     "redux": "^4.1.2",
     "source-map-explorer": "^2.5.2",
     "web-vitals": "^2.1.2"
@@ -40,7 +43,8 @@
       "jest"
     ],
     "globals": [
-      "localStorage"
+      "localStorage",
+      "React"
     ]
   },
   "browserslist": {

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import Title from '../components/Title'
+import Title from 'components/Title'
 
 const Provider = () => {
-  const [breadCrumb, setBreadCrumb] = useState([
+  const [breadCrumb, _] = useState([
     {
       name: 'Inicio',
       path: '/',

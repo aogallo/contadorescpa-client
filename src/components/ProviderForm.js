@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Formik, Form, Field } from 'formik'
+import React, { useEffect, useState } from 'react'
+import { Formik, Form } from 'formik'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useLazyQuery, useMutation } from '@apollo/client'
-import { AppContext } from '../context/AppContext'
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
 
 import {
   GET_ALL_PROVIDERS,
@@ -12,25 +11,49 @@ import {
   CREATE_PROVIDER,
   UPDATE_PROVIDER
 } from '../graphql/Provider/mutations'
+import CustomInput from './CustomInput/CustomInput'
+import { BiTrash } from 'react-icons/bi'
+import Tabs from './Tabs/Tabs'
+import { GET_ALL_COMPANIES } from 'graphql/Company/queries'
+import { CREATE_PROVIDER_COMPANY, DELETE_PROVIDER_COMPANY_BY_ID } from 'graphql/ProviderCompany/mutation'
+import {
+  initialProviderData,
+  formatterData
+} from './Providers/utils/formatterData'
+import useCustomContext from 'hooks/useCustomContext'
 
 const ProviderForm = () => {
   const navigate = useNavigate()
   const params = useParams()
-  const { company } = useContext(AppContext)
+  const { company, saveCompany } = useCustomContext()
+  const { data: companiesData, loading: loadingCompanies, error: errorCompanies, networkStatus } = useQuery(GET_ALL_COMPANIES, {
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+  })
+  const [companies, setCompanies] = useState([])
   const [message, setMessage] = useState(null)
   const [createProvider] = useMutation(CREATE_PROVIDER)
+  const [deleteProviderCompanyById] = useMutation(DELETE_PROVIDER_COMPANY_BY_ID)
+  const [createProviderCompany, { reset: resetMutationCreateProviderCompany }] = useMutation(CREATE_PROVIDER_COMPANY)
   const [updateProvider] = useMutation(UPDATE_PROVIDER)
   const [isEditing, setIsEditing] = useState(false)
   const [getProviderById, { data }] = useLazyQuery(GET_PROVIDER_BY_ID)
-  const [providerValues, setProviderValues] = useState({
-    id: 0,
-    name: '',
-    nit: '',
-    address: '',
-    email: '',
-    phone: '',
-    creditDay: ''
-  })
+  const [selectedCompany] = useState([])
+  const [providerValues, setProviderValues] = useState(initialProviderData)
+
+  useEffect(() => {
+    if (companiesData) {
+      setCompanies([{id:'0', name: 'Seleccionar compañia'}].concat(companiesData.getAllCompanies))
+      if (company?.id != 0) {
+        const newCompanyData = companiesData.getAllCompanies.find(companyServer => companyServer.id === company.id)
+        if (newCompanyData && newCompanyData.providers.length !== company.providers.length-1) {
+          saveCompany(newCompanyData)
+        }
+      }
+    }
+
+  }, [companiesData, loadingCompanies, errorCompanies])
 
   useEffect(() => {
     if (!company.name) navigate('/')
@@ -43,15 +66,7 @@ const ProviderForm = () => {
 
   useEffect(() => {
     if (data) {
-      setProviderValues({
-        id: data.getProviderById.id,
-        name: data.getProviderById.name,
-        nit: data.getProviderById.nit,
-        address: data.getProviderById.address,
-        email: data.getProviderById.email,
-        phone: data.getProviderById.phone,
-        creditDay: data.getProviderById.creditDay
-      })
+      setProviderValues(formatterData(data))
     }
   }, [data])
 
@@ -66,6 +81,7 @@ const ProviderForm = () => {
     if (!values.name) {
       errors.name = 'Por favor ingrese el nombre'
     }
+
     if (!values.nit) {
       errors.nit = 'Por favor ingrese el NIT'
     }
@@ -94,7 +110,7 @@ const ProviderForm = () => {
               email: values.email,
               phone: values.phone,
               creditDay: Number(values.creditDay),
-              idCompany: company.id
+              companies: []
             }
           },
           refetchQueries: [{ query: GET_ALL_PROVIDERS }]
@@ -110,7 +126,7 @@ const ProviderForm = () => {
               email: values.email,
               phone: values.phone,
               creditDay: Number(values.creditDay),
-              idCompany: company.id
+              companies: []
             }
           },
           refetchQueries: [{ query: GET_ALL_PROVIDERS }]
@@ -119,171 +135,213 @@ const ProviderForm = () => {
 
       setMessage({
         error: false,
-        message: `Proveedor ${
-          isEditing ? 'actualizado' : 'creado'
-        } correctamente`
+        message: `Proveedor ${isEditing ? 'actualizado' : 'creado'
+          } correctamente`
       })
       setTimeout(() => {
         setMessage(null)
         resetForm()
+        // if (isEditing) {
         navigate(-1)
+        // }
       }, 1500)
     } catch (error) {
       setMessage({ error: true, message: error.message })
       console.log(error)
     }
   }
+
+  const handleRemoveCompany = async ({ id }) => {
+    await deleteProviderCompanyById({
+      variables: {
+        providerCompany: {
+          id: 0,
+          idCompany: id,
+          idProvider: providerValues.id
+        }
+      },
+      refetchQueries: [
+        {
+          query: GET_ALL_PROVIDERS
+        },
+        {
+          query: GET_ALL_COMPANIES
+        }]
+    })
+  }
+
+  const handleSelectedCompany = async (idCompany) => {
+    const companyFind = providerValues.companies.filter(company => company.id === idCompany)
+    if (companyFind.length == 0) {
+      await createProviderCompany({
+        variables: {
+          providerCompany: {
+            id: 0,
+            idCompany,
+            idProvider: providerValues.id
+          }
+        },
+        refetchQueries: [{ query: GET_ALL_PROVIDERS }, { query: GET_ALL_COMPANIES }],
+        awaitRefetchQueries: true,
+      })
+      resetMutationCreateProviderCompany()
+    }
+
+  }
+
+  const titles = ['Proveedor', 'Asociar compañia con proveedor']
+  const content = [
+    <div className='container container--tabs'>
+      <div className=''>
+        <Formik
+          enableReinitialize
+          initialValues={providerValues}
+          validate={handleValidate}
+          onSubmit={handleCreateProvider}
+        >
+          {({ values, errors, touched }) => (
+            <Form>
+              {/* Name */}
+              <CustomInput
+                label='Nombre'
+                name='name'
+                placeholder='Juan'
+                value={values.name}
+                touch={touched.name}
+                errors={errors}
+                changeState={setProviderValues}
+                state={providerValues}
+              />
+
+              {/* NIT */}
+              <CustomInput
+                label='NIT'
+                name='nit'
+                placeholder='1233335'
+                value={values.nit}
+                touch={touched.nit}
+                errors={errors}
+                changeState={setProviderValues}
+                state={providerValues}
+              />
+
+              {/* Address */}
+              <CustomInput
+                label='Dirección'
+                name='address'
+                placeholder='Guatemala ciudad capital'
+                value={values.address}
+                touch={touched.address}
+                errors={errors}
+                changeState={setProviderValues}
+                state={providerValues}
+              />
+
+              {/* Email */}
+              <CustomInput
+                label='Correo'
+                name='email'
+                placeholder='juan@gmail.com'
+                value={values.email}
+                touch={touched.email}
+                errors={errors}
+                changeState={setProviderValues}
+                state={providerValues}
+              />
+
+              {/* Phone */}
+              <CustomInput
+                label='Teléfono'
+                name='phone'
+                placeholder='22401129'
+                value={values.phone}
+                touch={touched.phone}
+                errors={errors}
+                changeState={setProviderValues}
+                state={providerValues}
+              />
+
+              {/* Credit day */}
+              <CustomInput
+                label='Días de credito'
+                name='creditDay'
+                placeholder='11'
+                value={values.creditDay}
+                touch={touched.creditDay}
+                errors={errors}
+                changeState={setProviderValues}
+                state={providerValues}
+              />
+
+              {message && (
+                <div
+                  className={`message ${message.error ? 'message-error' : 'message-success'
+                    }`}
+                >
+                  {message.message}
+                </div>
+              )}
+
+              <div className='form__buttons--group'>
+                <button
+                  type='submit'
+                  className='btn form__submit'
+                >
+                  Guardar
+                </button>
+                <button
+                  type='button'
+                  onClick={handleCancel}
+                  className='btn form__cancel'
+                >
+                  Cancelar
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </div>
+    ,
+    <div className='container container--tabs'>
+      {/* Company */}
+      <CustomInput
+        label='Compañia'
+        name='company'
+        placeholder='11'
+        type='select'
+        arrayToSelect={companies}
+        changeStateSelected={handleSelectedCompany}
+        value={selectedCompany.id}
+      />
+      <div className='badges'
+      >
+        {
+          providerValues.companies && (
+            providerValues.companies.map(company => (
+              <span key={company.id} className='badge'>
+                <span className='badge__name'>
+                  {company.name}
+                </span>
+                <span
+                  onClick={() => handleRemoveCompany(company)}
+                  className='btn__action btn__action-delete'>
+                  <BiTrash />
+                </span>
+              </span>
+            )
+            )
+          )
+        }
+      </div>
+    </div>
+  ]
+
   return (
     <>
-      <div className='col-sm-12'>
-        <div className='card'>
-          <div className='card-header'>
-            <button onClick={handleCancel} className='btn'>
-              <i className='fas fa-arrow-left' />
-            </button>
-            {isEditing ? 'Editar' : 'Agregar'} Proveedor
-          </div>
-          <div className='card-body'>
-            <Formik
-              enableReinitialize
-              initialValues={providerValues}
-              validate={handleValidate}
-              onSubmit={handleCreateProvider}
-            >
-              {({ errors, touched }) => (
-                <Form>
-                  {/* Name */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='name' className='col-sm-2 form-label'>
-                      Nombre
-                    </label>
-                    <div className='col-sm-10'>
-                      <Field
-                        id='name'
-                        name='name'
-                        type='text'
-                        className='form-control'
-                      />
-                    </div>
-                    {touched.name && errors.name && (
-                      <div className='error' style={{ color: 'red' }}>
-                        {errors.name}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* NIT */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='nit' className='col-sm-2 form-label'>
-                      NIT
-                    </label>
-                    <div className='col-sm-10'>
-                      <Field
-                        id='nit'
-                        name='nit'
-                        type='text'
-                        className='form-control'
-                      />
-                    </div>
-                    {touched.nit && errors.nit && (
-                      <div className='error' style={{ color: 'red' }}>
-                        {errors.nit}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Address */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='address' className='col-sm-2 form-label'>
-                      Dirección
-                    </label>
-                    <div className='col-sm-10'>
-                      <Field
-                        id='address'
-                        name='address'
-                        className='form-control'
-                      />
-                    </div>
-                  </div>
-
-                  {/* Email */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='email' className='col-sm-2 form-label'>
-                      Correo
-                    </label>
-                    <div className='col-sm-10'>
-                      <Field
-                        name='email'
-                        type='email'
-                        id='email'
-                        className='form-control'
-                      />
-                    </div>
-                    {touched.email && errors.email && (
-                      <div className='error' style={{ color: 'red' }}>
-                        {errors.email}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Phone */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='phone' className='col-sm-2 form-label'>
-                      Teléfono
-                    </label>
-                    <div className='col-sm-10'>
-                      <Field
-                        className='form-control'
-                        name='phone'
-                        type='text'
-                      />
-                    </div>
-                  </div>
-
-                  {/* Credit day */}
-                  <div className='mb-3 row'>
-                    <label htmlFor='creditDay' className='col-sm-2 form-label'>
-                      Días de credito
-                    </label>
-                    <div className='col-sm-10'>
-                      <Field
-                        name='creditDay'
-                        type='text'
-                        className='form-control'
-                        id='creditDay'
-                      />
-                    </div>
-                  </div>
-                  {message && (
-                    <div
-                      className={`message ${
-                        message.error ? 'message-error' : 'message-success'
-                      }`}
-                    >
-                      {message.message}
-                    </div>
-                  )}
-                  <div className=''>
-                    <button
-                      type='submit'
-                      className='btn btn-primary'
-                    >
-                      Guardar
-                    </button>
-                    <button
-                      type='button'
-                      onClick={handleCancel}
-                      className='btn btn-danger'
-                    >
-                      Cancelar
-                    </button>
-                  </div>
-                </Form>
-              )}
-            </Formik>
-          </div>
-        </div>
-      </div>
+      <Tabs
+        content={content}
+        titles={titles} />
     </>
   )
 }

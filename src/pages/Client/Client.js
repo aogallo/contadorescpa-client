@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import Title from '../components/Title'
+import Title from 'components/Title'
 
 const Client = () => {
   // if (loading) return <>Loading.....</>
@@ -9,19 +9,18 @@ const Client = () => {
     {
       name: 'Inicio',
       path: '/',
-      active: 'active'
+      active: true
     },
     {
       name: 'Clientes',
       path: '/client',
-      active: ''
+      active: false
     }
   ]
 
   return (
     <>
       <Title title='Clientes' breadCrumb={breadCrumb} />
-
       <Outlet />
     </>
   )

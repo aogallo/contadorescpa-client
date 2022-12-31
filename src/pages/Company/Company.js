@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
-import { GET_ALL_COMPANIES } from '../graphql/Company/queries'
-import { AppContext } from '../context/AppContext'
-import Title from '../components/Title'
+import { GET_ALL_COMPANIES } from 'graphql/Company/queries'
+import { AppContext } from 'context/AppContext'
+import Title from 'components/Title'
 import { useNavigate } from 'react-router-dom'
 import Table from 'components/Table'
 
@@ -14,7 +14,10 @@ const columns = [
 ]
 
 const Company = () => {
-  const { data } = useQuery(GET_ALL_COMPANIES)
+  const { data } = useQuery(GET_ALL_COMPANIES, {
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'network-only'
+  })
   const navigate = useNavigate()
   const { saveCompany } = useContext(AppContext)
   const [companies, setCompanies] = useState([])
@@ -84,7 +87,7 @@ const Company = () => {
         />
       </div>
 
-      <Table columns={columns} data={companies} editRoute='/company/edit/'/>
+      <Table columns={columns} data={companies} editRoute='/company/edit/' />
 
     </div>
   )
