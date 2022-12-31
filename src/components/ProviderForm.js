@@ -30,8 +30,6 @@ const ProviderForm = () => {
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
-    // onCompleted: (data) => {
-    // }
   })
   const [companies, setCompanies] = useState([])
   const [message, setMessage] = useState(null)

@@ -58,7 +58,25 @@ const CustomInput = ({
         label: element.name
       }
     ))
-    inputToRender = <Select options={newOptions} />
+    inputToRender = <Select
+      className=''
+      styles={{
+        control: (baseStyles, state) => {
+          return {
+            ...baseStyles,
+            borderColor: state.isFocused ? 'blue' : 'black',
+            borderRadius: 10,
+          }
+        }
+      }}
+      // theme={(theme) => {
+      //   console.log('theme', theme)
+      //   return ({
+      //     ...theme,
+      //     borderRadius: 10,
+      //   })
+      // }}
+      options={newOptions} />
   }
 
   return (
