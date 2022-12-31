@@ -44,10 +44,10 @@ const ProviderForm = () => {
 
   useEffect(() => {
     if (companiesData) {
-      setCompanies([{id:'0', name: 'Seleccionar compañia'}].concat(companiesData.getAllCompanies))
+      setCompanies([{ id: '0', name: 'Seleccionar compañia' }].concat(companiesData.getAllCompanies))
       if (company?.id != 0) {
         const newCompanyData = companiesData.getAllCompanies.find(companyServer => companyServer.id === company.id)
-        if (newCompanyData && newCompanyData.providers.length !== company.providers.length-1) {
+        if (newCompanyData && newCompanyData.providers.length !== company.providers.length - 1) {
           saveCompany(newCompanyData)
         }
       }
@@ -170,7 +170,7 @@ const ProviderForm = () => {
     })
   }
 
-  const handleSelectedCompany = async (idCompany) => {
+  const handleSelectedCompany = async ({ value: idCompany }) => {
     const companyFind = providerValues.companies.filter(company => company.id === idCompany)
     if (companyFind.length == 0) {
       await createProviderCompany({
