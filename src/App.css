@@ -153,6 +153,12 @@ body {
   margin-bottom: 10px;
 }
 
+.form__grid--row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
 .form__group {
   display: flex;
   flex-direction: column;
@@ -181,7 +187,7 @@ body {
   line-height: 10px;
   font-size: 18px;
   outline: none;
-  padding: 10px;
+  padding: 6px;
   border-radius: 10px;
   /* border: 1px solid transparent; */
 }
@@ -270,7 +276,7 @@ body {
 
 /* Title */
 .title {
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   margin-left: inherit;
 }
 .title__name {
@@ -509,4 +515,17 @@ body {
 .tabs__content {
   background-color: var(--white-color);
   border: 1px solid blue;
+}
+
+.form__totals {
+  margin-top: 25px;
+}
+
+.form__group--total {
+  display: grid;
+  grid-template-columns: repeat(2, 100px);
+}
+
+.table__row--span {
+  display: table-footer-group;
 }

@@ -7,6 +7,10 @@ export const GET_ALL_COMPANIES = gql`
       nit
       dateBirth
       comercialActivity
+      providers {
+        id
+        name
+      }
     }
   }
 `

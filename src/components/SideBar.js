@@ -23,15 +23,9 @@ const SideBar = () => {
 
   const handleChange = (e) => {
     e.preventDefault()
-    console.log('handle', e.target.value)
     const id = e.target.value
     const selectedCompany = companies.filter(company => company.id === id)[0]
-    console.log('selected company', selectedCompany)
-
-    saveCompany({
-      id: selectedCompany.id,
-      name: selectedCompany.name
-    })
+    saveCompany(selectedCompany)
   }
 
   return (

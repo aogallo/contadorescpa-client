@@ -6,7 +6,8 @@ export const AppContext = createContext()
 
 const companyInitial = {
   id: null,
-  name: ''
+  name: '',
+  providers: []
 }
 
 const init = () => {
@@ -21,8 +22,13 @@ const AppProvider = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(user))
   }, [user])
 
+
   const saveCompany = (company) => {
-    setCompany(company)
+    setCompany({
+      id: company.id,
+      name: company.name,
+      providers: [{ id: 0, name: 'Seleccionar proveedor' }].concat(company.providers)
+    })
   }
 
   const logout = () => {
@@ -30,7 +36,7 @@ const AppProvider = ({ children }) => {
       type: types.logout,
       payload: user
     })
-    setCompany('')
+    setCompany(companyInitial)
   }
 
   return (

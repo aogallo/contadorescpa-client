@@ -1,27 +1,32 @@
 import React from 'react'
+import Select from 'react-select'
 
 const CustomInput = ({
-  state,
+  arrayToSelect,
   changeState,
   changeStateSelected,
-  type,
+  disabled,
+  errors,
   label,
-  placeholder,
   name,
-  value,
-  arrayToSelect,
+  pattern,
+  placeholder,
   regularExpression,
-  validateFunction,
+  readOnly,
+  state,
   touch,
-  errors
+  type,
+  validateFunction,
+  value,
 }) => {
   const onChange = (e) => {
     const value = e.target.value
-    if (type === 'select') {
+    if (type === 'select' && name == 'company') {
       changeStateSelected(value)
     } else {
       changeState({ ...state, [name]: value })
     }
+    // changeState({ ...state, [name]: value })
   }
 
   const validation = () => {
@@ -36,29 +41,42 @@ const CustomInput = ({
 
   let inputToRender = <input
     className='form__input'
+    disabled={disabled}
     name={name}
-    type={type}
     onChange={onChange}
+    pattern={pattern}
     placeholder={placeholder}
+    readOnly={readOnly}
+    type={type}
     value={value}
   />
 
-  if (type === 'select') {
-    inputToRender = <select
-      name={name}
-      type={type}
-      onChange={onChange}
-      placeholder={placeholder}
-      className='form__input'
-      value={value}>
+  if (type === 'select' && (typeof (arrayToSelect) == 'object' || typeof (arrayToSelect) == 'array')) {
+    const newOptions = arrayToSelect.map(element => (
       {
-        arrayToSelect &&
-        arrayToSelect.map((item) =>
-          <option key={item.id} value={item.id}>
-            {item.name}
-          </option>)
+        value: element.id,
+        label: element.name
       }
-    </select>
+    ))
+    inputToRender = <Select
+      className=''
+      styles={{
+        control: (baseStyles, state) => {
+          return {
+            ...baseStyles,
+            borderColor: state.isFocused ? 'blue' : 'black',
+            borderRadius: 10,
+          }
+        }
+      }}
+      // theme={(theme) => {
+      //   console.log('theme', theme)
+      //   return ({
+      //     ...theme,
+      //     borderRadius: 10,
+      //   })
+      // }}
+      options={newOptions} />
   }
 
   return (

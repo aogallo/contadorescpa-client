@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
-import { GET_ALL_ACCOUNTS_PAYABLE } from '../graphql/AccountsPayable/queries'
+import { GET_ACCOUNTS_PAYABLE_BY_ID_COMPANY } from '../graphql/AccountsPayable/queries'
 import { Link, NavLink } from 'react-router-dom'
 import Table from 'components/Table'
+import useCustomContext from 'hooks/useCustomContext'
+import { formatterDataToTable } from './AccountPayableForm/utils/formatterData'
 
 const columns = [
   { column: 'Serie', key: 'serie' },
@@ -15,38 +17,20 @@ const columns = [
 ]
 
 const AccountPayableList = ({ title }) => {
-  const { loading, data } = useQuery(GET_ALL_ACCOUNTS_PAYABLE, {
-    fetchPolicy: 'network-only',
-    nextFetchPolicy: 'network-only'
-  })
+  const { company } = useCustomContext()
+  const { loading, data } = useQuery(GET_ACCOUNTS_PAYABLE_BY_ID_COMPANY,
+    {
+      variables: {
+        id: company.id
+      },
+      fetchPolicy: 'network-only',
+      nextFetchPolicy: 'network-only'
+    })
   const [accountsPayable, setAccountsPayable] = useState([])
 
   useEffect(() => {
     if (data) {
-      const newAccountsPayableData = data.getAllAccountPayable.map(accountPayable => {
-        const {
-          account: {
-            id: idAccount,
-            name: accountName
-          },
-          provider: {
-            id: idProvider,
-            name: providerName
-          },
-          documentType: {
-            name: documentTypeName
-          }
-        } = accountPayable
-        return {
-          ...accountPayable,
-          idAccount,
-          accountName,
-          idProvider,
-          providerName,
-          documentTypeName
-        }
-      })
-      setAccountsPayable(newAccountsPayableData)
+      setAccountsPayable(formatterDataToTable(data))
     }
   }, [data])
 
@@ -60,7 +44,11 @@ const AccountPayableList = ({ title }) => {
         <Link className='' to='/cxp/add'>
           Agregar
         </Link>
-        <Table columns={columns} data={accountsPayable} />
+        <Table
+          columns={columns}
+          data={accountsPayable}
+          editRoute='edit/'
+        />
       </div>
     </>
   )

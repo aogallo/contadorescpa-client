@@ -5,8 +5,9 @@ import { BiEdit, BiTrash } from 'react-icons/bi'
 
 import 'components/Table/Table.css'
 import Editor from './Editor/Editor'
+import EmptyRows from './Table/EmptyRows'
 
-const Table = ({ columns, data, editRoute, }) => {
+const Table = ({ columns, data = [], editRoute, }) => {
   const [showEditor, setShowEditor] = useState(false)
   const handleShowModal = (element) => {
     console.log(element)
@@ -36,19 +37,22 @@ const Table = ({ columns, data, editRoute, }) => {
     )
   }
   const rowKeys = columns.map((column) => column['key'])
-  const rows = data && data.map((element) => (
-    <tr key={element.id} className='table__row'>
-      {
-        rowKeys.map((row) =>
-          row === 'actions' ? actionsButtons(element) :
-            <td
-              className='table__row-content'
-              key={row}>
-              {element[row] ? element[row] : '-'}
-            </td>)
-      }
-    </tr >
-  ))
+  const rows = data.length === 0 ?
+    <EmptyRows />
+    :
+    data.map((element) => (
+      <tr key={element.id} className='table__row'>
+        {
+          rowKeys.map((row) =>
+            row === 'actions' ? actionsButtons(element) :
+              <td
+                className='table__row-content'
+                key={row}>
+                {element[row] ? element[row] : '-'}
+              </td>)
+        }
+      </tr >
+    ))
   return (
     <div className='table'>
       <table className='table__content'>
