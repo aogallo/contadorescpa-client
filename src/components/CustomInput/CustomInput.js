@@ -60,6 +60,7 @@ const CustomInput = ({
     ))
     inputToRender = <Select
       className=''
+      onChange={(event) => changeStateSelected(event)}
       styles={{
         control: (baseStyles, state) => {
           return {
