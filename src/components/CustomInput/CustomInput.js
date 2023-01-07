@@ -21,8 +21,12 @@ const CustomInput = ({
 }) => {
   const onChange = (e) => {
     const value = e.target.value
-    if (type === 'select' && name == 'company') {
-      changeStateSelected(value)
+    // if (type === 'select' && (name == 'company' || name === 'documentType')) {
+    // console.log('name', name)
+    // console.log('value', value)
+    // if (type === 'select' && name === 'company') {
+    if (type === 'select') {
+      changeStateSelected(value, name)
     } else {
       changeState({ ...state, [name]: value })
     }
@@ -52,6 +56,7 @@ const CustomInput = ({
   />
 
   if (type === 'select' && (typeof (arrayToSelect) == 'object' || typeof (arrayToSelect) == 'array')) {
+    const handleSelectFunction = changeStateSelected ? changeStateSelected : changeState
     const newOptions = arrayToSelect.map(element => (
       {
         value: element.id,
@@ -60,7 +65,8 @@ const CustomInput = ({
     ))
     inputToRender = <Select
       className=''
-      onChange={(event) => changeStateSelected(event)}
+      // onChange={(event) => changeStateSelected(event)}
+      onChange={(event) => handleSelectFunction(event, name)}
       styles={{
         control: (baseStyles, state) => {
           return {
