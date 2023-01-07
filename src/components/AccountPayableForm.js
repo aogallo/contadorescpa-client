@@ -109,6 +109,10 @@ const AccountPayableForm = () => {
     }
   }
 
+  const handleOnChangeSelect = ({ value }, name) => {
+    setAccountPayableInitialValues({ ...accountPayableInitialValues, [name]: value })
+  }
+
   const handleCreateAccountPayable = async (values, { resetForm }) => {
     try {
       if (isEditing) {
@@ -196,7 +200,7 @@ const AccountPayableForm = () => {
                   {/* Document Type*/}
                   <CustomInput
                     arrayToSelect={documentTypes}
-                    changeState={setAccountPayableInitialValues}
+                    changeStateSelected={handleOnChangeSelect}
                     errors={errors}
                     label='Tipo de documento'
                     name='idDocumentType'
@@ -221,7 +225,7 @@ const AccountPayableForm = () => {
                   {/* Provider */}
                   <CustomInput
                     arrayToSelect={company.providers}
-                    changeState={setAccountPayableInitialValues}
+                    changeStateSelected={handleOnChangeSelect}
                     errors={errors}
                     label='Proveedor'
                     name='idProviderCompany'
@@ -235,7 +239,7 @@ const AccountPayableForm = () => {
                   {/* Account */}
                   <CustomInput
                     arrayToSelect={accounts}
-                    changeState={setAccountPayableInitialValues}
+                    changeStateSelected={handleOnChangeSelect}
                     errors={errors}
                     label='Cuenta'
                     name='idAccount'

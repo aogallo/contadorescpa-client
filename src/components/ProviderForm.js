@@ -170,7 +170,7 @@ const ProviderForm = () => {
     })
   }
 
-  const handleSelectedCompany = async ({ value: idCompany }) => {
+  const handleSelectedCompany = async ({ value: idCompany }, name = '') => {
     const companyFind = providerValues.companies.filter(company => company.id === idCompany)
     if (companyFind.length == 0) {
       await createProviderCompany({
