@@ -54,10 +54,10 @@ export const initialDataAccountPayable = {
   total: 0.00
 }
 
-export const formatterDataToTable = ({ getAllAccountPayable = [] }) => {
-  if (getAllAccountPayable.length == 0) return []
+export const formatterDataToTable = ({ getAccountPayableByIdCompany = [] }) => {
+  if (getAccountPayableByIdCompany.length == 0) return []
 
-  const newAccountsPayableData = getAllAccountPayable.map(accountPayable => {
+  const newAccountsPayableData = getAccountPayableByIdCompany.map(accountPayable => {
     const {
       account: {
         id: idAccount,
