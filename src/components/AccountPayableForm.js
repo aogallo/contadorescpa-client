@@ -78,11 +78,13 @@ const AccountPayableForm = () => {
   useEffect(() => {
     if (docs) setDocumentTypes((prevState) => prevState.concat(docs.getAllDocumentTypes))
   }, [docs])
+
   useEffect(() => {
     if (accountsData) {
       setAccounts((prevState) => prevState.concat(accountsData.getAllAccounts))
     }
   }, [accountsData])
+
   useEffect(() => {
     if (accountPayableById) {
       setAccountPayableInitialValues(formattedAccountPayableForState(accountPayableById))

@@ -19,18 +19,14 @@ const CustomInput = ({
   validateFunction,
   value,
 }) => {
+  console.log('test', state)
   const onChange = (e) => {
     const value = e.target.value
-    // if (type === 'select' && (name == 'company' || name === 'documentType')) {
-    // console.log('name', name)
-    // console.log('value', value)
-    // if (type === 'select' && name === 'company') {
     if (type === 'select') {
       changeStateSelected(value, name)
     } else {
       changeState({ ...state, [name]: value })
     }
-    // changeState({ ...state, [name]: value })
   }
 
   const validation = () => {
@@ -63,9 +59,10 @@ const CustomInput = ({
         label: element.name
       }
     ))
+    const valueSelect = newOptions.filter(option => option.value == value)
     inputToRender = <Select
       className=''
-      // onChange={(event) => changeStateSelected(event)}
+      value={valueSelect}
       onChange={(event) => handleSelectFunction(event, name)}
       styles={{
         control: (baseStyles, state) => {
