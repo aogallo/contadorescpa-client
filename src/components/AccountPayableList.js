@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { GET_ACCOUNTS_PAYABLE_BY_ID_COMPANY } from '../graphql/AccountsPayable/queries'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Table from 'components/Table'
 import useCustomContext from 'hooks/useCustomContext'
 import { formatterDataToTable } from './AccountPayableForm/utils/formatterData'
+import CreateFile from './CreateFile/CreateFile'
 
 const columns = [
   { column: 'Serie', key: 'serie' },
@@ -34,6 +35,7 @@ const AccountPayableList = ({ title }) => {
     }
   }, [data])
 
+
   return (
     <>
       <div className='form-header'>
@@ -44,6 +46,8 @@ const AccountPayableList = ({ title }) => {
         <Link className='' to='/cxp/add'>
           Agregar
         </Link>
+        <CreateFile
+          filename={`Facturas, ${company.name}.csv`} />
         <Table
           columns={columns}
           data={accountsPayable}
