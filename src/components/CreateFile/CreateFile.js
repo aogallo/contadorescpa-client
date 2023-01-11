@@ -3,7 +3,13 @@ import { useLazyQuery } from '@apollo/client';
 import { CREATE_REPORT } from 'graphql/Report/queries';
 
 const CreateFile = ({ filename, domain, format, startDate, endDate }) => {
-  const [createReport, { data, called, loading }] = useLazyQuery(CREATE_REPORT)
+  const [createReport, { data, called, loading }] = useLazyQuery(CREATE_REPORT, {
+    onCompleted: (data) => {
+      const csvData = creacteCsvFile(data.createReport)
+      download(csvData)
+      setLabelButton('Descargar archivo')
+    }
+  })
   const [labelButton, setLabelButton] = useState('Descargar archivo')
 
   const creacteCsvFile = (data) => {
@@ -45,9 +51,6 @@ const CreateFile = ({ filename, domain, format, startDate, endDate }) => {
         }
       }
     })
-    const csvData = creacteCsvFile(data.createReport)
-    download(csvData)
-    setLabelButton('Descargar archivo')
   }
 
   return (
