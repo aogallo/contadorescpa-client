@@ -6,6 +6,7 @@
   --secondary-color: #DBAE58;
   --white-color: #ffffff;
   --blue-color: #246dec;
+  --green-color: #42b883;
   --red-color: #cc4c43;
   --border-color: #d2d2d3;
   --gray-color-150: #f4f6fb;
@@ -278,11 +279,30 @@ body {
 .title {
   /* margin-bottom: 10px; */
   margin-left: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
 .title__name {
   font-weight: 700;
-  font-size: 20px;
+  font-size: 25px;
   height: 20px;
+}
+
+.title__button {
+  font-size: 12px;
+  padding: 14px 16px;
+  color: var(--white-color);
+  border-radius: 10px;
+}
+
+.title__button--blue {
+  background-color: var(--blue-color);
+}
+
+.title__button--green {
+  background-color: var(--green-color);
 }
 
 .title__breadcrumb {
@@ -299,6 +319,13 @@ body {
 
 .active {
   color: var(--sidebar-color);
+}
+
+.hidden__button {
+  visibility: hidden;
+}
+.show__button {
+  visibility: visible;
 }
 
 .title__breadcrumb__symbol {

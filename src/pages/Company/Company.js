@@ -31,6 +31,14 @@ const Company = () => {
     }
   ])
 
+  const groupButtons = [
+    {
+      name: 'Agregar Compañia',
+      path: '/company/add',
+      class: 'title__button--blue'
+    }
+  ]
+
   useEffect(() => {
     if (data) {
       setCompanies(data.getAllCompanies)
@@ -66,30 +74,27 @@ const Company = () => {
     })
     // navigate('/home')
   }
+  // <div className='form-header'>
+  //   <div className=''>
+  //     <span className='' id=''>
+  //       <i className='fas fa-search' />
+  //     </span>
+  //   </div>
+  //   <input
+  //     type='text'
+  //     className=''
+  //     name='search'
+  //     placeholder='Buscar compañia'
+  //     onChange={handleSearch}
+  //     value={search}
+  //   />
+  // </div>
 
   return (
-    <div className=''>
-      <Title title='Compañias' breadCrumb={breadCrumb} />
-
-      <div className='form-header'>
-        <div className=''>
-          <span className='' id=''>
-            <i className='fas fa-search' />
-          </span>
-        </div>
-        <input
-          type='text'
-          className=''
-          name='search'
-          placeholder='Buscar compañia'
-          onChange={handleSearch}
-          value={search}
-        />
-      </div>
-
+    <>
+      <Title title='Compañias' breadCrumb={breadCrumb} groupButtons={groupButtons} />
       <Table columns={columns} data={companies} editRoute='/company/edit/' />
-
-    </div>
+    </>
   )
 }
 

@@ -23,7 +23,7 @@ const Layout = () => {
 
   // const Header = lazy(async () => await import('components/Header/Header'))
   const ClientView = lazy(async () => await import('pages/Client/Client'))
-  const ClientListView = lazy(async () => await import('components/ClientList'))
+  const ClientListView = lazy(async () => await import('components/ClientList/ClientList'))
   const ClientFormView = lazy(async () => await import('components/ClientForm'))
   const SideBarComponent = lazy(async () => await import('components/SideBar'))
 

@@ -6,6 +6,7 @@ import Table from 'components/Table'
 import useCustomContext from 'hooks/useCustomContext'
 import { formatterDataToTable } from './AccountPayableForm/utils/formatterData'
 import CreateFile from './CreateFile/CreateFile'
+import Title from './Title'
 
 const columns = [
   { column: 'Serie', key: 'serie' },
@@ -38,22 +39,13 @@ const AccountPayableList = ({ title }) => {
 
   return (
     <>
-      <div className='form-header'>
-        <section>
-          <i className='fas fa-table me-1' />
-          {title}
-        </section>
-        <Link className='' to='/cxp/add'>
-          Agregar
-        </Link>
-        <CreateFile
-          filename={`Facturas, ${company.name}.csv`} />
-        <Table
-          columns={columns}
-          data={accountsPayable}
-          editRoute='edit/'
-        />
-      </div>
+      <CreateFile
+        filename={`Facturas, ${company.name}.csv`} />
+      <Table
+        columns={columns}
+        data={accountsPayable}
+        editRoute='edit/'
+      />
     </>
   )
 }
