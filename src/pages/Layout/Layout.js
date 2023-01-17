@@ -35,7 +35,7 @@ const Layout = () => {
   const AccountPayableForm = lazy(async () => await import('components/AccountPayableForm'))
   const AccountPayableList = lazy(async () => await import('components/AccountPayableList'))
 
-
+  const AccountsPayableReportView = lazy(async () => await import('pages/Reports/AccountPayableReport/AccountPayableReport'))
   const Company = lazy(async () => await import('pages/Company/Company'))
 
   const ErrorView = lazy(async () => await import('pages/Error/Error404'))
@@ -55,6 +55,7 @@ const Layout = () => {
                     <Route path='add' element={<ClientFormView />} />
                     <Route path='edit/:id' element={<ClientFormView />} />
                   </Route>
+
                   <Route path='/provider' element={<ProviderView />}>
                     <Route
                       path=''
@@ -63,6 +64,7 @@ const Layout = () => {
                     <Route path='add' element={<ProviderForm />} />
                     <Route path='edit/:id' element={<ProviderForm />} />
                   </Route>
+
                   <Route path='/cxp' element={<AccountsPayable />}>
                     <Route
                       path=''
@@ -73,6 +75,11 @@ const Layout = () => {
                     <Route path='add' element={<AccountPayableForm />} />
                     <Route path='edit/:id' element={<AccountPayableForm />} />
                   </Route>
+
+                  <Route path='/report' >
+                    <Route path='cxp' element={<AccountsPayableReportView />} />
+                  </Route>
+
                   <Route path='/company' element={<Company />}></Route>
                   <Route path='*' element={<ErrorView />} />
                 </Routes>
