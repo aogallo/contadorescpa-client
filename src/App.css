@@ -348,6 +348,7 @@ margin: 0 2rem;
 
 .active {
   color: var(--sidebar-color);
+  /* background-color: var(--main-bg-color); */
 }
 
 .hidden__button {
@@ -584,4 +585,8 @@ margin: 0 2rem;
 
 .table__row--span {
   display: table-footer-group;
+}
+
+.form__input--date {
+  width: inherit;
 }
