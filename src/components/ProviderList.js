@@ -15,7 +15,7 @@ const columns = [
   { column: 'Acciones', key: 'actions' }
 ]
 
-const ProviderList = ({ title }) => {
+const ProviderList = () => {
   const { loading, refetch, data } = useQuery(GET_ALL_PROVIDERS, {
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'network-only'
@@ -59,14 +59,9 @@ const ProviderList = ({ title }) => {
 
   return (
     <>
-      <div className=''>
-        <div className=''>
-          <Link to='/provider/add'>Agregar proveedor</Link>
-        </div>
-        <Table columns={columns}
-          data={providers}
-          editRoute='edit/' />
-      </div>
+      <Table columns={columns}
+        data={providers}
+        editRoute='edit/' />
     </>
   )
 }

@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import useCustomContext from 'hooks/useCustomContext'
-import { BiArchive, BiBuilding, BiBuildings, BiUser, BiLogOut } from 'react-icons/bi'
+import { BiArchive, BiBuilding, BiBuildings, BiUser, BiLogOut, BiChevronRight } from 'react-icons/bi'
+import { BsChevronRight } from 'react-icons/bs'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_COMPANIES } from 'graphql/Company/queries'
+
+import menus from 'components/SideBar/menu'
+import SidebarMenu from './SideBar/SidebarMenu'
 
 const SideBar = () => {
   const { data } = useQuery(GET_ALL_COMPANIES)
@@ -27,6 +31,12 @@ const SideBar = () => {
     const selectedCompany = companies.filter(company => company.id === id)[0]
     saveCompany(selectedCompany)
   }
+
+
+  // <NavLink to='/client' className='sidebar__link'>
+  //   <BiUser className='icon__left' />
+  //   <span className='sidebar__subtitle'>Clientes</span>
+  // </NavLink>
 
   return (
     <aside className='sidebar'>
@@ -56,30 +66,20 @@ const SideBar = () => {
       <div className='user'>
         <span className='sidebar__link sidebar__link--user'>{user?.username}</span>
       </div>
-      <NavLink to='/client' className='sidebar__link'>
-        <BiUser />
-        <span className='sidebar__subtitle'>Clientes</span>
-      </NavLink>
-      <NavLink to='/company' className='sidebar__link'>
-        <BiBuilding />
-        <span className='sidebar__subtitle'>Compa&ntilde;ia</span>
-      </NavLink>
-      <NavLink to='/provider' className='sidebar__link'>
-        <BiUser />
-        <span className='sidebar__subtitle'>Proveedores</span>
-      </NavLink>
-      <NavLink to='/cxp' className='sidebar__link'>
-        <BiArchive />
-        <span className='sidebar__subtitle'>Facturas</span>
-      </NavLink>
-      <NavLink to='/selected-company' className='sidebar__link'
-        onClick={() => saveCompany({ id: null, name: '' })}>
-        <BiBuildings />
-        <span className='sidebar__subtitle'>Seleccionar compañia</span>
-      </NavLink>
-      <a className='sidebar__link' onClick={handleLogut}>
-        <BiLogOut />
-        <span className='sidebar__subtitle'>Salir</span>
+
+      {
+        menus.map((menu) => <SidebarMenu key={menu.title} menu={menu} />)
+      }
+
+
+      <a
+        className='sidebar__link'
+        onClick={handleLogut}>
+        <div>
+
+          <BiLogOut />
+          <span className='sidebar__subtitle'>Salir</span>
+        </div>
       </a>
     </aside>
   )

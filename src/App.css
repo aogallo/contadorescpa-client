@@ -6,6 +6,7 @@
   --secondary-color: #DBAE58;
   --white-color: #ffffff;
   --blue-color: #246dec;
+  --green-color: #42b883;
   --red-color: #cc4c43;
   --border-color: #d2d2d3;
   --gray-color-150: #f4f6fb;
@@ -92,6 +93,12 @@ body {
   color: var(--sidebar-color);
 }
 
+.sidebar__group {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .sidebar__link {
   display: flex;
   gap: 1rem;
@@ -101,6 +108,29 @@ body {
   text-decoration: none;
   font-size: 1.2rem;
   cursor: pointer;
+  justify-content: space-between;
+}
+
+.sidebar__link--menu {
+  flex-direction: column;
+}
+
+.sidebar__item {
+  display: flex;
+  gap: 1rem;
+}
+
+.sidebar__subtitle {
+  margin-left: 1rem;
+}
+
+.sidebar__link--submenu {
+font-size: 1.1rem;
+margin: 0 2rem;
+}
+
+.icon__right {
+  float: right;
 }
 
 .company {
@@ -278,11 +308,30 @@ body {
 .title {
   /* margin-bottom: 10px; */
   margin-left: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
 .title__name {
   font-weight: 700;
-  font-size: 20px;
+  font-size: 25px;
   height: 20px;
+}
+
+.title__button {
+  font-size: 12px;
+  padding: 14px 16px;
+  color: var(--white-color);
+  border-radius: 10px;
+}
+
+.title__button--blue {
+  background-color: var(--blue-color);
+}
+
+.title__button--green {
+  background-color: var(--green-color);
 }
 
 .title__breadcrumb {
@@ -299,6 +348,14 @@ body {
 
 .active {
   color: var(--sidebar-color);
+  /* background-color: var(--main-bg-color); */
+}
+
+.hidden__button {
+  visibility: hidden;
+}
+.show__button {
+  visibility: visible;
 }
 
 .title__breadcrumb__symbol {
@@ -528,4 +585,8 @@ body {
 
 .table__row--span {
   display: table-footer-group;
+}
+
+.form__input--date {
+  width: inherit;
 }
