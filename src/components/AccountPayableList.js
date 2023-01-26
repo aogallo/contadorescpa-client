@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
-import { GET_ACCOUNTS_PAYABLE_BY_ID_COMPANY } from '../graphql/AccountsPayable/queries'
-import { Link } from 'react-router-dom'
-import Table from 'components/Table'
+
 import useCustomContext from 'hooks/useCustomContext'
+
+import { GET_ACCOUNTS_PAYABLE_BY_ID_COMPANY } from '../graphql/AccountsPayable/queries'
 import { formatterDataToTable } from './AccountPayableForm/utils/formatterData'
+
+import Table from 'components/Table'
+
 import CreateFile from './CreateFile/CreateFile'
-import Title from './Title'
 
 const columns = [
   { column: 'Serie', key: 'serie' },
@@ -18,7 +20,7 @@ const columns = [
   { column: 'Acciones', key: 'actions' }
 ]
 
-const AccountPayableList = ({ title }) => {
+const AccountPayableList = () => {
   const { company } = useCustomContext()
   const { loading, data } = useQuery(GET_ACCOUNTS_PAYABLE_BY_ID_COMPANY,
     {
@@ -39,8 +41,6 @@ const AccountPayableList = ({ title }) => {
 
   return (
     <>
-      <CreateFile
-        filename={`Facturas, ${company.name}.csv`} />
       <Table
         columns={columns}
         data={accountsPayable}

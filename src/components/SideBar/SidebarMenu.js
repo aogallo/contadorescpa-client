@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const SidebarMenu = ({ menu }) => {
   const [showSubMenus, setShowSubMenus] = useState(false)
@@ -27,7 +27,7 @@ const SidebarMenu = ({ menu }) => {
   //   )) : null
   // }
   const subMenusInput = showSubMenus ? subMenus.map((subMenu) =>
-    <NavLink
+    <Link
       key={subMenu.title}
       to={subMenu.path}
       className='sidebar__link sidebar__link--submenu'>
@@ -38,7 +38,7 @@ const SidebarMenu = ({ menu }) => {
           subMenu.showSubMenus ? subMenu.iconOpen : subMenu.iconClosed
         }
       </div>
-    </NavLink>
+    </Link>
   )
     :
     null
@@ -76,14 +76,14 @@ const SidebarMenu = ({ menu }) => {
       }
     </ul>
     :
-    <NavLink
+    <Link
       to={path}
       className='sidebar__link'>
       <div>
         {icon}
         <span className='sidebar__subtitle'>{title}</span>
       </div>
-    </NavLink>
+    </Link>
 
   return (
     <>

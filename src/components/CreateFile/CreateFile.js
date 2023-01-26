@@ -1,14 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useLazyQuery } from '@apollo/client';
-import { CREATE_REPORT } from 'graphql/Report/queries';
 
-const CreateFile = ({ filename, domain, format, startDate, endDate }) => {
-  const [createReport, { data, called, loading }] = useLazyQuery(CREATE_REPORT, {
-    onCompleted: (data) => {
-      const csvData = creacteCsvFile(data.createReport)
-      download(csvData)
-      setLabelButton('Descargar archivo')
-    }
+const CreateFile = ({ createReportQuery, filename, domain, format, startDate, endDate }) => {
+  const [createReport, { data, called, loading }] = useLazyQuery(createReportQuery, {
   })
   const [labelButton, setLabelButton] = useState('Descargar archivo')
 
@@ -46,15 +40,29 @@ const CreateFile = ({ filename, domain, format, startDate, endDate }) => {
     await createReport({
       variables: {
         report: {
-          domain: 'accountPayable',
-          format: 'csv'
+          domain,
+          format,
+          startDate,
+          endDate
         }
       }
+    }).then(() => {
+      if (data.createReport.length == 0) {
+        // TODO: send message that the results is empy
+        setLabelButton('Descargar archivo')
+        return false
+      }
+      const csvData = creacteCsvFile(data.createReport)
+      console.log('onCompleted', csvData)
+      download(csvData)
+      setLabelButton('Descargar archivo')
     })
   }
 
   return (
-    <button onClick={handleDownloadReport} >
+    <button
+      className='btn title__button title__button--green'
+      onClick={handleDownloadReport} >
       {labelButton}
     </button>
   )

@@ -36,9 +36,9 @@ const AccountPayableForm = () => {
   const [createAccountPayable] = useMutation(CREATE_ACCOUNT_PAYABLE)
   const [updateAccountPayable] = useMutation(UPDATE_ACCOUNT_PAYABLE)
   const [message, setMessage] = useState(null)
-  const [documentTypes, setDocumentTypes] = useState([{ id: "0", name: 'Seleccionar un tipo de documento' }])
+  const [documentTypes, setDocumentTypes] = useState([{ id: 0, name: 'Seleccionar un tipo de documento' }])
   const [isEditing, setIsEditing] = useState(false)
-  const [accounts, setAccounts] = useState([{ id: "0", name: 'Seleccionar cuenta' }])
+  const [accounts, setAccounts] = useState([{ id: 0, name: 'Seleccionar cuenta' }])
   const [accountPayableInitialValues, setAccountPayableInitialValues] = useState(initialDataAccountPayable)
 
   useEffect(() => {
@@ -171,7 +171,7 @@ const AccountPayableForm = () => {
             return (
               <Form>
                 <div className='form__grid--row'>
-                  {/* Document Date*/}
+                  {/* Serie */}
                   <CustomInput
                     changeState={setAccountPayableInitialValues}
                     errors={errors}
@@ -188,7 +188,7 @@ const AccountPayableForm = () => {
                   <CustomInput
                     changeState={setAccountPayableInitialValues}
                     errors={errors}
-                    label='Documento de documento'
+                    label='Número de documento'
                     name='documentNumber'
                     placeholder='Ingresar el número de documento'
                     state={accountPayableInitialValues}
