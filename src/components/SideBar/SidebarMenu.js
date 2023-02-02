@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const SidebarMenu = ({ menu }) => {
-  const [showSubMenus, setShowSubMenus] = useState(false)
+  const [showSubMenus, setShowSubMenus] = useState(true)
   const {
     title,
     path,
