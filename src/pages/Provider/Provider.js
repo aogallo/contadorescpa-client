@@ -11,9 +11,20 @@ const Provider = () => {
     }
   ])
 
+  const groupButtons = [
+    {
+      name: 'Agregar proveedor',
+      path: '/provider/add',
+      class: 'title__button--blue'
+    }
+  ]
+
   return (
     <>
-      <Title title='Proveedores' breadCrumb={breadCrumb} />
+      <Title
+        title='Proveedores'
+        breadCrumb={breadCrumb}
+        groupButtons={groupButtons} />
       <Outlet />
     </>
   )

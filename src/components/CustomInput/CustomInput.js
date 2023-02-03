@@ -19,7 +19,6 @@ const CustomInput = ({
   validateFunction,
   value,
 }) => {
-  console.log('test', state)
   const onChange = (e) => {
     const value = e.target.value
     if (type === 'select') {

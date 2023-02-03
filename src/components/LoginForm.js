@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Message from './Message/Message'
 
 const LoginForm = (props) => {
+  const navigate = useNavigate()
   const [username, setUserName] = useState('')
   const [password, setPassword] = useState('')
 

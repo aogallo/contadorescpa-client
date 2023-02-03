@@ -18,9 +18,17 @@ const Client = () => {
     }
   ]
 
+  const groupButtons = [
+    {
+      name: 'Agregar cliente',
+      path: '/client/add',
+      class: 'title__button--blue'
+    }
+  ]
+
   return (
     <>
-      <Title title='Clientes' breadCrumb={breadCrumb} />
+      <Title title='Clientes' groupButtons={groupButtons} />
       <Outlet />
     </>
   )
