@@ -10,6 +10,7 @@
   --red-color: #cc4c43;
   --border-color: #d2d2d3;
   --gray-color-150: #f4f6fb;
+  --gran-color-200: #e5e7eb;
   --sidebar-background: #21232d;
   --sidebar-color: #9799ab;
 }
@@ -589,4 +590,10 @@ margin: 0 2rem;
 
 .form__input--date {
   width: inherit;
+}
+
+.placeholder {
+  display: flex;
+  flex: 0 0 auto;
+
 }
