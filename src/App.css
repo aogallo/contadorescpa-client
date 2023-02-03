@@ -142,6 +142,10 @@ margin: 0 2rem;
   margin-bottom: 5px;
 }
 
+.sidebar__select {
+  width: 17rem;
+}
+
 .company__list {
   margin-top: 10px;
   width: 270px;

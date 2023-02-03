@@ -3,6 +3,7 @@ import Select from 'react-select'
 
 const CustomInput = ({
   arrayToSelect,
+  customClass,
   changeState,
   changeStateSelected,
   disabled,
@@ -69,22 +70,24 @@ const CustomInput = ({
             ...baseStyles,
             borderColor: state.isFocused ? 'blue' : 'black',
             borderRadius: 10,
+            ...customClass.control,
+          }
+        },
+        singleValue: (styles) => {
+          return {
+            ...styles,
+            ...customClass.singleValue
           }
         }
       }}
-      // theme={(theme) => {
-      //   console.log('theme', theme)
-      //   return ({
-      //     ...theme,
-      //     borderRadius: 10,
-      //   })
-      // }}
       options={newOptions} />
   }
 
   return (
     <div className='form__control'>
-      <label htmlFor={name} className='form__label'>{label}</label>
+      <label htmlFor={name} className={`form__label ${customClass.label}`}>
+        {label}
+      </label>
       {
         inputToRender
       }

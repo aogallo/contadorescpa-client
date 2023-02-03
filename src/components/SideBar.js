@@ -9,6 +9,7 @@ import { GET_ALL_COMPANIES } from 'graphql/Company/queries'
 
 import menus from 'components/SideBar/menu'
 import SidebarMenu from './SideBar/SidebarMenu'
+import CustomInput from './CustomInput/CustomInput'
 
 const SideBar = () => {
   const { data } = useQuery(GET_ALL_COMPANIES)
@@ -18,50 +19,45 @@ const SideBar = () => {
     logout()
   }
 
+  const customClassSidebar = {
+    control: {
+      backgroundColor: '#21232d',
+      borderColor: '#9799ab',
+    },
+    singleValue: {
+      color: '#9799ab',
+    },
+    label: 'sidebar__title'
+  }
+
   useEffect(() => {
     if (data) {
       setCompanies(data.getAllCompanies)
     }
   }, [data])
 
-
-  const handleChange = (e) => {
-    e.preventDefault()
-    const id = e.target.value
+  const handleChange = (event) => {
+    const id = event.value
     const selectedCompany = companies.filter(company => company.id === id)[0]
     saveCompany(selectedCompany)
   }
-
-
-  // <NavLink to='/client' className='sidebar__link'>
-  //   <BiUser className='icon__left' />
-  //   <span className='sidebar__subtitle'>Clientes</span>
-  // </NavLink>
 
   return (
     <aside className='sidebar'>
       <NavLink to='' className="sidebar__title">
         <h2 className=''>Contadores</h2>
       </NavLink>
-      <div className='company'>
-        <label htmlFor='idCompany' className='company__label'>Compa&ntilde;ia</label>
-        <select
-          className='company__list'
+      <div className='sidebar__subtitle sidebar__select'>
+        <CustomInput
+          label='Compañia'
           name='company'
-          id='company'
-          onChange={handleChange}
-          placeholder='Compañia'
-          value={company.id}>
-          {
-            companies &&
-            companies.map((company) =>
-              <option className='company__item'
-                key={company.id}
-                value={company.id}>
-                {company.name}
-              </option>)
-          }
-        </select>
+          customClass={customClassSidebar}
+          placeholder='11'
+          type='select'
+          arrayToSelect={companies}
+          changeStateSelected={handleChange}
+          value={company.id}
+        />
       </div>
       <div className='user'>
         <span className='sidebar__link sidebar__link--user'>{user?.username}</span>
