@@ -1,6 +1,5 @@
 import React from "react";
 import Select from "react-select";
-import { currencyFormatter } from "utils/currencyFormatter";
 
 const CustomInput = ({
   arrayToSelect,
@@ -21,8 +20,6 @@ const CustomInput = ({
   value,
   required,
 }) => {
-  console.log("test", state);
-  console.log("test format:***", currencyFormatter("123444555", "", ""));
   const onChange = (e) => {
     const value = e.target.value;
     if (type === "select") {

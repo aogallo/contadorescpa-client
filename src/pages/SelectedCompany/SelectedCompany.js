@@ -5,6 +5,7 @@ import Title from 'components/Title'
 import { useNavigate } from 'react-router-dom'
 import useCustomContext from 'hooks/useCustomContext'
 import { isTokenExpired } from 'utils/token'
+import Loading from 'components/Loading/Loading'
 
 const SelectedCompany = () => {
   const { data } = useQuery(GET_ALL_COMPANIES)
@@ -63,6 +64,10 @@ const SelectedCompany = () => {
   const handleSelectCompany = (company) => {
     saveCompany(company)
     navigate('/')
+  }
+
+  if (!companies) {
+    return <Loading />
   }
 
   return (

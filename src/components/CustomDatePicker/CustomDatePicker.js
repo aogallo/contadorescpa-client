@@ -24,13 +24,16 @@ const CustomDatePicker = ({
       <label htmlFor={name} className='form__label'>
         {label}
       </label>
-      <DatePicker
-        className='form__input'
-        todayButton="Hoy"
-        selected={value}
-        onChange={(date) => handleChange(date)}
-        dateFormat='dd/MM/yyyy'
-      />
+      <div>
+        <DatePicker
+          className='form__input form__input--date'
+          todayButton="Hoy"
+          selected={value}
+          onChange={(date) => handleChange(date)}
+          dateFormat='dd/MM/yyyy'
+        >
+        </DatePicker>
+      </div>
       {
         touch && errors[name] && (
           <p style={{ color: 'red' }}> {errors[name]}</p>

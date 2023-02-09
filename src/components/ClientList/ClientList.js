@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useMutation, useQuery } from '@apollo/client'
 
-import { GET_ALL_CLIENTS } from '../graphql/Client/queries'
-import { DELETE_CLIENT } from '../graphql/Client/mutations'
+import { GET_ALL_CLIENTS } from 'graphql/Client/queries'
+import { DELETE_CLIENT } from 'graphql/Client/mutations'
 
 import 'components/ClientList/ClientList.css'
-import CustomModal from './Modal/CustomModal'
+import CustomModal from 'components/Modal/CustomModal'
 import Table from 'components/Table'
 
 const columns = [
@@ -61,16 +61,12 @@ const ClientList = ({ title }) => {
 
   return (
     <>
-      <div className=''>
-        <div className='btn-add'>
-          <Link to='/client/add'>
-          </Link>
-        </div>
-        <Table columns={columns} editRoute='/client/edit/' data={clients}/>
-      </div>
-      {showModal && (
-        <CustomModal handleClose={handleClose} handleAction={handleAction} />
-      )}
+      <Table columns={columns} editRoute='/client/edit/' data={clients} />
+      {
+        showModal && (
+          <CustomModal handleClose={handleClose} handleAction={handleAction} />
+        )
+      }
     </>
   )
 }
