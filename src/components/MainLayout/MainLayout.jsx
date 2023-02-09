@@ -10,7 +10,7 @@ const MainLayout = () => {
 
   const ProviderView = lazy(async () => await import('pages/Provider/Provider'))
   const ProviderList = lazy(async () => await import('components/ProviderList'))
-  const ProviderForm = lazy(async () => await import('components/ProviderForm'))
+  const ProviderEditor = lazy(async () => await import('components/Providers/ProviderEditor'))
 
   const AccountsPayable = lazy(async () => await import('pages/AccountsPayable/AccountsPayable'))
   const AccountPayableForm = lazy(async () => await import('components/AccountPayableForm'))
@@ -33,21 +33,13 @@ const MainLayout = () => {
           </Route>
 
           <Route path='/provider' element={<ProviderView />}>
-            <Route
-              path=''
-              element={<ProviderList title='Listado de proveedores' />}
-            />
-            <Route path='add' element={<ProviderForm />} />
-            <Route path='edit/:id' element={<ProviderForm />} />
+            <Route path='' element={<ProviderList title='Listado de proveedores' />} />
+            <Route path='add' element={<ProviderEditor />} />
+            <Route path='edit/:id' element={<ProviderEditor />} />
           </Route>
 
           <Route path='/cxp' element={<AccountsPayable />}>
-            <Route
-              path=''
-              element={
-                <AccountPayableList title='Listado de cuentas por pagar' />
-              }
-            />
+            <Route path='' element={<AccountPayableList title='Listado de cuentas por pagar' />} />
             <Route path='add' element={<AccountPayableForm />} />
             <Route path='edit/:id' element={<AccountPayableForm />} />
           </Route>
