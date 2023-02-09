@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&family=Roboto:ital,wght@0,400;0,500;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&family=Roboto:ital,wght@0,400;0,500;1,700&display=swap");
 
 :root {
   --main-bg-color: #e6e8ed;
   --primary-color: #246dec;
-  --secondary-color: #DBAE58;
+  --secondary-color: #dbae58;
   --white-color: #ffffff;
   --blue-color: #246dec;
   --red-color: #cc4c43;
@@ -22,12 +22,11 @@ a {
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   min-height: 100%;
   margin: 0;
   background: var(--main-bg-color);
 }
-
 
 .btn {
   border: 1px solid inherit;
@@ -64,8 +63,8 @@ body {
   display: grid;
   grid-template:
     /* 'sidebar header' 60px */
-    'sidebar main'
-    'sidebar main' auto /
+    "sidebar main"
+    "sidebar main" auto /
     300px auto;
 }
 
@@ -79,7 +78,7 @@ body {
 }
 
 .header__username::before {
-  content: '';
+  content: "";
   border: 1px solid rgba(0, 0, 0);
   margin-right: 0.5rem;
   height: 0.2rem;
@@ -165,7 +164,7 @@ body {
   margin-bottom: 20px;
 }
 
-.form__buttons{
+.form__buttons {
   display: flex;
   flex-direction: column;
 }
@@ -198,7 +197,7 @@ body {
   border-radius: 5px;
   border: 1px solid var(--primary-color);
   font-weight: 700;
-  color: var(--white-color)
+  color: var(--white-color);
 }
 
 .message__text {
@@ -271,7 +270,7 @@ body {
 }
 
 .btn__action-delete {
-  color: var(--red-color)
+  color: var(--red-color);
 }
 
 /* Title */
@@ -382,7 +381,7 @@ body {
 
 .container {
   background-color: var(--white-color);
-  height: 650px;
+  height: auto;
   border-radius: 10px;
   padding: 10px;
 }
@@ -424,7 +423,8 @@ body {
   flex-direction: column;
   padding: 30px 0;
   gap: 5px;
-  margin-bottom: 20px;
+  padding-bottom: 0;
+  /* margin-bottom: 20px; */
 }
 
 .form__group--column {
@@ -439,9 +439,8 @@ body {
   border-radius: 5px;
   border: 1px solid var(--red-color);
   font-weight: 700;
-  color: var(--white-color)
+  color: var(--white-color);
 }
-
 
 .user {
   padding: 10px 0;
