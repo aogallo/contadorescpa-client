@@ -3,6 +3,7 @@ import Select from "react-select";
 
 const CustomInput = ({
   arrayToSelect,
+  customClass,
   changeState,
   changeStateSelected,
   disabled,
@@ -11,12 +12,12 @@ const CustomInput = ({
   name,
   pattern,
   placeholder,
-  regularExpression,
+  // regularExpression,
   readOnly,
   state,
   touch,
   type,
-  validateFunction,
+  // validateFunction,
   value,
   required,
 }) => {
@@ -54,55 +55,54 @@ const CustomInput = ({
     />
   );
 
-  if (
-    type === "select" &&
-    (typeof arrayToSelect == "object" || typeof arrayToSelect == "array")
-  ) {
-    const handleSelectFunction = changeStateSelected
-      ? changeStateSelected
-      : changeState;
-    const newOptions = arrayToSelect.map((element) => ({
-      value: element.id,
-      label: element.customName ?? element.name,
-    }));
-    const valueSelect = newOptions.filter((option) => option.value == value);
-    inputToRender = (
-      <Select
-        className=""
-        value={valueSelect}
-        onChange={(event) => handleSelectFunction(event, name)}
-        styles={{
-          control: (baseStyles, state) => {
-            return {
-              ...baseStyles,
-              borderColor: state.isFocused ? "blue" : "black",
-              borderRadius: 10,
-            };
-          },
-        }}
-        // theme={(theme) => {
-        //   console.log('theme', theme)
-        //   return ({
-        //     ...theme,
-        //     borderRadius: 10,
-        //   })
-        // }}
-        options={newOptions}
-      />
-    );
+  if (type == 'select' && (typeof arrayToSelect == 'object' || typeof arrayToSelect == 'array')) {
+    // if (type == 'select' && arrayToSelect.lenght > 0) {
+    const handleSelectFunction = changeStateSelected ? changeStateSelected : changeState
+    const newOptions = arrayToSelect.map(element => (
+      {
+        value: element.id,
+        label: element.name
+      }
+    ))
+    const valueSelect = newOptions.filter(option => option.value == value)
+    inputToRender = <Select
+      className=''
+      value={valueSelect}
+      onChange={(event) => handleSelectFunction(event, name)}
+      styles={{
+        control: (baseStyles, state) => {
+          return {
+            ...baseStyles,
+            borderColor: state.isFocused ? 'blue' : 'black',
+            borderRadius: 10,
+            ...customClass.control,
+          }
+        },
+        singleValue: (styles) => {
+          return {
+            ...styles,
+            ...customClass.singleValue
+          }
+        }
+      }}
+      options={newOptions} />
   }
 
   return (
-    <div className="form__control">
-      <label htmlFor={name} className="form__label">
+    <div className='form__control'>
+      <label htmlFor={name} className={`form__label ${customClass.label}`}>
         {label}
       </label>
-      {inputToRender}
-      {touch && errors[name] && (
-        <p style={{ color: "red", margin: "0" }}> {errors[name]}</p>
-      )}
-    </div>
-  );
-};
+      {
+        inputToRender
+      }
+      {
+        touch && errors[name] && (
+          <p style={{ color: 'red' }}> {errors[name]}</p>
+        )
+      }
+    </div >
+  )
+}
 
 export default CustomInput;

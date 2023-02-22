@@ -163,8 +163,8 @@ const AccountPayableForm = () => {
   };
 
   const handleValidate = (values) => {
-    let errors = {};
-
+    const errors = {}
+    console.log('values', values)
     if (!values.serie) {
       errors.serie = 'Campo requerido';
     }

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useLazyQuery } from '@apollo/client';
 
 const CreateFile = ({ createReportQuery, filename, domain, format, startDate, endDate }) => {
-  const [createReport, { data, called, loading }] = useLazyQuery(createReportQuery, {
+  const [createReport, { data }] = useLazyQuery(createReportQuery, {
   })
   const [labelButton, setLabelButton] = useState('Descargar archivo')
 
