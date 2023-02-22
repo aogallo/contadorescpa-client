@@ -8,8 +8,6 @@ import { formatterDataToTable } from './AccountPayableForm/utils/formatterData'
 
 import Table from 'components/Table'
 
-import CreateFile from './CreateFile/CreateFile'
-
 const columns = [
   { column: 'Serie', key: 'serie' },
   { column: 'Numero', key: 'documentNumber' },
@@ -22,7 +20,7 @@ const columns = [
 
 const AccountPayableList = () => {
   const { company } = useCustomContext()
-  const { loading, data } = useQuery(GET_ACCOUNTS_PAYABLE_BY_ID_COMPANY,
+  const { data } = useQuery(GET_ACCOUNTS_PAYABLE_BY_ID_COMPANY,
     {
       variables: {
         id: company.id

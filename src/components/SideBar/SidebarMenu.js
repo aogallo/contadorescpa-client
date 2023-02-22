@@ -15,7 +15,8 @@ const SidebarMenu = ({ menu }) => {
   } = menu
 
   const handleShowSubMenu = () => {
-    setShowSubMenus(!showSubMenus)
+    // setShowSubMenus(!showSubMenus)
+    console.log('test')
   }
   // {
   //   showSubMenus ? subMenus.map((subMenu) => (
