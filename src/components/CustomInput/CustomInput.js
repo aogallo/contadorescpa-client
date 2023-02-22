@@ -1,5 +1,5 @@
-import React from 'react'
-import Select from 'react-select'
+import React from "react";
+import Select from "react-select";
 
 const CustomInput = ({
   arrayToSelect,
@@ -19,37 +19,41 @@ const CustomInput = ({
   type,
   // validateFunction,
   value,
+  required,
 }) => {
   const onChange = (e) => {
-    const value = e.target.value
-    if (type === 'select') {
-      changeStateSelected(value, name)
+    const value = e.target.value;
+    if (type === "select") {
+      changeStateSelected(value, name);
     } else {
-      changeState({ ...state, [name]: value })
+      changeState({ ...state, [name]: value });
     }
-  }
+  };
 
-  // const validation = () => {
-  //   if (regularExpression) {
-  //     console.log('regularExpression', regularExpression)
-  //   }
+  const validation = () => {
+    if (regularExpression) {
+      console.log("regularExpression", regularExpression);
+    }
 
-  //   if (validateFunction) {
-  //     validateFunction()
-  //   }
-  // }
+    if (validateFunction) {
+      validateFunction();
+    }
+  };
 
-  let inputToRender = <input
-    className='form__input'
-    disabled={disabled}
-    name={name}
-    onChange={onChange}
-    pattern={pattern}
-    placeholder={placeholder}
-    readOnly={readOnly}
-    type={type}
-    value={value}
-  />
+  let inputToRender = (
+    <input
+      className="form__input"
+      disabled={disabled}
+      name={name}
+      onChange={onChange}
+      pattern={pattern}
+      placeholder={placeholder}
+      readOnly={readOnly}
+      type={type}
+      value={value}
+      required={required}
+    />
+  );
 
   if (type == 'select' && (typeof arrayToSelect == 'object' || typeof arrayToSelect == 'array')) {
     // if (type == 'select' && arrayToSelect.lenght > 0) {
@@ -101,4 +105,4 @@ const CustomInput = ({
   )
 }
 
-export default CustomInput
+export default CustomInput;
