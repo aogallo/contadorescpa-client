@@ -96,20 +96,20 @@ const AccountPayableForm = () => {
     navigate(-1)
   }
 
-  const validateFields = (values) => {
-    try {
-      const errors = {}
-      if (!values.serie) errors.serie = 'La serie es requerida.'
+  // const validateFields = (values) => {
+  //   try {
+  //     const errors = {}
+  //     if (!values.serie) errors.serie = 'La serie es requerida.'
 
-      if (!values.documentNumber) {
-        errors.documentNumber = 'El número de documento es requerido.'
-      }
+  //     if (!values.documentNumber) {
+  //       errors.documentNumber = 'El número de documento es requerido.'
+  //     }
 
-      return errors
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  //     return errors
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   const handleOnChangeSelect = ({ value }, name) => {
     setAccountPayableInitialValues({ ...accountPayableInitialValues, [name]: value })
@@ -154,7 +154,7 @@ const AccountPayableForm = () => {
 
   const handleValidate = (values) => {
     const errors = {}
-
+    console.log('values', values)
     return errors
   }
 

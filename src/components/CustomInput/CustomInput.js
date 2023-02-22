@@ -12,12 +12,12 @@ const CustomInput = ({
   name,
   pattern,
   placeholder,
-  regularExpression,
+  // regularExpression,
   readOnly,
   state,
   touch,
   type,
-  validateFunction,
+  // validateFunction,
   value,
 }) => {
   const onChange = (e) => {
@@ -29,15 +29,15 @@ const CustomInput = ({
     }
   }
 
-  const validation = () => {
-    if (regularExpression) {
-      console.log('regularExpression', regularExpression)
-    }
+  // const validation = () => {
+  //   if (regularExpression) {
+  //     console.log('regularExpression', regularExpression)
+  //   }
 
-    if (validateFunction) {
-      validateFunction()
-    }
-  }
+  //   if (validateFunction) {
+  //     validateFunction()
+  //   }
+  // }
 
   let inputToRender = <input
     className='form__input'
@@ -51,7 +51,8 @@ const CustomInput = ({
     value={value}
   />
 
-  if (type === 'select' && (typeof (arrayToSelect) == 'object' || typeof (arrayToSelect) == 'array')) {
+  if (type == 'select' && (typeof arrayToSelect == 'object' || typeof arrayToSelect == 'array')) {
+    // if (type == 'select' && arrayToSelect.lenght > 0) {
     const handleSelectFunction = changeStateSelected ? changeStateSelected : changeState
     const newOptions = arrayToSelect.map(element => (
       {

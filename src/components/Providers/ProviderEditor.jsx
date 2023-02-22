@@ -1,44 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import { Formik, Form } from 'formik'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 
 import {
   GET_ALL_PROVIDERS,
-  GET_PROVIDER_BY_ID
 } from 'graphql/Provider/queries'
-import {
-  CREATE_PROVIDER,
-  UPDATE_PROVIDER
-} from 'graphql/Provider/mutations'
 import CustomInput from 'components/CustomInput/CustomInput'
 import { BiTrash } from 'react-icons/bi'
 import Tabs from 'components/Tabs/Tabs'
 import { GET_ALL_COMPANIES } from 'graphql/Company/queries'
 import { CREATE_PROVIDER_COMPANY, DELETE_PROVIDER_COMPANY_BY_ID } from 'graphql/ProviderCompany/mutation'
 import {
-  initialProviderData,
   formatterData
 } from 'components/Providers/utils/formatterData'
 import useCustomContext from 'hooks/useCustomContext'
 import ProviderForm from './ProviderForm'
 
 const ProviderEditor = () => {
-  const navigate = useNavigate()
-  const params = useParams()
   const { company, saveCompany } = useCustomContext()
-  const { data: companiesData, loading: loadingCompanies, error: errorCompanies, networkStatus } = useQuery(GET_ALL_COMPANIES, {
+  const { data: companiesData, loading: loadingCompanies, error: errorCompanies } = useQuery(GET_ALL_COMPANIES, {
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
   })
   const [companies, setCompanies] = useState([])
-  const [message, setMessage] = useState(null)
-  const [createProvider] = useMutation(CREATE_PROVIDER)
+  // const [createProvider] = useMutation(CREATE_PROVIDER)
   const [deleteProviderCompanyById] = useMutation(DELETE_PROVIDER_COMPANY_BY_ID)
   const [createProviderCompany, { reset: resetMutationCreateProviderCompany }] = useMutation(CREATE_PROVIDER_COMPANY)
-  const [updateProvider] = useMutation(UPDATE_PROVIDER)
-  const [getProviderById, { data }] = useLazyQuery(GET_PROVIDER_BY_ID)
+  // const [updateProvider] = useMutation(UPDATE_PROVIDER)
+  // const [getProviderById, { data }] = useLazyQuery(GET_PROVIDER_BY_ID)
   const [selectedCompany] = useState([])
 
   useEffect(() => {
@@ -55,16 +44,16 @@ const ProviderEditor = () => {
   }, [companiesData, loadingCompanies, errorCompanies])
 
 
-  useEffect(() => {
-    if (data) {
-      setProviderValues(formatterData(data))
-    }
-  }, [data])
+  // useEffect(() => {
+  //   if (data) {
+  //     setProviderValues(formatterData(data))
+  //   }
+  // }, [data])
 
-  const handleCancel = (e) => {
-    e.preventDefault()
-    navigate(-1)
-  }
+  // const handleCancel = (e) => {
+  //   e.preventDefault()
+  //   navigate(-1)
+  // }
 
   const handleRemoveCompany = async ({ id }) => {
     await deleteProviderCompanyById({

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import useCustomContext from 'hooks/useCustomContext'
-import { BiArchive, BiBuilding, BiBuildings, BiUser, BiLogOut, BiChevronRight } from 'react-icons/bi'
-import { BsChevronRight } from 'react-icons/bs'
+import { BiLogOut } from 'react-icons/bi'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_COMPANIES } from 'graphql/Company/queries'
 

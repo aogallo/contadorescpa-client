@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Link, NavLink } from 'react-router-dom'
 import { useMutation, useQuery } from '@apollo/client'
 
 import { GET_ALL_CLIENTS } from 'graphql/Client/queries'
@@ -18,16 +17,15 @@ const columns = [
   { column: 'Acciones', key: 'actions' }
 ]
 
-const ClientList = ({ title }) => {
+const ClientList = () => {
   const { refetch, data } = useQuery(GET_ALL_CLIENTS, {
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'network-only'
   })
   const [deleteClientById] = useMutation(DELETE_CLIENT)
   const [clients, setClients] = useState([])
-  const [clientDelete, setClientDelete] = useState(null)
+  const [clientDelete] = useState(null)
   const [showModal, setShowModal] = useState(false)
-  const [message, setMessage] = useState('')
 
   useEffect(() => {
     if (data) setClients(data.getAllClients)
@@ -37,25 +35,21 @@ const ClientList = ({ title }) => {
     setShowModal(false)
   }
 
-  const handleShowModal = (client) => {
-    setClientDelete(client)
-    setShowModal(true)
-  }
-
   const handleAction = async () => {
     try {
       await deleteClientById({
         variables: { id: clientDelete.id }
       })
 
-      setMessage({ error: false, message: 'Cliente eliminado' })
+      // setMessage({ error: false, message: 'Cliente eliminado' })
       setTimeout(() => {
         setShowModal(false)
-        setMessage('')
+        // setMessage('')
         refetch()
       }, 1000)
     } catch (error) {
-      setMessage({ error: true, message: error.message })
+      // TODO add error to boundary erros
+      console.log('error', error)
     }
   }
 

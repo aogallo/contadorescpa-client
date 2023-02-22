@@ -1,4 +1,3 @@
-import SideBar from 'components/SideBar'
 const Loading = () => {
   return (
     <div className='main'>
