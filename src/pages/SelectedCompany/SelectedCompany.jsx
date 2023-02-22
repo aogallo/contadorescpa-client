@@ -31,6 +31,7 @@ const SelectedCompany = () => {
     if (company?.id) {
       navigate('/')
     }
+
   }, [logged])
 
   useEffect(() => {
@@ -38,6 +39,11 @@ const SelectedCompany = () => {
       setCompanies(data.getAllCompanies)
       setFilterCompanies(data.getAllCompanies)
       setBreadCrumb('')
+      if (process.env.NODE_ENV === 'development') {
+        console.log(data.getAllCompanies)
+        saveCompany(data.getAllCompanies[0])
+        navigate('/')
+      }
     }
   }, [data])
 

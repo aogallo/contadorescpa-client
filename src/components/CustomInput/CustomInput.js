@@ -90,7 +90,9 @@ const CustomInput = ({
 
   return (
     <div className='form__control'>
-      <label htmlFor={name} className={`form__label ${customClass.label}`}>
+      <label
+        htmlFor={name}
+        className={`form__label ${customClass && customClass.label}`}>
         {label}
       </label>
       {

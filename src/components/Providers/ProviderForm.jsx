@@ -2,14 +2,28 @@ import CustomInput from "components/CustomInput/CustomInput"
 import { Form, Formik } from "formik"
 import useCustomContext from "hooks/useCustomContext"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import { initialProviderData } from "./utils/formatterData"
+import { useNavigate, useParams } from "react-router-dom"
+import { formatterData, initialProviderData } from "./utils/formatterData"
+import { useLazyQuery, useMutation } from '@apollo/client'
+import { CREATE_PROVIDER, UPDATE_PROVIDER } from "graphql/Provider/mutations"
+import { GET_ALL_PROVIDERS, GET_PROVIDER_BY_ID } from "graphql/Provider/queries"
 
 const ProviderForm = () => {
+  const navigate = useNavigate()
   const [providerValues, setProviderValues] = useState(initialProviderData)
   const params = useParams()
+  const [updateProvider] = useMutation(UPDATE_PROVIDER)
   const [isEditing, setIsEditing] = useState(false)
+  const [message, setMessage] = useState('')
   const { company, saveCompany } = useCustomContext()
+  const [createProvider] = useMutation(CREATE_PROVIDER)
+  const [getProviderById, { data }] = useLazyQuery(GET_PROVIDER_BY_ID)
+
+  useEffect(() => {
+    if (data) {
+      setProviderValues(formatterData(data))
+    }
+  }, [data])
 
   useEffect(() => {
     if (!company.name) navigate('/')
@@ -19,6 +33,12 @@ const ProviderForm = () => {
       getProviderById({ variables: { id: params.id } })
     }
   }, [])
+
+  const handleCancel = (e) => {
+    e.preventDefault()
+    navigate(-1)
+  }
+
   const handleValidate = (values) => {
     const errors = {}
 
@@ -30,11 +50,9 @@ const ProviderForm = () => {
       errors.nit = 'Por favor ingrese el NIT'
     }
 
-    if (!values.email) {
-      errors.email = 'Por favor ingresa una dirección de correo eletrónico'
-    } else if (
+    if (values.email & (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
+    )) {
       errors.email = 'El correo ingresado es invalido'
     }
 
@@ -42,6 +60,7 @@ const ProviderForm = () => {
   }
 
   const handleCreateProvider = async (values, { resetForm }) => {
+    console.log('submit', values)
     try {
       if (isEditing) {
         await updateProvider({
@@ -178,14 +197,15 @@ const ProviderForm = () => {
                 state={providerValues}
               />
 
-              {message && (
-                <div
-                  className={`message ${message.error ? 'message-error' : 'message-success'
-                    }`}
-                >
-                  {message.message}
-                </div>
-              )}
+              {
+                message && (
+                  <div
+                    className={`message ${message.error ? 'message-error' : 'message-success'
+                      }`}
+                  >
+                    {message.message}
+                  </div>
+                )}
 
               <div className='form__buttons--group'>
                 <button

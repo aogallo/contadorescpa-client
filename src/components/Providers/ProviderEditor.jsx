@@ -14,8 +14,10 @@ import {
 } from 'components/Providers/utils/formatterData'
 import useCustomContext from 'hooks/useCustomContext'
 import ProviderForm from './ProviderForm'
+import { initialProviderData } from "./utils/formatterData"
 
 const ProviderEditor = () => {
+  const [providerValues, setProviderValues] = useState(initialProviderData)
   const { company, saveCompany } = useCustomContext()
   const { data: companiesData, loading: loadingCompanies, error: errorCompanies } = useQuery(GET_ALL_COMPANIES, {
     fetchPolicy: 'network-only',
@@ -23,10 +25,8 @@ const ProviderEditor = () => {
     notifyOnNetworkStatusChange: true,
   })
   const [companies, setCompanies] = useState([])
-  // const [createProvider] = useMutation(CREATE_PROVIDER)
   const [deleteProviderCompanyById] = useMutation(DELETE_PROVIDER_COMPANY_BY_ID)
   const [createProviderCompany, { reset: resetMutationCreateProviderCompany }] = useMutation(CREATE_PROVIDER_COMPANY)
-  // const [updateProvider] = useMutation(UPDATE_PROVIDER)
   // const [getProviderById, { data }] = useLazyQuery(GET_PROVIDER_BY_ID)
   const [selectedCompany] = useState([])
 
@@ -44,16 +44,7 @@ const ProviderEditor = () => {
   }, [companiesData, loadingCompanies, errorCompanies])
 
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setProviderValues(formatterData(data))
-  //   }
-  // }, [data])
 
-  // const handleCancel = (e) => {
-  //   e.preventDefault()
-  //   navigate(-1)
-  // }
 
   const handleRemoveCompany = async ({ id }) => {
     await deleteProviderCompanyById({
