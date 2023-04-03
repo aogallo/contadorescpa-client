@@ -1,12 +1,12 @@
-import CustomInput from "components/CustomInput/CustomInput"
-import { Form, Formik } from "formik"
-import useCustomContext from "hooks/useCustomContext"
-import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { formatterData, initialProviderData } from "./utils/formatterData"
+import CustomInput from 'components/CustomInput/CustomInput'
+import { Form, Formik } from 'formik'
+import useCustomContext from 'hooks/useCustomContext'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { formatterData, initialProviderData } from './utils/formatterData'
 import { useLazyQuery, useMutation } from '@apollo/client'
-import { CREATE_PROVIDER, UPDATE_PROVIDER } from "graphql/Provider/mutations"
-import { GET_ALL_PROVIDERS, GET_PROVIDER_BY_ID } from "graphql/Provider/queries"
+import { CREATE_PROVIDER, UPDATE_PROVIDER } from 'graphql/Provider/mutations'
+import { GET_ALL_PROVIDERS, GET_PROVIDER_BY_ID } from 'graphql/Provider/queries'
 
 const ProviderForm = () => {
   const navigate = useNavigate()
@@ -205,7 +205,8 @@ const ProviderForm = () => {
                   >
                     {message.message}
                   </div>
-                )}
+                )
+}
 
               <div className='form__buttons--group'>
                 <button

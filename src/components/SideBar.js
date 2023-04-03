@@ -21,10 +21,10 @@ const SideBar = () => {
   const customClassSidebar = {
     control: {
       backgroundColor: '#21232d',
-      borderColor: '#9799ab',
+      borderColor: '#9799ab'
     },
     singleValue: {
-      color: '#9799ab',
+      color: '#9799ab'
     },
     label: 'sidebar__title'
   }
@@ -43,7 +43,7 @@ const SideBar = () => {
 
   return (
     <aside className='sidebar'>
-      <NavLink to='' className="sidebar__title">
+      <NavLink to='' className='sidebar__title'>
         <h2 className=''>Contadores</h2>
       </NavLink>
       <div className='sidebar__subtitle sidebar__select'>
@@ -66,10 +66,10 @@ const SideBar = () => {
         menus.map((menu) => <SidebarMenu key={menu.title} menu={menu} />)
       }
 
-
       <a
         className='sidebar__link'
-        onClick={handleLogut}>
+        onClick={handleLogut}
+      >
         <div>
 
           <BiLogOut />

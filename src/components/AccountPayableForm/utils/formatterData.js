@@ -1,7 +1,7 @@
 export const formattedDateToSave = (accountPayable) => {
   console.log('datos', accountPayable)
   const { documentDate } = accountPayable
-  const dateFormatted = `${documentDate.getFullYear()}${(documentDate.getUTCMonth() + 1).toString().padStart(2, "0")}${documentDate.getUTCDate().toString().padStart(2, "0")}`
+  const dateFormatted = `${documentDate.getFullYear()}${(documentDate.getUTCMonth() + 1).toString().padStart(2, '0')}${documentDate.getUTCDate().toString().padStart(2, '0')}`
 
   return {
     ...accountPayable,
@@ -26,7 +26,7 @@ export const formattedAccountPayableForState = ({ getAccountPayableById: account
     idAccount: accountPayable.account.id,
     serie: accountPayable.serie,
     documentNumber: accountPayable.documentNumber,
-    documentDate: documentDate,
+    documentDate,
     exento: accountPayable.exento,
     importation: accountPayable.importation,
     service: accountPayable.service,

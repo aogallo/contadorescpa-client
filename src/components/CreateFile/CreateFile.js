@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client'
 
 const CreateFile = ({ createReportQuery, filename, domain, format, startDate, endDate }) => {
   const [createReport, { data }] = useLazyQuery(createReportQuery, {
@@ -31,7 +31,7 @@ const CreateFile = ({ createReportQuery, filename, domain, format, startDate, en
     a.setAttribute('href', url)
     a.setAttribute('download', filename)
     document.body.appendChild(a)
-    a.click();
+    a.click()
     document.body.removeChild(a)
   }
 
@@ -62,7 +62,8 @@ const CreateFile = ({ createReportQuery, filename, domain, format, startDate, en
   return (
     <button
       className='btn title__button title__button--green'
-      onClick={handleDownloadReport} >
+      onClick={handleDownloadReport}
+    >
       {labelButton}
     </button>
   )

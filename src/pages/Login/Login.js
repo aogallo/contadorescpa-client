@@ -48,7 +48,6 @@ const Login = () => {
       await login({
         variables: { username: valores.username, password: valores.password }
       })
-
     } catch (error) {
       setMessageError(error.message)
       setTimeout(() => {

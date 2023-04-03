@@ -9,7 +9,7 @@ import Table from 'components/Table'
 const columns = [
   { column: 'Nombre', key: 'name' },
   { column: 'Nit', key: 'nit' },
-  { column: 'Fecha de creación', 'key': 'dateBirth' },
+  { column: 'Fecha de creación', key: 'dateBirth' },
   { column: 'Acciones', key: 'actions' }
 ]
 
@@ -99,4 +99,3 @@ const Company = () => {
 }
 
 export default Company
-

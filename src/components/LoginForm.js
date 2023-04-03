@@ -20,7 +20,7 @@ const LoginForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     props.handleLogin({
-      username: username,
+      username,
       password
     })
   }
@@ -33,17 +33,19 @@ const LoginForm = (props) => {
           <h3 className='login-header__heading'>Iniciar sesi&oacute;n en CPA</h3>
           <h3 className='login-header__heading'>Ingrese su usuaruio y contrase&ntilde;a</h3>
         </section>
-        <form onSubmit={handleSubmit} className="form">
+        <form onSubmit={handleSubmit} className='form'>
           <section className='form__group'>
             <label htmlFor='username' className='form__label'>Usuario</label>
-            <input type='text'
+            <input
+              type='text'
               className='form__input'
               id='username'
               name='username'
               value={username}
               required
               onChange={handleChange}
-              placeholder='Ingrese su usuario' />
+              placeholder='Ingrese su usuario'
+            />
           </section>
 
           <section className='form__group'>
@@ -56,7 +58,8 @@ const LoginForm = (props) => {
               value={password}
               required
               onChange={handleChange}
-              placeholder='Ingrese su contraseña' />
+              placeholder='Ingrese su contraseña'
+            />
           </section>
 
           <div className='form__buttons'>
@@ -72,4 +75,4 @@ const LoginForm = (props) => {
   )
 }
 
-export default LoginForm;
+export default LoginForm

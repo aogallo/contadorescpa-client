@@ -7,9 +7,9 @@ import Table from './Table'
 const columns = [
   { column: 'Nombre', key: 'name' },
   { column: 'Nit', key: 'nit' },
-  { column: 'Dirección', 'key': 'address' },
-  { column: 'Correo', 'key': 'email' },
-  { column: 'Telefono', 'key': 'phone' },
+  { column: 'Dirección', key: 'address' },
+  { column: 'Correo', key: 'email' },
+  { column: 'Telefono', key: 'phone' },
   { column: 'Acciones', key: 'actions' }
 ]
 
@@ -57,9 +57,11 @@ const ProviderList = () => {
 
   return (
     <>
-      <Table columns={columns}
+      <Table
+        columns={columns}
         data={providers}
-        editRoute='edit/' />
+        editRoute='edit/'
+      />
     </>
   )
 }

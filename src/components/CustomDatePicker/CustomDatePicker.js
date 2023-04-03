@@ -10,7 +10,7 @@ const CustomDatePicker = ({
   name,
   touch,
   state,
-  value,
+  value
 }) => {
   const handleChange = (date) => {
     changeDate({
@@ -27,12 +27,11 @@ const CustomDatePicker = ({
       <div>
         <DatePicker
           className='form__input form__input--date'
-          todayButton="Hoy"
+          todayButton='Hoy'
           selected={value}
           onChange={(date) => handleChange(date)}
           dateFormat='dd/MM/yyyy'
-        >
-        </DatePicker>
+        />
       </div>
       {
         touch && errors[name] && (

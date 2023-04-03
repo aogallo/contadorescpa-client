@@ -24,7 +24,8 @@ const Provider = () => {
       <Title
         title='Proveedores'
         breadCrumb={breadCrumb}
-        groupButtons={groupButtons} />
+        groupButtons={groupButtons}
+      />
       <Outlet />
     </>
   )

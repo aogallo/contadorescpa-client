@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 
 import {
-  GET_ALL_PROVIDERS,
+  GET_ALL_PROVIDERS
 } from 'graphql/Provider/queries'
 import CustomInput from 'components/CustomInput/CustomInput'
 import { BiTrash } from 'react-icons/bi'
@@ -14,7 +14,7 @@ import {
 } from 'components/Providers/utils/formatterData'
 import useCustomContext from 'hooks/useCustomContext'
 import ProviderForm from './ProviderForm'
-import { initialProviderData } from "./utils/formatterData"
+import { initialProviderData } from './utils/formatterData'
 
 const ProviderEditor = () => {
   const [providerValues, setProviderValues] = useState(initialProviderData)
@@ -22,7 +22,7 @@ const ProviderEditor = () => {
   const { data: companiesData, loading: loadingCompanies, error: errorCompanies } = useQuery(GET_ALL_COMPANIES, {
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
+    notifyOnNetworkStatusChange: true
   })
   const [companies, setCompanies] = useState([])
   const [deleteProviderCompanyById] = useMutation(DELETE_PROVIDER_COMPANY_BY_ID)
@@ -40,11 +40,7 @@ const ProviderEditor = () => {
         }
       }
     }
-
   }, [companiesData, loadingCompanies, errorCompanies])
-
-
-
 
   const handleRemoveCompany = async ({ id }) => {
     await deleteProviderCompanyById({
@@ -77,29 +73,27 @@ const ProviderEditor = () => {
           }
         },
         refetchQueries: [{ query: GET_ALL_PROVIDERS }, { query: GET_ALL_COMPANIES }],
-        awaitRefetchQueries: true,
+        awaitRefetchQueries: true
       })
       resetMutationCreateProviderCompany()
     }
   }
 
   const titles = ['Proveedor', 'Asociar compañia con proveedor']
-  const content = [<ProviderForm />
-    ,
-  <div className='container container--tabs'>
-    {/* Company */}
-    <CustomInput
-      label='Compañia'
-      name='company'
-      placeholder='11'
-      type='select'
-      arrayToSelect={companies}
-      changeStateSelected={handleSelectedCompany}
-      value={selectedCompany.id}
-    />
-    <div className='badges'
-    >
-      {
+  const content = [<ProviderForm />,
+    <div className='container container--tabs'>
+      {/* Company */}
+      <CustomInput
+        label='Compañia'
+        name='company'
+        placeholder='11'
+        type='select'
+        arrayToSelect={companies}
+        changeStateSelected={handleSelectedCompany}
+        value={selectedCompany.id}
+      />
+      <div className='badges'>
+        {
         providerValues.companies && (
           providerValues.companies.map(company => (
             <span key={company.id} className='badge'>
@@ -108,7 +102,8 @@ const ProviderEditor = () => {
               </span>
               <span
                 onClick={() => handleRemoveCompany(company)}
-                className='btn__action btn__action-delete'>
+                className='btn__action btn__action-delete'
+              >
                 <BiTrash />
               </span>
             </span>
@@ -116,15 +111,16 @@ const ProviderEditor = () => {
           )
         )
       }
+      </div>
     </div>
-  </div>
   ]
 
   return (
     <>
       <Tabs
         content={content}
-        titles={titles} />
+        titles={titles}
+      />
     </>
   )
 }

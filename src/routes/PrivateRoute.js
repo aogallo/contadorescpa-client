@@ -4,7 +4,6 @@ import { AppContext } from 'context/AppContext'
 
 import { isTokenExpired } from 'utils/token'
 
-
 const PrivateRoute = ({ children }) => {
   const { user } = useContext(AppContext)
   const logged = isTokenExpired(user.token)

@@ -28,7 +28,7 @@
     "build": "NODE_ENV=production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "fixlinter": "standard --fix",
+    "fixlinter": "standard --fix | snazzy",
     "dev": "PORT=3001 NODE_ENV=development react-scripts start",
     "lint": "eslint ./src/"
   },
@@ -67,12 +67,15 @@
     ]
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint": "^8.23.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "snazzy": "^9.0.0",
     "standard": "^17.0.0"
   },
   "pre-commit": [
-    "lint"
+    "lint",
+    "start"
   ]
 }

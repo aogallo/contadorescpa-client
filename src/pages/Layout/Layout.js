@@ -33,13 +33,14 @@ const Layout = () => {
           path='/selected-company'
           element={
             <SelectedCompany />
-          } />
+          }
+        />
       </Routes>
       <div className='grid_container'>
-        {/*<Header />*/}
+        {/* <Header /> */}
         <SideBar />
-        {/*<Suspense fallback={<Loading />} >*/}
-        {/*</Suspense>*/}
+        {/* <Suspense fallback={<Loading />} > */}
+        {/* </Suspense> */}
         <MainLayout />
       </div>
     </>

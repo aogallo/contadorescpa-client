@@ -31,7 +31,6 @@ const SelectedCompany = () => {
     if (company?.id) {
       navigate('/')
     }
-
   }, [logged])
 
   useEffect(() => {

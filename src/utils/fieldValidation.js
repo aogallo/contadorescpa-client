@@ -1,5 +1,5 @@
 export const validatedFormFields = (values, fields) => {
-  let errors = {}
+  const errors = {}
 
   if (fields.includes('name')) {
     if (!values.name) {

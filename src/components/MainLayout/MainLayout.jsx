@@ -21,7 +21,6 @@ const MainLayout = () => {
 
   const ErrorView = lazy(async () => await import('pages/Error/Error404'))
 
-
   return (
     <Suspense fallback={<Loading />}>
       <div className='main'>
@@ -44,11 +43,11 @@ const MainLayout = () => {
             <Route path='edit/:id' element={<AccountPayableForm />} />
           </Route>
 
-          <Route path='/report' >
+          <Route path='/report'>
             <Route path='cxp' element={<AccountsPayableReportView />} />
           </Route>
 
-          <Route path='/company' element={<Company />}></Route>
+          <Route path='/company' element={<Company />} />
           <Route path='*' element={<ErrorView />} />
         </Routes>
       </div>
