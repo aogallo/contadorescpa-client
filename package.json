@@ -30,7 +30,7 @@
     "eject": "react-scripts eject",
     "fixlinter": "standard --fix | snazzy",
     "dev": "PORT=3001 NODE_ENV=development react-scripts start",
-    "lint": "eslint ./src/"
+    "lint": "eslint ./src/ & standard | snazzy"
   },
   "eslintConfig": {
     "extends": [
@@ -75,7 +75,6 @@
     "standard": "^17.0.0"
   },
   "pre-commit": [
-    "lint",
-    "start"
+    "lint"
   ]
 }
