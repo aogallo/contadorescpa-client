@@ -65,6 +65,10 @@ const CustomInput = ({
       }
     ))
     const valueSelect = newOptions.filter(option => option.value === value)
+    let customControl = {}
+    if (customClass && Object.prototype.hasOwnProperty.call(customClass, 'control')) {
+      customControl = customClass.control
+    }
     inputToRender = (
       <Select
         className=''
@@ -76,7 +80,7 @@ const CustomInput = ({
               ...baseStyles,
               borderColor: state.isFocused ? 'blue' : 'black',
               borderRadius: 10,
-              ...customClass.control
+              ...customControl
             }
           },
           singleValue: (styles) => {
