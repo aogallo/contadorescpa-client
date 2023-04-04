@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useMutation } from '@apollo/client'
-import { LOGIN } from '../graphql/Login/mutations'
 
 const useUser = () => {
   // const [login, { loading, error, data }] = useMutation(LOGIN)

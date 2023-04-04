@@ -14,7 +14,7 @@ const Login = () => {
   const navigate = useNavigate()
   const [login, { data }] = useMutation(LOGIN)
   const [messageError, setMessageError] = useState('')
-  const { dispatch, company } = useContext(AppContext)
+  const { dispatch } = useContext(AppContext)
 
   useEffect(() => {
     if (data) {
@@ -28,20 +28,7 @@ const Login = () => {
       })
       navigate('/selected-company')
     }
-  }, [data])
-  const validateFields = (valores) => {
-    const errores = {}
-
-    if (!valores.username) {
-      errores.username = 'Por favor ingresa su usuario'
-    }
-
-    if (!valores.password) {
-      errores.password = 'Por favor ingresa tu contraseña'
-    }
-
-    return errores
-  }
+  }, [data, navigate, dispatch])
 
   const handleLogin = async (valores) => {
     try {

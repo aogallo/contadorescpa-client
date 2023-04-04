@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from 'react'
 import CustomInput from 'components/CustomInput/CustomInput'
 import { Form, Formik } from 'formik'
 import useCustomContext from 'hooks/useCustomContext'
-import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { formatterData, initialProviderData } from './utils/formatterData'
 import { useLazyQuery, useMutation } from '@apollo/client'
@@ -15,7 +15,7 @@ const ProviderForm = () => {
   const [updateProvider] = useMutation(UPDATE_PROVIDER)
   const [isEditing, setIsEditing] = useState(false)
   const [message, setMessage] = useState('')
-  const { company, saveCompany } = useCustomContext()
+  const { company } = useCustomContext()
   const [createProvider] = useMutation(CREATE_PROVIDER)
   const [getProviderById, { data }] = useLazyQuery(GET_PROVIDER_BY_ID)
 
@@ -206,7 +206,7 @@ const ProviderForm = () => {
                     {message.message}
                   </div>
                 )
-}
+              }
 
               <div className='form__buttons--group'>
                 <button

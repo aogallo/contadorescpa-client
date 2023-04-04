@@ -8,7 +8,7 @@ import Editor from './Editor/Editor'
 import EmptyRows from './Table/EmptyRows'
 
 const Table = ({ columns, data = [], editRoute }) => {
-  const [showEditor, setShowEditor] = useState(false)
+  const [showEditor] = useState(false)
   const handleShowModal = (element) => {
     console.log(element)
   }
@@ -46,11 +46,11 @@ const Table = ({ columns, data = [], editRoute }) => {
             row === 'actions'
               ? actionsButtons(element)
               : <td
-                  className='table__row-content'
-                  key={row}
-                >
+                className='table__row-content'
+                key={row}
+              >
                 {element[row] ? element[row] : '-'}
-                </td>)
+              </td>)
         }
       </tr>
     ))

@@ -1,27 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import './Title/Title.css'
 
-// {
-//   breadCrumb && (
-//     <nav className='title__breadcrumb'>
-//       {breadCrumb
-//         ? breadCrumb.map((b) => {
-//           return (
-//             <NavLink
-//               // className={`title__breadcrumb__item ${b.active && 'title__breadcrumb__item-active'}`}
-//               className={`title__breadcrumb__item`}
-//               key={b.name}
-//               to={b.path}>
-//               <h4>{b.name}</h4> {b.active && <span className='title__breadcrumb__symbol'>/</span >}
-//             </NavLink>
-//           )
-//         })
-//         : ''}
-//
-//     </nav>
-//   )
-// }
 const Title = ({ title, groupButtons }) => {
   const location = useLocation()
 

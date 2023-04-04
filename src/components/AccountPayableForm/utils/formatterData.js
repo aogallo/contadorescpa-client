@@ -55,7 +55,7 @@ export const initialDataAccountPayable = {
 }
 
 export const formatterDataToTable = ({ getAccountPayableByIdCompany = [] }) => {
-  if (getAccountPayableByIdCompany.length == 0) return []
+  if (getAccountPayableByIdCompany.length === 0) return []
 
   const newAccountsPayableData = getAccountPayableByIdCompany.map(accountPayable => {
     const {

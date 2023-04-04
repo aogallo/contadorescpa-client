@@ -103,21 +103,6 @@ const AccountPayableForm = () => {
     navigate(-1)
   }
 
-  const validateFields = (values) => {
-    try {
-      const errors = {}
-      if (!values.serie) errors.serie = 'La serie es requerida.'
-
-      if (!values.documentNumber) {
-        errors.documentNumber = 'El número de documento es requerido.'
-      }
-
-      return errors
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   const handleOnChangeSelect = ({ value }, name) => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,

@@ -1,9 +1,9 @@
 export const currencyFormatter = (value, region, currency) => {
-  if (region != undefined || null || '') {
+  if (region !== undefined || null || '') {
     region = 'es-GT'
   }
 
-  if (currency != undefined || null || '') {
+  if (currency !== undefined || null || '') {
     currency = 'GTQ'
   }
   const valueParse = +value

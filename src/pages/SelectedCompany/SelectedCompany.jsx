@@ -52,15 +52,16 @@ const SelectedCompany = () => {
   }
 
   const filterTerm = (term) => {
-    const result = filterCompanies.filter((compay) => {
+    const result = filterCompanies.filter((company) => {
       if (
-        compay.name
+        company.name
           .toString()
           .toLowerCase()
           .includes(term.toLocaleLowerCase())
       ) {
-        return compay
+        return company
       }
+      return null
     })
 
     setCompanies(result)

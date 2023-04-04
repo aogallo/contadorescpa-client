@@ -9,15 +9,12 @@ import { BiTrash } from 'react-icons/bi'
 import Tabs from 'components/Tabs/Tabs'
 import { GET_ALL_COMPANIES } from 'graphql/Company/queries'
 import { CREATE_PROVIDER_COMPANY, DELETE_PROVIDER_COMPANY_BY_ID } from 'graphql/ProviderCompany/mutation'
-import {
-  formatterData
-} from 'components/Providers/utils/formatterData'
 import useCustomContext from 'hooks/useCustomContext'
 import ProviderForm from './ProviderForm'
 import { initialProviderData } from './utils/formatterData'
 
 const ProviderEditor = () => {
-  const [providerValues, setProviderValues] = useState(initialProviderData)
+  const [providerValues] = useState(initialProviderData)
   const { company, saveCompany } = useCustomContext()
   const { data: companiesData, loading: loadingCompanies, error: errorCompanies } = useQuery(GET_ALL_COMPANIES, {
     fetchPolicy: 'network-only',
@@ -33,7 +30,7 @@ const ProviderEditor = () => {
   useEffect(() => {
     if (companiesData) {
       setCompanies([{ id: '0', name: 'Seleccionar compañia' }].concat(companiesData.getAllCompanies))
-      if (company?.id != 0) {
+      if (company?.id !== 0) {
         const newCompanyData = companiesData.getAllCompanies.find(companyServer => companyServer.id === company.id)
         if (newCompanyData && newCompanyData.providers.length !== company.providers.length - 1) {
           saveCompany(newCompanyData)
@@ -61,9 +58,9 @@ const ProviderEditor = () => {
     })
   }
 
-  const handleSelectedCompany = async ({ value: idCompany }, name = '') => {
+  const handleSelectedCompany = async ({ value: idCompany }, _name = '') => {
     const companyFind = providerValues.companies.filter(company => company.id === idCompany)
-    if (companyFind.length == 0) {
+    if (companyFind.length === 0) {
       await createProviderCompany({
         variables: {
           providerCompany: {
@@ -80,20 +77,20 @@ const ProviderEditor = () => {
   }
 
   const titles = ['Proveedor', 'Asociar compañia con proveedor']
-  const content = [<ProviderForm />,
-    <div className='container container--tabs'>
-      {/* Company */}
-      <CustomInput
-        label='Compañia'
-        name='company'
-        placeholder='11'
-        type='select'
-        arrayToSelect={companies}
-        changeStateSelected={handleSelectedCompany}
-        value={selectedCompany.id}
-      />
-      <div className='badges'>
-        {
+  const content = [<ProviderForm key={1} />,
+  <div className='container container--tabs' key={2}>
+    {/* Company */}
+    <CustomInput
+      label='Compañia'
+      name='company'
+      placeholder='11'
+      type='select'
+      arrayToSelect={companies}
+      changeStateSelected={handleSelectedCompany}
+      value={selectedCompany.id}
+    />
+    <div className='badges'>
+      {
         providerValues.companies && (
           providerValues.companies.map(company => (
             <span key={company.id} className='badge'>
@@ -111,8 +108,8 @@ const ProviderEditor = () => {
           )
         )
       }
-      </div>
     </div>
+  </div>
   ]
 
   return (

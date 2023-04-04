@@ -24,35 +24,14 @@
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "start": "standard && react-scripts start",
+    "start": "react-scripts start",
     "build": "NODE_ENV=production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "fixlinter": "standard --fix | snazzy",
     "dev": "PORT=3001 NODE_ENV=development react-scripts start",
-    "lint": "eslint ./src/ & standard | snazzy"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "plugins": [
-      "react-hooks"
-    ],
-    "rules": {
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn"
-    }
-  },
-  "standard": {
-    "env": [
-      "jest"
-    ],
-    "globals": [
-      "localStorage",
-      "React"
-    ]
+    "lint": "eslint . --ext .js,.jsx",
+    "prepare": "husky install"
   },
   "browserslist": {
     "production": [
@@ -67,12 +46,15 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^8.23.0",
-    "eslint-config-react-app": "^7.0.1",
+    "eslint": "^8.0.1",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-app": "^6.2.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "snazzy": "^9.0.0",
-    "standard": "^17.0.0"
+    "husky": "^8.0.0"
   },
   "pre-commit": [
     "lint"

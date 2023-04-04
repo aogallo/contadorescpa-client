@@ -47,7 +47,7 @@ const CreateFile = ({ createReportQuery, filename, domain, format, startDate, en
         }
       }
     }).then(() => {
-      if (data.createReport.length == 0) {
+      if (data.createReport.length === 0) {
         // TODO: send message that the results is empy
         setLabelButton('Descargar archivo')
         return false

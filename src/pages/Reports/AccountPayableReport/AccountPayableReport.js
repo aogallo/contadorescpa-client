@@ -7,16 +7,14 @@ import useCustomContext from 'hooks/useCustomContext'
 
 import { GET_ALL_ACCOUNTS } from 'graphql/Account/queries'
 import { CREATE_REPORT } from 'graphql/Report/queries'
-import CustomInput from 'components/CustomInput/CustomInput'
 import CreateFile from 'components/CreateFile/CreateFile'
 
 const AccountPayableReport = () => {
   const { company } = useCustomContext()
-  const [accounts, setAccounts] = useState([{ id: 0, name: 'Seleccionar cuenta' }])
+  const [, setAccounts] = useState([{ id: 0, name: 'Seleccionar cuenta' }])
   useQuery(GET_ALL_ACCOUNTS, {
     onCompleted: (data) => {
       if (data) {
-        console.log(data)
         setAccounts((prevState) => prevState.concat(data.getAllAccounts))
       }
     }
@@ -28,6 +26,7 @@ const AccountPayableReport = () => {
     provider: ''
   })
 
+  // eslint-disable-next-line no-unused-vars
   const handleOnChangeSelect = ({ value }, name) => {
     setReportState({ ...reportState, [name]: value })
   }

@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 import Title from 'components/Title'
 
 const Provider = () => {
-  const [breadCrumb, _] = useState([
+  const [breadCrumb] = useState([
     {
       name: 'Inicio',
       path: '/',

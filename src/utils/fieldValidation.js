@@ -9,7 +9,7 @@ export const validatedFormFields = (values, fields) => {
     }
   }
 
-  fields.map((field) => {
+  fields.each((field) => {
     if (field === 'email') {
       if (!values.email) {
         errors.email = 'Por favor ingresa una dirección de correo eletrónico'

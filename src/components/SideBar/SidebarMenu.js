@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const SidebarMenu = ({ menu }) => {
-  const [showSubMenus, setShowSubMenus] = useState(true)
+  const [showSubMenus] = useState(true)
   const {
     title,
     path,
@@ -28,7 +28,7 @@ const SidebarMenu = ({ menu }) => {
   //   )) : null
   // }
   const subMenusInput = showSubMenus
-    ? subMenus.map((subMenu) =>
+    ? subMenus.forEach((subMenu) =>
       <Link
         key={subMenu.title}
         to={subMenu.path}
@@ -38,8 +38,8 @@ const SidebarMenu = ({ menu }) => {
           {subMenu.icon}
           <span className='sidebar__subtitle'>{subMenu.title}</span>
           {
-          subMenu.showSubMenus ? subMenu.iconOpen : subMenu.iconClosed
-        }
+            subMenu.showSubMenus ? subMenu.iconOpen : subMenu.iconClosed
+          }
         </div>
       </Link>
     )
@@ -72,13 +72,13 @@ const SidebarMenu = ({ menu }) => {
           </div>
           <div>
             {
-            showSubMenus ? iconOpen : iconClosed
-          }
+              showSubMenus ? iconOpen : iconClosed
+            }
           </div>
         </li>
         {
-        showSubMenus ? subMenusInput : null
-      }
+          showSubMenus ? subMenusInput : null
+        }
       </ul>
       )
     : (

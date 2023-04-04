@@ -30,15 +30,15 @@ const CustomInput = ({
     }
   }
 
-  const validation = () => {
-    if (regularExpression) {
-      console.log('regularExpression', regularExpression)
-    }
+  // const validation = () => {
+  //   if (regularExpression) {
+  //     console.log('regularExpression', regularExpression)
+  //   }
 
-    if (validateFunction) {
-      validateFunction()
-    }
-  }
+  //   if (validateFunction) {
+  //     validateFunction()
+  //   }
+  // }
 
   let inputToRender = (
     <input
@@ -55,7 +55,7 @@ const CustomInput = ({
     />
   )
 
-  if (type == 'select' && (typeof arrayToSelect === 'object' || typeof arrayToSelect === 'array')) {
+  if (type === 'select' && (typeof arrayToSelect === 'object')) {
     // if (type == 'select' && arrayToSelect.lenght > 0) {
     const handleSelectFunction = changeStateSelected || changeState
     const newOptions = arrayToSelect.map(element => (
@@ -64,7 +64,7 @@ const CustomInput = ({
         label: element.name
       }
     ))
-    const valueSelect = newOptions.filter(option => option.value == value)
+    const valueSelect = newOptions.filter(option => option.value === value)
     inputToRender = (
       <Select
         className=''

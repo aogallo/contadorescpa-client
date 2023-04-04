@@ -1,6 +1,7 @@
+import React from 'react'
 import { BsChevronDown, BsChevronRight } from 'react-icons/bs'
 
-const { BiUser, BiBuilding, BiArchive, BiLogOut } = require('react-icons/bi')
+const { BiUser, BiBuilding, BiArchive } = require('react-icons/bi')
 const { TbReport, TbReportMoney } = require('react-icons/tb')
 
 const menus = [
