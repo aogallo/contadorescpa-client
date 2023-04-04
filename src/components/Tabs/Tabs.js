@@ -7,8 +7,10 @@ const Tabs = ({ titles, content }) => {
     <li
       key={title}
       onClick={() => setCurrentTab(index)}
-      className={currentTab === index ?
-        'tabs__tab tabs__tab--selected' : 'tabs__tab'}>
+      className={currentTab === index
+        ? 'tabs__tab tabs__tab--selected'
+        : 'tabs__tab'}
+    >
       {title}
     </li>
   )

@@ -2,58 +2,42 @@ import React, { useEffect, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 
 import {
-  GET_ALL_PROVIDERS,
+  GET_ALL_PROVIDERS
 } from 'graphql/Provider/queries'
 import CustomInput from 'components/CustomInput/CustomInput'
 import { BiTrash } from 'react-icons/bi'
 import Tabs from 'components/Tabs/Tabs'
 import { GET_ALL_COMPANIES } from 'graphql/Company/queries'
 import { CREATE_PROVIDER_COMPANY, DELETE_PROVIDER_COMPANY_BY_ID } from 'graphql/ProviderCompany/mutation'
-import {
-  formatterData
-} from 'components/Providers/utils/formatterData'
 import useCustomContext from 'hooks/useCustomContext'
 import ProviderForm from './ProviderForm'
+import { initialProviderData } from './utils/formatterData'
 
 const ProviderEditor = () => {
+  const [providerValues] = useState(initialProviderData)
   const { company, saveCompany } = useCustomContext()
   const { data: companiesData, loading: loadingCompanies, error: errorCompanies } = useQuery(GET_ALL_COMPANIES, {
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
+    notifyOnNetworkStatusChange: true
   })
   const [companies, setCompanies] = useState([])
-  // const [createProvider] = useMutation(CREATE_PROVIDER)
   const [deleteProviderCompanyById] = useMutation(DELETE_PROVIDER_COMPANY_BY_ID)
   const [createProviderCompany, { reset: resetMutationCreateProviderCompany }] = useMutation(CREATE_PROVIDER_COMPANY)
-  // const [updateProvider] = useMutation(UPDATE_PROVIDER)
   // const [getProviderById, { data }] = useLazyQuery(GET_PROVIDER_BY_ID)
   const [selectedCompany] = useState([])
 
   useEffect(() => {
     if (companiesData) {
       setCompanies([{ id: '0', name: 'Seleccionar compañia' }].concat(companiesData.getAllCompanies))
-      if (company?.id != 0) {
+      if (company?.id !== 0) {
         const newCompanyData = companiesData.getAllCompanies.find(companyServer => companyServer.id === company.id)
         if (newCompanyData && newCompanyData.providers.length !== company.providers.length - 1) {
           saveCompany(newCompanyData)
         }
       }
     }
-
   }, [companiesData, loadingCompanies, errorCompanies])
-
-
-  // useEffect(() => {
-  //   if (data) {
-  //     setProviderValues(formatterData(data))
-  //   }
-  // }, [data])
-
-  // const handleCancel = (e) => {
-  //   e.preventDefault()
-  //   navigate(-1)
-  // }
 
   const handleRemoveCompany = async ({ id }) => {
     await deleteProviderCompanyById({
@@ -74,9 +58,9 @@ const ProviderEditor = () => {
     })
   }
 
-  const handleSelectedCompany = async ({ value: idCompany }, name = '') => {
+  const handleSelectedCompany = async ({ value: idCompany }, _name = '') => {
     const companyFind = providerValues.companies.filter(company => company.id === idCompany)
-    if (companyFind.length == 0) {
+    if (companyFind.length === 0) {
       await createProviderCompany({
         variables: {
           providerCompany: {
@@ -86,16 +70,15 @@ const ProviderEditor = () => {
           }
         },
         refetchQueries: [{ query: GET_ALL_PROVIDERS }, { query: GET_ALL_COMPANIES }],
-        awaitRefetchQueries: true,
+        awaitRefetchQueries: true
       })
       resetMutationCreateProviderCompany()
     }
   }
 
   const titles = ['Proveedor', 'Asociar compañia con proveedor']
-  const content = [<ProviderForm />
-    ,
-  <div className='container container--tabs'>
+  const content = [<ProviderForm key={1} />,
+  <div className='container container--tabs' key={2}>
     {/* Company */}
     <CustomInput
       label='Compañia'
@@ -106,8 +89,7 @@ const ProviderEditor = () => {
       changeStateSelected={handleSelectedCompany}
       value={selectedCompany.id}
     />
-    <div className='badges'
-    >
+    <div className='badges'>
       {
         providerValues.companies && (
           providerValues.companies.map(company => (
@@ -117,7 +99,8 @@ const ProviderEditor = () => {
               </span>
               <span
                 onClick={() => handleRemoveCompany(company)}
-                className='btn__action btn__action-delete'>
+                className='btn__action btn__action-delete'
+              >
                 <BiTrash />
               </span>
             </span>
@@ -133,7 +116,8 @@ const ProviderEditor = () => {
     <>
       <Tabs
         content={content}
-        titles={titles} />
+        titles={titles}
+      />
     </>
   )
 }

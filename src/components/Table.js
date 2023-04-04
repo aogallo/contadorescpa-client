@@ -7,8 +7,8 @@ import 'components/Table/Table.css'
 import Editor from './Editor/Editor'
 import EmptyRows from './Table/EmptyRows'
 
-const Table = ({ columns, data = [], editRoute, }) => {
-  const [showEditor, setShowEditor] = useState(false)
+const Table = ({ columns, data = [], editRoute }) => {
+  const [showEditor] = useState(false)
   const handleShowModal = (element) => {
     console.log(element)
   }
@@ -36,22 +36,23 @@ const Table = ({ columns, data = [], editRoute, }) => {
       </td>
     )
   }
-  const rowKeys = columns.map((column) => column['key'])
-  const rows = data.length === 0 ?
-    <EmptyRows />
-    :
-    data.map((element) => (
+  const rowKeys = columns.map((column) => column.key)
+  const rows = data.length === 0
+    ? <EmptyRows />
+    : data.map((element) => (
       <tr key={element.id} className='table__row'>
         {
           rowKeys.map((row) =>
-            row === 'actions' ? actionsButtons(element) :
-              <td
+            row === 'actions'
+              ? actionsButtons(element)
+              : <td
                 className='table__row-content'
-                key={row}>
+                key={row}
+              >
                 {element[row] ? element[row] : '-'}
               </td>)
         }
-      </tr >
+      </tr>
     ))
   return (
     <div className='table'>
@@ -61,8 +62,8 @@ const Table = ({ columns, data = [], editRoute, }) => {
             {
               columns &&
               columns.map((column) => (
-                <th className='table__title' key={column['key']}>
-                  {column['column']}
+                <th className='table__title' key={column.key}>
+                  {column.column}
                 </th>
               ))
             }

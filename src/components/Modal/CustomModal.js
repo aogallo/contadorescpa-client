@@ -19,8 +19,7 @@ const CustomModal = (props) => {
           <h3>Confirmacion</h3>
         </div>
         <div className='modal-content'>
-          <div className='modal-icon'>
-          </div>
+          <div className='modal-icon' />
           <p className='modal-text'>
             Esta seguro de eliminar el registro?
           </p>

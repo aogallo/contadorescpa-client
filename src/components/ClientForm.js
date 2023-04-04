@@ -56,7 +56,7 @@ const ClientForm = () => {
         nit: data.getClientById.nit,
         address: data.getClientById.address,
         email: data.getClientById.email,
-        phone: data.getClientById.phone,
+        phone: data.getClientById.phone
         // idCompany: data.getClientById.idCompany
       })
     }
@@ -299,7 +299,8 @@ const ClientForm = () => {
                   id='idCompany'
                   onChange={handleChange}
                   placeholder='Compañia'
-                  value={values.idCompany}>
+                  value={values.idCompany}
+                >
                   {
                     companies &&
                     companies.map((company) => <option key={company.id} value={company.id}>{company.name}</option>)

@@ -148,7 +148,7 @@ margin: 0 2rem;
 .company__list {
   margin-top: 10px;
   width: 270px;
-  background: var(--sidebar-background);
+          background: var(--sidebar-background);
   color: var(--white-color);
   border-radius: 10px;
   padding: 8px;

@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
-import { useNavigate, useParams } from 'react-router-dom';
-import { GET_ALL_DOCUMENT_TYPES } from '../graphql/DocumentType/queries';
-import { GET_ALL_ACCOUNTS } from '../graphql/Account/queries';
+import React, { useEffect, useState } from 'react'
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
+import { useNavigate, useParams } from 'react-router-dom'
+import { GET_ALL_DOCUMENT_TYPES } from '../graphql/DocumentType/queries'
+import { GET_ALL_ACCOUNTS } from '../graphql/Account/queries'
 import {
   CREATE_ACCOUNT_PAYABLE,
-  UPDATE_ACCOUNT_PAYABLE,
-} from '../graphql/AccountsPayable/muations';
+  UPDATE_ACCOUNT_PAYABLE
+} from '../graphql/AccountsPayable/muations'
 import {
   GET_ACCOUNT_PAYABLE_BY_ID,
-  GET_ALL_ACCOUNTS_PAYABLE,
-} from '../graphql/AccountsPayable/queries';
+  GET_ALL_ACCOUNTS_PAYABLE
+} from '../graphql/AccountsPayable/queries'
 
-import 'components/AccountPayableForm/AccountPayableForm.css';
-import { Form, Formik } from 'formik';
-import CustomInput from './CustomInput/CustomInput';
-import CustomDatePicker from './CustomDatePicker/CustomDatePicker';
-import useCustomContext from 'hooks/useCustomContext';
-import { calculateTotal } from 'utils/calculateValues';
+import 'components/AccountPayableForm/AccountPayableForm.css'
+import { Form, Formik } from 'formik'
+import CustomInput from './CustomInput/CustomInput'
+import CustomDatePicker from './CustomDatePicker/CustomDatePicker'
+import useCustomContext from 'hooks/useCustomContext'
+import { calculateTotal } from 'utils/calculateValues'
 import {
   formattedAccountPayableForState,
   formattedDateToSave,
-  initialDataAccountPayable,
-} from './AccountPayableForm/utils/formatterData';
-import { currencyFormatter } from 'utils/currencyFormatter';
+  initialDataAccountPayable
+} from './AccountPayableForm/utils/formatterData'
+import { currencyFormatter } from 'utils/currencyFormatter'
 
 const AccountPayableForm = () => {
-  const { company } = useCustomContext();
-  const navigate = useNavigate();
-  const params = useParams();
-  const { data: docs } = useQuery(GET_ALL_DOCUMENT_TYPES);
-  const { data: accountsData } = useQuery(GET_ALL_ACCOUNTS);
+  const { company } = useCustomContext()
+  const navigate = useNavigate()
+  const params = useParams()
+  const { data: docs } = useQuery(GET_ALL_DOCUMENT_TYPES)
+  const { data: accountsData } = useQuery(GET_ALL_ACCOUNTS)
   const [getAccountPayableById, { data: accountPayableById }] = useLazyQuery(
     GET_ACCOUNT_PAYABLE_BY_ID
-  );
+  )
   const [createAccountPayable] = useMutation(CREATE_ACCOUNT_PAYABLE)
   const [updateAccountPayable] = useMutation(UPDATE_ACCOUNT_PAYABLE)
   const [message, setMessage] = useState(null)
@@ -44,85 +44,71 @@ const AccountPayableForm = () => {
 
   useEffect(() => {
     if (params.id) {
-      setIsEditing(true);
-      getAccountPayableById({ variables: { id: params.id } });
+      setIsEditing(true)
+      getAccountPayableById({ variables: { id: params.id } })
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,
-      total: calculateTotal(accountPayableInitialValues),
-    });
+      total: calculateTotal(accountPayableInitialValues)
+    })
   }, [
     accountPayableInitialValues.exento,
     accountPayableInitialValues.importation,
     accountPayableInitialValues.service,
-    accountPayableInitialValues.asset,
-  ]);
+    accountPayableInitialValues.asset
+  ])
 
   useEffect(() => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,
-      iva: (accountPayableInitialValues.total / 1.12) * 0.12,
-    });
-  }, [accountPayableInitialValues.total]);
+      iva: (accountPayableInitialValues.total / 1.12) * 0.12
+    })
+  }, [accountPayableInitialValues.total])
 
   useEffect(() => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,
       subtotal:
-        accountPayableInitialValues.total - accountPayableInitialValues.iva,
-    });
-  }, [accountPayableInitialValues.iva]);
+        accountPayableInitialValues.total - accountPayableInitialValues.iva
+    })
+  }, [accountPayableInitialValues.iva])
 
   useEffect(() => {
-    if (docs)
+    if (docs) {
       setDocumentTypes((prevState) =>
         prevState.concat(docs.getAllDocumentTypes)
-      );
-  }, [docs]);
+      )
+    }
+  }, [docs])
 
   useEffect(() => {
     if (accountsData) {
-      setAccounts((prevState) => prevState.concat(accountsData.getAllAccounts));
+      setAccounts((prevState) => prevState.concat(accountsData.getAllAccounts))
     }
-  }, [accountsData]);
+  }, [accountsData])
 
   useEffect(() => {
     if (accountPayableById) {
       setAccountPayableInitialValues(
         formattedAccountPayableForState(accountPayableById)
-      );
+      )
     }
-  }, [accountPayableById]);
+  }, [accountPayableById])
 
   const handleCancel = (e) => {
-    e.preventDefault();
-    navigate(-1);
-  };
-
-  const validateFields = (values) => {
-    try {
-      const errors = {};
-      if (!values.serie) errors.serie = 'La serie es requerida.';
-
-      if (!values.documentNumber) {
-        errors.documentNumber = 'El número de documento es requerido.';
-      }
-
-      return errors;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    e.preventDefault()
+    navigate(-1)
+  }
 
   const handleOnChangeSelect = ({ value }, name) => {
     setAccountPayableInitialValues({
       ...accountPayableInitialValues,
-      [name]: value,
-    });
-  };
+      [name]: value
+    })
+  }
 
   const handleCreateAccountPayable = async (values, { resetForm }) => {
     try {
@@ -130,69 +116,69 @@ const AccountPayableForm = () => {
         // EDIT
         await updateAccountPayable({
           variables: {
-            accountPayable: formattedDateToSave(values),
+            accountPayable: formattedDateToSave(values)
           },
-          refetchQueries: [{ query: GET_ALL_ACCOUNTS_PAYABLE }],
-        });
+          refetchQueries: [{ query: GET_ALL_ACCOUNTS_PAYABLE }]
+        })
       } else {
         // ADD
         await createAccountPayable({
           variables: {
-            accountPayable: formattedDateToSave(values),
+            accountPayable: formattedDateToSave(values)
           },
-          refetchQueries: [{ query: GET_ALL_ACCOUNTS_PAYABLE }],
-        });
+          refetchQueries: [{ query: GET_ALL_ACCOUNTS_PAYABLE }]
+        })
       }
 
       setMessage({
         error: false,
         message: `Cuenta por pagar ${isEditing ? 'actualizada' : 'creada'
-          } correctamente`,
-      });
+          } correctamente`
+      })
       setTimeout(() => {
-        setMessage(null);
-        navigate(-1);
-        resetForm();
-      }, 1500);
+        setMessage(null)
+        navigate(-1)
+        resetForm()
+      }, 1500)
     } catch (error) {
       setMessage({
         error: true,
-        message: error.message,
-      });
+        message: error.message
+      })
     }
-  };
+  }
 
   const handleValidate = (values) => {
     const errors = {}
     console.log('values', values)
     if (!values.serie) {
-      errors.serie = 'Campo requerido';
+      errors.serie = 'Campo requerido'
     }
 
     if (!values.documentNumber) {
-      errors.documentNumber = 'Campo requerido';
+      errors.documentNumber = 'Campo requerido'
     }
 
     if (!values.idDocumentType) {
-      errors.idDocumentType = 'Campo requerido';
+      errors.idDocumentType = 'Campo requerido'
     }
 
     if (!values.idProviderCompany) {
-      errors.idProviderCompany = 'Campo requerido';
+      errors.idProviderCompany = 'Campo requerido'
     }
 
     if (!values.idAccount) {
-      errors.idAccount = 'Campo requerido';
+      errors.idAccount = 'Campo requerido'
     }
 
     if (!values.asset && !values.service && !values.importation) {
-      errors.asset = 'Campo requerido';
-      errors.service = 'Campo requerido';
-      errors.importation = 'Campo requerido';
+      errors.asset = 'Campo requerido'
+      errors.service = 'Campo requerido'
+      errors.importation = 'Campo requerido'
     }
 
-    return errors;
-  };
+    return errors
+  }
 
   return (
     <div className='container'>
@@ -220,7 +206,7 @@ const AccountPayableForm = () => {
                     value={values.serie}
                   />
 
-                  {/* Document Number*/}
+                  {/* Document Number */}
                   <CustomInput
                     changeState={setAccountPayableInitialValues}
                     errors={errors}
@@ -231,7 +217,7 @@ const AccountPayableForm = () => {
                 </div>
 
                 <div className='form__grid--row'>
-                  {/* Document Type*/}
+                  {/* Document Type */}
                   <CustomInput
                     arrayToSelect={documentTypes}
                     changeStateSelected={handleOnChangeSelect}
@@ -245,7 +231,7 @@ const AccountPayableForm = () => {
                     value={values.idDocumentType}
                   />
 
-                  {/* Document Date*/}
+                  {/* Document Date */}
                   <CustomDatePicker
                     changeDate={setAccountPayableInitialValues}
                     errors={errors}
@@ -402,12 +388,12 @@ const AccountPayableForm = () => {
                   </button>
                 </div>
               </Form>
-            );
+            )
           }}
-        </Formik >
-      </div >
-    </div >
-  );
-};
+        </Formik>
+      </div>
+    </div>
+  )
+}
 
-export default AccountPayableForm;
+export default AccountPayableForm

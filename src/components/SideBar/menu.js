@@ -1,18 +1,19 @@
-import { BsChevronDown, BsChevronRight } from "react-icons/bs";
+import React from 'react'
+import { BsChevronDown, BsChevronRight } from 'react-icons/bs'
 
-const { BiUser, BiBuilding, BiArchive, BiLogOut } = require("react-icons/bi");
+const { BiUser, BiBuilding, BiArchive } = require('react-icons/bi')
 const { TbReport, TbReportMoney } = require('react-icons/tb')
 
 const menus = [
   {
-    title: "Clientes",
-    path: "/client",
+    title: 'Clientes',
+    path: '/client',
     icon: <BiUser className='icon__left' />,
     iconClosed: null,
     iconOpen: null,
     isMenu: false,
     subMenus: [],
-    customFunction: null,
+    customFunction: null
   },
   {
     title: 'Compañia',
@@ -22,16 +23,17 @@ const menus = [
     iconOpen: null,
     isMenu: false,
     subMenus: [],
-    customFunction: null,
+    customFunction: null
   },
   {
-    title: 'Proveedores', path: '/provider',
+    title: 'Proveedores',
+    path: '/provider',
     icon: <BiUser className='icon__left' />,
     iconClosed: null,
     iconOpen: null,
     isMenu: false,
     subMenus: [],
-    customFunction: null,
+    customFunction: null
   },
   {
     title: 'Facturas',
@@ -41,7 +43,7 @@ const menus = [
     iconOpen: null,
     isMenu: false,
     subMenus: [],
-    customFunction: null,
+    customFunction: null
   },
   {
     title: 'Reportes',
@@ -58,11 +60,11 @@ const menus = [
         iconClosed: null,
         iconOpen: null,
         subMenus: [],
-        customFunction: null,
+        customFunction: null
       }
     ],
-    customFunction: null,
-  },
+    customFunction: null
+  }
 ]
 
 export default menus

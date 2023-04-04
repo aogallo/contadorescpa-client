@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import Loading from 'components/Loading/Loading'
@@ -20,7 +20,6 @@ const MainLayout = () => {
   const Company = lazy(async () => await import('pages/Company/Company'))
 
   const ErrorView = lazy(async () => await import('pages/Error/Error404'))
-
 
   return (
     <Suspense fallback={<Loading />}>
@@ -44,11 +43,11 @@ const MainLayout = () => {
             <Route path='edit/:id' element={<AccountPayableForm />} />
           </Route>
 
-          <Route path='/report' >
+          <Route path='/report'>
             <Route path='cxp' element={<AccountsPayableReportView />} />
           </Route>
 
-          <Route path='/company' element={<Company />}></Route>
+          <Route path='/company' element={<Company />} />
           <Route path='*' element={<ErrorView />} />
         </Routes>
       </div>

@@ -1,7 +1,8 @@
+import React from 'react'
+
 const PlaceholderLoader = () => {
   return (
-    <div className="placeholder">
-    </div>
+    <div className='placeholder' />
   )
 }
 

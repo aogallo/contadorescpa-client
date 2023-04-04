@@ -3,21 +3,6 @@ import { Outlet } from 'react-router-dom'
 import Title from 'components/Title'
 
 const Client = () => {
-  // if (loading) return <>Loading.....</>
-
-  const breadCrumb = [
-    {
-      name: 'Inicio',
-      path: '/',
-      active: true
-    },
-    {
-      name: 'Clientes',
-      path: '/client',
-      active: false
-    }
-  ]
-
   const groupButtons = [
     {
       name: 'Agregar cliente',

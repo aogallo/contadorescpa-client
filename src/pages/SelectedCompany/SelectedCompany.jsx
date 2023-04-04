@@ -38,6 +38,11 @@ const SelectedCompany = () => {
       setCompanies(data.getAllCompanies)
       setFilterCompanies(data.getAllCompanies)
       setBreadCrumb('')
+      if (process.env.NODE_ENV === 'development') {
+        console.log(data.getAllCompanies)
+        saveCompany(data.getAllCompanies[0])
+        navigate('/')
+      }
     }
   }, [data])
 
@@ -47,15 +52,16 @@ const SelectedCompany = () => {
   }
 
   const filterTerm = (term) => {
-    const result = filterCompanies.filter((compay) => {
+    const result = filterCompanies.filter((company) => {
       if (
-        compay.name
+        company.name
           .toString()
           .toLowerCase()
           .includes(term.toLocaleLowerCase())
       ) {
-        return compay
+        return company
       }
+      return null
     })
 
     setCompanies(result)

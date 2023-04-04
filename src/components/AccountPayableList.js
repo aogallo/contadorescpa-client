@@ -11,10 +11,10 @@ import Table from 'components/Table'
 const columns = [
   { column: 'Serie', key: 'serie' },
   { column: 'Numero', key: 'documentNumber' },
-  { column: 'Fecha', 'key': 'documentDate' },
-  { column: 'Tipo de documento', 'key': 'documentTypeName' },
-  { column: 'Proveedor', 'key': 'providerName' },
-  { column: 'Cuenta', 'key': 'accountName' },
+  { column: 'Fecha', key: 'documentDate' },
+  { column: 'Tipo de documento', key: 'documentTypeName' },
+  { column: 'Proveedor', key: 'providerName' },
+  { column: 'Cuenta', key: 'accountName' },
   { column: 'Acciones', key: 'actions' }
 ]
 
@@ -35,7 +35,6 @@ const AccountPayableList = () => {
       setAccountsPayable(formatterDataToTable(data))
     }
   }, [data])
-
 
   return (
     <>
