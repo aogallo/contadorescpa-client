@@ -1,78 +1,76 @@
 {
   "name": "contadorescpa-client",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
-  "dependencies": {
-    "@apollo/client": "^3.5.7",
-    "@popperjs/core": "^2.11.0",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "formik": "^2.2.9",
-    "graphql": "^16.2.0",
-    "jwt-decode": "^3.1.2",
-    "react": "^16.14.0",
-    "react-datepicker": "^4.8.0",
-    "react-dom": "^16.14.0",
-    "react-icons": "^4.7.1",
-    "react-router-dom": "^6.2.1",
-    "react-scripts": "^5.0.0",
-    "react-select": "^5.7.0",
-    "redux": "^4.1.2",
-    "source-map-explorer": "^2.5.2",
-    "web-vitals": "^2.1.2"
-  },
+  "type": "module",
   "scripts": {
-    "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "start": "standard && react-scripts start",
-    "build": "NODE_ENV=production react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "fixlinter": "standard --fix",
-    "dev": "PORT=3001 NODE_ENV=development react-scripts start",
-    "lint": "eslint ./src/"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:ci": "vitest run --coverage",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint src --ext ts,tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,json,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,json,css,md}\"",
+    "prepare": "husky install"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "plugins": [
-      "react-hooks"
-    ],
-    "rules": {
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn"
-    }
-  },
-  "standard": {
-    "env": [
-      "jest"
-    ],
-    "globals": [
-      "localStorage",
-      "React"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.22.3",
+    "@tanstack/react-query": "^5.28.4",
+    "@tanstack/react-query-devtools": "^5.28.4",
+    "axios": "^1.6.8",
+    "@mui/material": "^5.15.14",
+    "@mui/icons-material": "^5.15.14",
+    "@mui/x-date-pickers": "^7.0.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
+    "formik": "^2.4.5",
+    "jwt-decode": "^4.0.0",
+    "react-icons": "^5.0.1",
+    "date-fns": "^3.6.0"
   },
   "devDependencies": {
-    "eslint": "^8.23.0",
-    "eslint-config-react-app": "^7.0.1",
+    "typescript": "^5.4.3",
+    "@types/react": "^18.2.73",
+    "@types/react-dom": "^18.2.23",
+    "@types/node": "^20.11.30",
+    "vite": "^5.2.6",
+    "@vitejs/plugin-react": "^4.2.1",
+    "vitest": "^1.4.0",
+    "@vitest/ui": "^1.4.0",
+    "@testing-library/react": "^14.2.2",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/user-event": "^14.5.2",
+    "jsdom": "^24.0.0",
+    "msw": "^2.2.9",
+    "@vitest/coverage-v8": "^1.4.0",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "standard": "^17.0.0"
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.2.5",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "@commitlint/cli": "^19.2.1",
+    "@commitlint/config-conventional": "^19.1.0"
   },
-  "pre-commit": [
-    "lint"
-  ]
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  }
 }
