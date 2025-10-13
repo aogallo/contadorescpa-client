@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+
 import { calculateTotal, formatNumber, safeParseNumber } from '../calculateValues';
 
 describe('calculateValues', () => {
@@ -154,8 +155,8 @@ describe('calculateValues', () => {
     });
 
     it('should return default value for null', () => {
-      expect(safeParseNumber(null as any)).toBe(0);
-      expect(safeParseNumber(null as any, 15)).toBe(15);
+      expect(safeParseNumber(null as unknown as string)).toBe(0);
+      expect(safeParseNumber(null as unknown as string, 15)).toBe(15);
     });
 
     it('should return default value for invalid string', () => {

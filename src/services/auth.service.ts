@@ -1,6 +1,7 @@
-import api from './api';
-import { User, LoginCredentials } from 'types/user';
 import { ApiResponse } from 'types/common';
+import { User, LoginCredentials } from 'types/user';
+
+import api from './api';
 
 export const authService = {
   /**

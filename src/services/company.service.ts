@@ -1,6 +1,7 @@
-import api from './api';
-import { Company } from 'types/company';
 import { ApiResponse } from 'types/common';
+import { Company } from 'types/company';
+
+import api from './api';
 
 export const companyService = {
   /**

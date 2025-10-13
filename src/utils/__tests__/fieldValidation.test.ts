@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+
 import {
   validatedFormFields,
   validateEmail,
@@ -259,7 +260,7 @@ describe('fieldValidation', () => {
     });
 
     it('should return errors for null required fields', () => {
-      const values = {
+      const values: Record<string, unknown> = {
         name: null,
         email: null,
       };

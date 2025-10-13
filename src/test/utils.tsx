@@ -1,11 +1,12 @@
 import { ReactElement, ReactNode } from 'react';
-import { render, RenderOptions } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BrowserRouter } from 'react-router-dom';
+
 import { ThemeProvider } from '@mui/material/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { render, RenderOptions } from '@testing-library/react';
 import { es } from 'date-fns/locale';
+import { BrowserRouter } from 'react-router-dom';
 
 // Create a custom theme for testing if needed
 const testTheme = {
@@ -24,16 +25,11 @@ const createTestQueryClient = () =>
     defaultOptions: {
       queries: {
         retry: false,
-        cacheTime: 0,
+        gcTime: 0,
       },
       mutations: {
         retry: false,
       },
-    },
-    logger: {
-      log: console.log,
-      warn: console.warn,
-      error: () => {}, // Suppress error logs in tests
     },
   });
 
@@ -47,7 +43,7 @@ const AllTheProviders = ({ children }: AllTheProvidersProps) => {
   return (
     <QueryClientProvider client={testQueryClient}>
       <BrowserRouter>
-        <ThemeProvider theme={testTheme as any}>
+        <ThemeProvider theme={testTheme}>
           <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
             {children}
           </LocalizationProvider>
@@ -60,7 +56,9 @@ const AllTheProviders = ({ children }: AllTheProvidersProps) => {
 const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) =>
   render(ui, { wrapper: AllTheProviders, ...options });
 
-export * from '@testing-library/react';
+// Re-export testing library utilities (excluding render to avoid conflicts)
+export { screen, waitFor, within, fireEvent } from '@testing-library/react';
+// Export custom render with all providers
 export { customRender as render };
 export { createTestQueryClient };
 

@@ -41,6 +41,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - actions/dependency-review-action: v3 → v4 (better analysis)
 - Added --legacy-peer-deps flag for npm install to handle transition dependencies
 - Created .npmrc to standardize npm configuration across environments
+- Fixed all linting errors (import ordering, unused imports, type issues)
+- Fixed all TypeScript type errors (Vite env, React Query v5 API, Theme types)
+- Created vite-env.d.ts for Vite environment type definitions
+- Updated React Query from cacheTime to gcTime (v5 API)
 
 ### Removed
 - Create React App (react-scripts)

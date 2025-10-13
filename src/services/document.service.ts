@@ -1,6 +1,7 @@
-import api from './api';
-import { DocumentType, Account } from 'types/document';
 import { ApiResponse } from 'types/common';
+import { DocumentType, Account } from 'types/document';
+
+import api from './api';
 
 export const documentService = {
   /**

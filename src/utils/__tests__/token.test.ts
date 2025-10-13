@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+
 import { isTokenExpired, getTokenPayload, getStoredToken, isAuthenticated } from '../token';
 
 describe('token utilities', () => {
@@ -83,7 +84,7 @@ describe('token utilities', () => {
   describe('getStoredToken', () => {
     it('should return token from localStorage', () => {
       const mockUser = { token: 'test-token', username: 'testuser' };
-      (localStorage.getItem as any).mockReturnValue(JSON.stringify(mockUser));
+      (localStorage.getItem as ReturnType<typeof vi.fn>).mockReturnValue(JSON.stringify(mockUser));
 
       const token = getStoredToken();
       expect(token).toBe('test-token');
@@ -91,7 +92,7 @@ describe('token utilities', () => {
     });
 
     it('should return null if no user in localStorage', () => {
-      (localStorage.getItem as any).mockReturnValue(null);
+      (localStorage.getItem as ReturnType<typeof vi.fn>).mockReturnValue(null);
 
       const token = getStoredToken();
       expect(token).toBeNull();
@@ -99,14 +100,14 @@ describe('token utilities', () => {
 
     it('should return null if user has no token', () => {
       const mockUser = { username: 'testuser' };
-      (localStorage.getItem as any).mockReturnValue(JSON.stringify(mockUser));
+      (localStorage.getItem as ReturnType<typeof vi.fn>).mockReturnValue(JSON.stringify(mockUser));
 
       const token = getStoredToken();
       expect(token).toBeNull();
     });
 
     it('should handle JSON parse errors', () => {
-      (localStorage.getItem as any).mockReturnValue('invalid-json');
+      (localStorage.getItem as ReturnType<typeof vi.fn>).mockReturnValue('invalid-json');
 
       const token = getStoredToken();
       expect(token).toBeNull();
@@ -115,7 +116,7 @@ describe('token utilities', () => {
 
   describe('isAuthenticated', () => {
     it('should return false if no token stored', () => {
-      (localStorage.getItem as any).mockReturnValue(null);
+      (localStorage.getItem as ReturnType<typeof vi.fn>).mockReturnValue(null);
 
       expect(isAuthenticated()).toBe(false);
     });
@@ -124,7 +125,7 @@ describe('token utilities', () => {
       const expiredToken =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1Nzc4MzY4MDB9.signature';
       const mockUser = { token: expiredToken };
-      (localStorage.getItem as any).mockReturnValue(JSON.stringify(mockUser));
+      (localStorage.getItem as ReturnType<typeof vi.fn>).mockReturnValue(JSON.stringify(mockUser));
 
       expect(isAuthenticated()).toBe(false);
     });
@@ -134,7 +135,7 @@ describe('token utilities', () => {
       const payload = JSON.stringify({ exp: futureExp });
       const validToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.${btoa(payload)}.signature`;
       const mockUser = { token: validToken };
-      (localStorage.getItem as any).mockReturnValue(JSON.stringify(mockUser));
+      (localStorage.getItem as ReturnType<typeof vi.fn>).mockReturnValue(JSON.stringify(mockUser));
 
       expect(isAuthenticated()).toBe(true);
     });

@@ -1,6 +1,7 @@
-import api from './api';
-import { Provider, ProviderFormValues } from 'types/provider';
 import { ApiResponse } from 'types/common';
+import { Provider, ProviderFormValues } from 'types/provider';
+
+import api from './api';
 
 export const providerService = {
   /**
