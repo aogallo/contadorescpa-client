@@ -34,6 +34,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed legacy Create React App dependencies
 - Added npm install optimization flags (--prefer-offline --no-audit)
 - Fixed Codecov upload to run only once per test matrix
+- Updated all GitHub Actions to latest versions:
+  - actions/upload-artifact: v3 → v4 (v3 deprecated)
+  - codecov/codecov-action: v3 → v4 (with token support)
+  - github/codeql-action: v2 → v3 (improved security scanning)
+  - actions/dependency-review-action: v3 → v4 (better analysis)
 
 ### Removed
 - Create React App (react-scripts)
