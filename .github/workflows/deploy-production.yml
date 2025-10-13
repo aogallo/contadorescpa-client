@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-      - run: npm ci
+      - run: npm ci --prefer-offline --no-audit
       - run: npm run build
         env:
           VITE_API_URL: ${{ secrets.PRODUCTION_API_URL }}
