@@ -1,0 +1,9 @@
+build
+dist
+coverage
+node_modules
+*.min.js
+.vite
+package-lock.json
+yarn.lock
+
