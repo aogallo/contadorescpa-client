@@ -39,6 +39,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - codecov/codecov-action: v3 → v4 (with token support)
   - github/codeql-action: v2 → v3 (improved security scanning)
   - actions/dependency-review-action: v3 → v4 (better analysis)
+- Added --legacy-peer-deps flag for npm install to handle transition dependencies
+- Created .npmrc to standardize npm configuration across environments
 
 ### Removed
 - Create React App (react-scripts)
